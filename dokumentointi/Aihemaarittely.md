@@ -1,5 +1,5 @@
 #Huom
-Tämä on sama aihe kuin viime jaksossa. Silloin oli liikaa tekemistä muilla kursseilla/töissä, joten päätin dropata kurssin silloin. En ehtinyt tekemään ohjelmaa paljoakaan.
+Tämä on sama aihe kuin viime jaksossa. Silloin oli liikaa tekemistä muilla kursseilla/töissä eikä paja-ajatkaan olleet sopivia, joten päätin dropata kurssin silloin. En ehtinyt tekemään ohjelmaa paljoakaan.
 
 #Aihe
 
