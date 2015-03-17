@@ -7,15 +7,15 @@ package kanipeli.domain;
 
 /**
  *
- * @author Sami
+ * @author sjsarsa
  */
-public class HealingItem implements Item {
+public class DamagingItem implements Item {
     
     private String name;
     private int quantity;
     private int quality;
 
-    public HealingItem(String name, int quantity, int quality) {
+    public DamagingItem(String name, int quantity, int quality) {
         this.name = name;
         this.quantity = quantity;
         this.quality = quality;
@@ -23,7 +23,7 @@ public class HealingItem implements Item {
 
     @Override
     public void use(Creature creature) {
-        creature.setCurrentHp(creature.getCurrentHp() + quality);
+        creature.setCurrentHp(creature.getCurrentHp() - quality);
         quantity--;
     }
 
@@ -43,9 +43,5 @@ public class HealingItem implements Item {
     public int getQuantity() {
         return quantity;
     }
-    
-    
-    
-    
     
 }

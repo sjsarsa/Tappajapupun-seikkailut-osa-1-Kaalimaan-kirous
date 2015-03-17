@@ -9,17 +9,17 @@ import java.util.ArrayList;
  *
  * @author Sami
  */
-public class KehittyvaHahmo extends KartallaOlevaHahmo {
+public class PlayableCreature extends CreatureOnField {
     private int lvl = 1;
     private int exp = 0;
     private int requiredExp = 5;
     private int munny = 0;
     private ArrayList<Item> items = new ArrayList<Item>();
 
-    public KehittyvaHahmo(int x, int y, String Nimi, int maxHp, int damage, int exp) {
+    public PlayableCreature(int x, int y, String Nimi, int maxHp, int damage, int exp) {
         super(x, y, Nimi, maxHp, damage, exp);
     }
-    
+
     public boolean addExp(int i) {
         exp += i;
         if (exp >= requiredExp) {
@@ -34,14 +34,14 @@ public class KehittyvaHahmo extends KartallaOlevaHahmo {
         lvl++;
         System.out.println("Tuhovoimasi kasvoi!");
     }
-
+    
     public void levelUpHp() {
         super.setMaxHp(super.getMaxHp() + (15 * lvl) / 3);
         lvl++;
         System.out.println("Kestävyytesi kasvoi!");
     }
     
-     public ArrayList<Item> getItems() {
+    public ArrayList<Item> getItems() {
         return items;
     }
 

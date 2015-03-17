@@ -11,23 +11,23 @@ import java.util.Random;
  *
  * @author sjsarsa
  */
-public class Hahmo {
+public class Creature {
 
-    private String Nimi;
+    private String name;
     private int maxHp;
     private int currentHp;
     private int damage;
     private int exp;
     private Random rm = new Random();
-
-    public Hahmo(String Nimi, int maxHp, int damage, int exp) {
-        this.Nimi = Nimi;
+    
+    public Creature(String name, int maxHp, int damage, int exp) {
+        this.name = name;
         this.maxHp = maxHp;
         this.currentHp = maxHp;
         this.damage = damage;
         this.exp = exp;
     }
-
+   
     public int getExp() {
         return exp;
     }
@@ -52,8 +52,8 @@ public class Hahmo {
         return maxHp;
     }
 
-    public String getNimi() {
-        return Nimi;
+    public String getName() {
+        return name;
     }
 
     public void setMaxHp(int maxHp) {
@@ -65,7 +65,8 @@ public class Hahmo {
     }
 
     public void setCurrentHp(int currentHp) {
-        this.currentHp = currentHp;
+        this.currentHp = Math.min(currentHp, maxHp);
+        
     }
 
 

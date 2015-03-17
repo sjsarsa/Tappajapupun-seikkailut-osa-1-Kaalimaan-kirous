@@ -9,31 +9,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-import kanipeli.domain.Hahmo;
-import kanipeli.domain.KartallaOlevaHahmo;
-import kanipeli.domain.KehittyvaHahmo;
+import kanipeli.domain.Creature;
+import kanipeli.domain.CreatureOnField;
+import kanipeli.domain.PlayableCreature;
 
 /**
  *
  * @author Sami
  */
-public class Kartta {
+public class Field {
 
     private int leveys;
     private int korkeus;
-    private KehittyvaHahmo pelaaja;
-    private KartallaOlevaHahmo paavihollinen;
+    private PlayableCreature pelaaja;
+    private CreatureOnField paavihollinen;
 
-    private List<KartallaOlevaHahmo> kartallaOlevat;
+    private List<CreatureOnField> kartallaOlevat;
     private Scanner lukija;
 
-    public Kartta(int leveys, int korkeus, Scanner lukija) {
+    public Field(int leveys, int korkeus, Scanner lukija) {
         this.leveys = leveys;
         this.korkeus = korkeus;
         this.lukija = lukija;
-        this.pelaaja = new KehittyvaHahmo(0, 0, "Hilipati", 20, 5, 0);
+        this.pelaaja = new PlayableCreature(0, 0, "Hilipati", 20, 5, 0);
         this.kartallaOlevat = new ArrayList();
-        this.paavihollinen = new KartallaOlevaHahmo(leveys / 2, korkeus / 2, "Pedobear", 1000, 30, 0);
+        this.paavihollinen = new CreatureOnField(leveys / 2, korkeus / 2, "Pedobear", 1000, 30, 0);
         this.kartallaOlevat.add(paavihollinen);
     }
 
@@ -46,24 +46,24 @@ public class Kartta {
         }
     }
 
-    public boolean taistele(Hahmo vihollinen) {
-        System.out.println(vihollinen.getNimi() + "kävi kimppuusi!");
+    public boolean taistele(Creature vihollinen) {
+        System.out.println(vihollinen.getName() + "kävi kimppuusi!");
         System.out.println("");
-        Taistelu taistelu = new Taistelu(pelaaja, vihollinen, lukija);
+        Battle taistelu = new Battle(pelaaja, vihollinen, lukija);
         taistelu.run();
-        if (taistelu.isTappio()) {
+        if (taistelu.getLoss()) {
             System.out.println("Hävisit pelin.");
-        } else if (taistelu.isPakeni()) {
+        } else if (taistelu.getEscaped()) {
             System.out.println("Lähdit pakoon senkin nössö.");
             
         } else {
             System.out.println("Voitit!");
             
         }
-        if (taistelu.isTappio()) {
+        if (taistelu.getLoss()) {
             return false;
         }
-        if (!taistelu.isPakeni()) {
+        if (!taistelu.getEscaped()) {
             if (pelaaja.addExp(vihollinen.getExp())) {
                 levelUp();
             }
@@ -81,7 +81,7 @@ public class Kartta {
             }
         }
         kartta[pelaaja.getX()][pelaaja.getY()] = '@';
-        for (KartallaOlevaHahmo h : kartallaOlevat) {
+        for (CreatureOnField h : kartallaOlevat) {
             kartta[h.getX()][h.getY()] = 'B';
         }
         kartta[paavihollinen.getX()][paavihollinen.getY()] = 'B';
@@ -101,25 +101,25 @@ public class Kartta {
         for (int i = 0; i < syote.length(); i++) {
             if (syote.charAt(i) == 's') {
                 if (pelaaja.getY() < korkeus - 1) {
-                    pelaaja.liikuAlas();
+                    pelaaja.moveDown();
                 }
                 onLiikuttu();
             }
             if (syote.charAt(i) == 'a') {
                 if (pelaaja.getX() > 0) {
-                    pelaaja.liikuVasen();
+                    pelaaja.moveLeft();
                 }
                 onLiikuttu();
             }
             if (syote.charAt(i) == 'w') {
                 if (pelaaja.getY() > 0) {
-                    pelaaja.liikuYlos();
+                    pelaaja.moveUp();
                 }
                 onLiikuttu();
             }
             if (syote.charAt(i) == 'd') {
                 if (pelaaja.getX() < leveys - 1) {
-                    pelaaja.liikuOikea();
+                    pelaaja.moveRight();
                 }
                 onLiikuttu();
             }
@@ -127,8 +127,8 @@ public class Kartta {
         }
     }
 
-    public void onkoSamaRuutu(List<KartallaOlevaHahmo> kartallaOlevat) {
-        for (KartallaOlevaHahmo h : kartallaOlevat) {
+    public void onkoSamaRuutu(List<CreatureOnField> kartallaOlevat) {
+        for (CreatureOnField h : kartallaOlevat) {
             if (pelaaja.getX() == h.getX() && pelaaja.getY() == h.getY()) {
                 taistele(h);
             }
@@ -138,7 +138,7 @@ public class Kartta {
     private void onLiikuttu() {
         onkoSamaRuutu(kartallaOlevat);
         Random rm = new Random();
-        Hahmo perusvihollinen = new Hahmo("Pikkuhirviö", 15, 3, 1);
+        Creature perusvihollinen = new Creature("Pikkuhirviö", 15, 3, 1);
         if (rm.nextInt(3) == 1) {
             taistele(perusvihollinen);
         }

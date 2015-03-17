@@ -6,7 +6,7 @@
 package kanipeli;
 
 import java.util.Scanner;
-import kanipeli.peli.Kartta;
+import kanipeli.peli.Field;
 
 /**
  *
@@ -16,7 +16,7 @@ public class main {
 
     public static void main(String[] args) {
         Scanner lukija = new Scanner(System.in);
-        Kartta kartta = new Kartta(10, 10, lukija);
-        kartta.run();
+        Field field = new Field(10, 10, lukija);
+        field.run();
     }
 }

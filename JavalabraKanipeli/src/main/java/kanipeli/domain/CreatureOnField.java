@@ -9,13 +9,13 @@ package kanipeli.domain;
  *
  * @author Sami
  */
-public class KartallaOlevaHahmo extends Hahmo {
+public class CreatureOnField extends Creature {
 
     private int x;
     private int y;
 
-    public KartallaOlevaHahmo(int x, int y, String Nimi, int maxHp, int vahinko,  int exp) {
-        super(Nimi, maxHp, vahinko, exp);
+    public CreatureOnField(int x, int y, String name, int maxHp, int damage,  int exp) {
+        super(name, maxHp, damage, exp);
         this.x = x;
         this.y = y;
     }
@@ -28,24 +28,23 @@ public class KartallaOlevaHahmo extends Hahmo {
         return y;
     }
 
-    public void liikuAlas() {
+    public void moveDown() {
         y++;
     }
 
-    public void liikuVasen() {
+    public void moveLeft() {
         if (x > 0) {
             x--;
         }
     }
 
-    public void liikuOikea() {
+    public void moveRight() {
         x++;
     }
 
-    public void liikuYlos() {
+    public void moveUp() {
         if (y > 0) {
             y--;
         }
     }
-
 }

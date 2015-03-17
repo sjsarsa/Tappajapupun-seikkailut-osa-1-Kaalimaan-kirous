@@ -6,8 +6,8 @@
 package kanipeli.peli;
 
 import java.util.Scanner;
-import kanipeli.domain.Hahmo;
-import kanipeli.domain.KehittyvaHahmo;
+import kanipeli.domain.Creature;
+import kanipeli.domain.PlayableCreature;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,15 +19,15 @@ import static org.junit.Assert.*;
  *
  * @author Sami
  */
-public class TaisteluTest {
-    private Hahmo hahmo;
-    private Taistelu taistelu;
+public class BattleTest {
+    private Creature hahmo;
+    private Battle taistelu;
     
-    public TaisteluTest() {
+    public BattleTest() {
         Scanner lukija = new Scanner(System.in);
-        this.hahmo = new Hahmo("Pikkuhirviö", 15, 3, 0);
-        KehittyvaHahmo sankari = new KehittyvaHahmo(0, 0, "Hilipati", 20, 5,  0);
-        this.taistelu = new Taistelu(sankari, hahmo, lukija);
+        this.hahmo = new Creature("Pikkuhirviö", 15, 3, 0);
+        PlayableCreature sankari = new PlayableCreature(0, 0, "Hilipati", 20, 5,  0);
+        this.taistelu = new Battle(sankari, hahmo, lukija);
     }
     
     @BeforeClass

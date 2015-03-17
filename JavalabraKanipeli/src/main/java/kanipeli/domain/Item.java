@@ -11,7 +11,7 @@ package kanipeli.domain;
  */
 public interface Item {
    
-    abstract void use(Hahmo hahmo);
+    abstract void use(Creature creature);
     abstract String getName();
     abstract int getQuantity();
     
