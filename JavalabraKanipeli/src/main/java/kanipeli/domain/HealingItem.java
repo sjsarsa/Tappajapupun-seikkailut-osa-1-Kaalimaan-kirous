@@ -9,43 +9,18 @@ package kanipeli.domain;
  *
  * @author Sami
  */
-public class HealingItem implements Item {
-    
-    private String name;
-    private int quantity;
-    private int quality;
+public class HealingItem extends Item implements Comparable<Item> {
 
     public HealingItem(String name, int quantity, int quality) {
-        this.name = name;
-        this.quantity = quantity;
-        this.quality = quality;
+        super(name, quantity, quality);
     }
 
     @Override
     public void use(Creature creature) {
-        creature.setCurrentHp(creature.getCurrentHp() + quality);
-        quantity--;
+        creature.setCurrentHp(creature.getCurrentHp() + super.getQuality());
+        super.decreaseQuantity(1);
     }
 
-    @Override
-    public String toString() {
-        return name + ": " + quantity;
-    }
+    
 
-    public String getName() {
-        return name;
-    }
-
-    public int getQuality() {
-        return quality;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-    
-    
-    
-    
-    
 }

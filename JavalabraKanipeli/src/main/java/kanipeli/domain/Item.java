@@ -9,10 +9,55 @@ package kanipeli.domain;
  *
  * @author Sami
  */
-public interface Item {
+public abstract class Item implements Comparable<Item>{
+    private String name;
+    private int quantity;
+    private int quality;
+    
+    public Item(String name, int quantity, int quality) {
+        this.name = name;
+        this.quantity = quantity;
+        this.quality = quality;
+    }
+    
+    abstract public void use(Creature creature);
+    @Override
+    public String toString() {
+        return name + ": " + quantity;
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    public int getQuantity() {
+        return quantity;
+    }
+    
    
-    abstract void use(Creature creature);
-    abstract String getName();
-    abstract int getQuantity();
+    public void increaseQuantity(int quantity) {
+        this.quantity += quantity;
+    }
+    
+    public void decreaseQuantity(int quantity) {
+        this.quantity -= quantity;
+    }
+
+    public int getQuality() {
+        return quality;
+    }
+
+    @Override
+    public int compareTo(Item t) {
+        return this.quality - t.getQuality(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public boolean equals(Item i) {
+        if (name.equals(i.getName()) && quality == i.getQuality()) {
+            return true;
+        }
+        return false;
+    }
+    
     
 }

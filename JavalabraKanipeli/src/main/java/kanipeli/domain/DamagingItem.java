@@ -9,39 +9,18 @@ package kanipeli.domain;
  *
  * @author sjsarsa
  */
-public class DamagingItem implements Item {
+public class DamagingItem extends Item implements  Comparable<Item> {
     
-    private String name;
-    private int quantity;
-    private int quality;
-
+    
     public DamagingItem(String name, int quantity, int quality) {
-        this.name = name;
-        this.quantity = quantity;
-        this.quality = quality;
+        super(name, quantity, quality);
     }
-
+    
     @Override
     public void use(Creature creature) {
-        creature.setCurrentHp(creature.getCurrentHp() - quality);
-        quantity--;
+        creature.takeDamage(super.getQuality());
+        super.decreaseQuantity(1); 
     }
 
-    @Override
-    public String toString() {
-        return name + ": " + quantity;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getQuality() {
-        return quality;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
     
 }

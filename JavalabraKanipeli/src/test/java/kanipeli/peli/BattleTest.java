@@ -20,14 +20,9 @@ import static org.junit.Assert.*;
  * @author Sami
  */
 public class BattleTest {
-    private Creature hahmo;
-    private Battle taistelu;
-    
+   
     public BattleTest() {
-        Scanner lukija = new Scanner(System.in);
-        this.hahmo = new Creature("Pikkuhirviö", 15, 3, 0);
-        PlayableCreature sankari = new PlayableCreature(0, 0, "Hilipati", 20, 5,  0);
-        this.taistelu = new Battle(sankari, hahmo, lukija);
+        
     }
     
     @BeforeClass
@@ -46,6 +41,15 @@ public class BattleTest {
     @After
     public void tearDown() {
     }
+    
+//    @Test
+//    public void attack() {
+//        Scanner scr = new Scanner("1\n");
+//        Creature enemy = new Creature("Pikkuhirviö", 15, 3, 0);
+//        PlayableCreature hero = new PlayableCreature(0, 0, "Hilipati", 20, 5,  0);
+//        Battle battle = new Battle(hero, enemy, scr);
+//        battle.run();
+//    }
     
 
     

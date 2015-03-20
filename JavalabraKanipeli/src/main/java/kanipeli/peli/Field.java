@@ -19,141 +19,124 @@ import kanipeli.domain.PlayableCreature;
  */
 public class Field {
 
-    private int leveys;
-    private int korkeus;
-    private PlayableCreature pelaaja;
-    private CreatureOnField paavihollinen;
+    private int width;
+    private int height;
+    private PlayableCreature player;
+    private List<Creature> randomEncounters;
+    private List<CreatureOnField> creaturesOnField;
+    private Scanner scr;
+    private boolean alive = true;
 
-    private List<CreatureOnField> kartallaOlevat;
-    private Scanner lukija;
-
-    public Field(int leveys, int korkeus, Scanner lukija) {
-        this.leveys = leveys;
-        this.korkeus = korkeus;
-        this.lukija = lukija;
-        this.pelaaja = new PlayableCreature(0, 0, "Hilipati", 20, 5, 0);
-        this.kartallaOlevat = new ArrayList();
-        this.paavihollinen = new CreatureOnField(leveys / 2, korkeus / 2, "Pedobear", 1000, 30, 0);
-        this.kartallaOlevat.add(paavihollinen);
+    public Field(int width, int height, PlayableCreature player, List<CreatureOnField> creaturesOnField, List<Creature> randomEncounters, Scanner scr) {
+        this.width = width;
+        this.height = height;
+        this.scr = scr;
+        this.player = player;
+        this.creaturesOnField = creaturesOnField;
+        this.randomEncounters = randomEncounters;
     }
 
     public void run() {
-
-        while (true) {
-            System.out.println(luoJaTulostaKartta());
+        while (alive) {
+            printField();
             System.out.println("");
-            kysyJaLueSyote();
+            moveOnField();
         }
     }
 
-    public boolean taistele(Creature vihollinen) {
-        System.out.println(vihollinen.getName() + "kävi kimppuusi!");
+    public void fight(Creature foe) {
+        System.out.println(foe.getName() + "kävi kimppuusi!");
         System.out.println("");
-        Battle taistelu = new Battle(pelaaja, vihollinen, lukija);
-        taistelu.run();
-        if (taistelu.getLoss()) {
+        Battle battle = new Battle(player, foe, scr);
+        battle.run();
+        if (battle.getLost()) {
             System.out.println("Hävisit pelin.");
-        } else if (taistelu.getEscaped()) {
+            alive = false;
+        } else if (battle.getEscaped()) {
             System.out.println("Lähdit pakoon senkin nössö.");
-            
+
         } else {
             System.out.println("Voitit!");
-            
         }
-        if (taistelu.getLoss()) {
-            return false;
-        }
-        if (!taistelu.getEscaped()) {
-            if (pelaaja.addExp(vihollinen.getExp())) {
-                levelUp();
-            }
-        }
-        return true;
     }
 
-    private String luoJaTulostaKartta() {
+    public void printField() {
         StringBuilder sb = new StringBuilder();
-        char[][] kartta = new char[leveys][korkeus];
+        char[][] field = new char[width][height];
 
-        for (int x = 0; x < leveys; x++) {
-            for (int y = 0; y < korkeus; y++) {
-                kartta[x][y] = '.';
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                field[x][y] = '.';
             }
         }
-        kartta[pelaaja.getX()][pelaaja.getY()] = '@';
-        for (CreatureOnField h : kartallaOlevat) {
-            kartta[h.getX()][h.getY()] = 'B';
+        field[player.getX()][player.getY()] = '@';
+        for (CreatureOnField m : creaturesOnField) {
+            if (m.getCurrentHp() > 0) {
+                field[m.getX()][m.getY()] = 'B';
+            }
         }
-        kartta[paavihollinen.getX()][paavihollinen.getY()] = 'B';
-        for (int y = 0; y < korkeus; y++) {
-            for (int x = 0; x < leveys; x++) {
-                sb.append(kartta[x][y]);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                sb.append(field[x][y]);
             }
             sb.append("\n");
         }
-        return sb.toString();
+        System.out.println(sb.toString());
     }
 
-    public void kysyJaLueSyote() {
+    public void moveOnField() {
         System.out.println("");
-        String syote = lukija.nextLine();
+        String input = scr.nextLine();
 
-        for (int i = 0; i < syote.length(); i++) {
-            if (syote.charAt(i) == 's') {
-                if (pelaaja.getY() < korkeus - 1) {
-                    pelaaja.moveDown();
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) == 's') {
+                if (player.getY() < height - 1) {
+                    player.moveDown();
                 }
-                onLiikuttu();
+                moved();
             }
-            if (syote.charAt(i) == 'a') {
-                if (pelaaja.getX() > 0) {
-                    pelaaja.moveLeft();
+            if (input.charAt(i) == 'a') {
+                if (player.getX() > 0) {
+                    player.moveLeft();
                 }
-                onLiikuttu();
+                moved();
             }
-            if (syote.charAt(i) == 'w') {
-                if (pelaaja.getY() > 0) {
-                    pelaaja.moveUp();
+            if (input.charAt(i) == 'w') {
+                if (player.getY() > 0) {
+                    player.moveUp();
                 }
-                onLiikuttu();
+                moved();
             }
-            if (syote.charAt(i) == 'd') {
-                if (pelaaja.getX() < leveys - 1) {
-                    pelaaja.moveRight();
+            if (input.charAt(i) == 'd') {
+                if (player.getX() < width - 1) {
+                    player.moveRight();
                 }
-                onLiikuttu();
+                moved();
             }
 
         }
     }
 
-    public void onkoSamaRuutu(List<CreatureOnField> kartallaOlevat) {
-        for (CreatureOnField h : kartallaOlevat) {
-            if (pelaaja.getX() == h.getX() && pelaaja.getY() == h.getY()) {
-                taistele(h);
+    public boolean checkSpot() {
+        for (CreatureOnField h : creaturesOnField) {
+            if (player.getX() == h.getX() && player.getY() == h.getY()) {
+                if (h.getCurrentHp() > 0) {
+                    fight(h);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void moved() {
+        if (checkSpot()); else {
+            Random rm = new Random();
+            if (rm.nextInt(3) == 1) {
+                Creature h = randomEncounters.get(rm.nextInt(randomEncounters.size()));
+                fight(new Creature(h.getName(), h.getMaxHp(), h.getDamage(), h.getExp()));
             }
         }
     }
 
-    private void onLiikuttu() {
-        onkoSamaRuutu(kartallaOlevat);
-        Random rm = new Random();
-        Creature perusvihollinen = new Creature("Pikkuhirviö", 15, 3, 1);
-        if (rm.nextInt(3) == 1) {
-            taistele(perusvihollinen);
-        }
-
-    }
-
-    private void levelUp() {
-        System.out.println("Level up!");
-        System.out.println("Haluatko kehittää kestävyyttä (= 1) vai tuhovoimaa (= 2)?");
-        System.out.println("");
-        String komento = lukija.nextLine();
-        if (komento.equals("1")) {
-            pelaaja.levelUpHp();
-        } else if (komento.equals("2")) {
-            pelaaja.levelUpDamage();
-        }
-    }
 }

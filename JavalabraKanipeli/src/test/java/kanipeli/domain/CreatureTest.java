@@ -18,10 +18,10 @@ import static org.junit.Assert.*;
  */
 public class CreatureTest {
     
-    private Creature hahmo;
+    private Creature critter;
     
     public CreatureTest() {
-        hahmo = new Creature("Einari", 10, 1, 1);
+        critter = new Creature("Einari", 10, 1, 1);
     }
     
     @BeforeClass
@@ -42,50 +42,52 @@ public class CreatureTest {
     }
     
     @Test
-    public void getNameToimii() {
-        assertEquals(hahmo.getName(), "Einari");
+    public void getName() {
+        assertEquals(critter.getName(), "Einari");
     }
     
     @Test
-    public void getMaxHpToimii() {
-        assertEquals(hahmo.getMaxHp(), 10);
+    public void getMaxHp() {
+        assertEquals(critter.getMaxHp(), 10);
     }
     
     @Test
-    public void getDamageToimii() {
-        assertEquals(hahmo.getDamage(), 1);
+    public void getDamage() {
+        assertEquals(critter.getDamage(), 1);
     }
     
     @Test
-    public void getExpToimii() {
-        assertEquals(hahmo.getExp(), 1);
+    public void getExp() {
+        assertEquals(critter.getExp(), 1);
     }
     
     @Test
-    public void setDamageToimii() {
-        hahmo.setDamage(3);
-        assertEquals(hahmo.getDamage(), 3);
+    public void setDamage() {
+        critter.setDamage(3);
+        assertEquals(critter.getDamage(), 3);
     }
     
     @Test
-    public void setCurrentHpToimii() {
-        hahmo.setCurrentHp(4);
-        assertEquals(hahmo.getCurrentHp(), 4);
-        hahmo.setCurrentHp(1337);
-        assertEquals(hahmo.getCurrentHp(), 10);
+    public void setCurrentHp() {
+        critter.setCurrentHp(4);
+        assertEquals(critter.getCurrentHp(), 4);
+        critter.setCurrentHp(1337);
+        assertEquals(critter.getCurrentHp(), 10);
     }
     
     @Test
     public void setMaxHpToimii() {
-        hahmo.setMaxHp(20);
-        assertEquals(hahmo.getMaxHp(), 20);
+        critter.setMaxHp(20);
+        assertEquals(critter.getMaxHp(), 20);
     }
     
     @Test
-    public void ottaaDamagea() {
-        hahmo.setMaxHp(10);
-        hahmo.takeDamage(3);  
-        assertEquals(hahmo.getCurrentHp(), 7);
+    public void takesDamage() {
+        critter.setMaxHp(10);
+        critter.takeDamage(3);  
+        assertEquals(critter.getCurrentHp(), 7);
+        critter.takeDamage(100);
+        assertEquals(critter.getCurrentHp(), 0);
     }
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:

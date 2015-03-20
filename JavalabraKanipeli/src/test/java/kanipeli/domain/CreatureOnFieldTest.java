@@ -37,14 +37,14 @@ public class CreatureOnFieldTest {
     public void tearDown() {
     }
     @Test
-    public void getteritToimii() {
+    public void getters() {
         CreatureOnField joppe = new CreatureOnField(10, 10, "Joppe", 30, 10, 0);
         assertEquals(joppe.getX(), 10);
         assertEquals(joppe.getY(), 10);
     }
     
     @Test
-    public void liikualasToimii() {
+    public void moveDown() {
         CreatureOnField joppe = new CreatureOnField(10, 10, "Joppe", 30, 10, 0);
         joppe.moveDown();
         joppe.moveDown();
@@ -53,7 +53,7 @@ public class CreatureOnFieldTest {
     }
     
     @Test
-    public void liikuylosToimii() {
+    public void moveUp() {
         CreatureOnField joppe = new CreatureOnField(10, 10, "Joppe", 30, 10, 0);
         joppe.moveUp();
         assertEquals(joppe.getX(), 10);
@@ -61,7 +61,7 @@ public class CreatureOnFieldTest {
     }
     
     @Test
-    public void liikuVasenToimii() {
+    public void moveLeft() {
         CreatureOnField joppe = new CreatureOnField(10, 10, "Joppe", 30, 10, 0);
         joppe.moveLeft();
         assertEquals(joppe.getX(), 9);
@@ -69,7 +69,7 @@ public class CreatureOnFieldTest {
     }
     
     @Test
-    public void LiikuOikeaToimii() {
+    public void moveRight() {
         CreatureOnField joppe = new CreatureOnField(10, 10, "Joppe", 30, 10, 0);
         joppe.moveRight();
         assertEquals(joppe.getX(), 11);
