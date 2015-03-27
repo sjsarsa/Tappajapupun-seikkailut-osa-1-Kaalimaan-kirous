@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -21,35 +20,4 @@ public class HealingItem extends Item implements Comparable<Item> {
         creature.setCurrentHp(creature.getCurrentHp() + super.getQuality());
         super.decreaseQuantity(1);
     }
-
-    
-
 }
-=======
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package kanipeli.domain;
-
-/**
- *
- * @author Sami
- */
-public class HealingItem extends Item implements Comparable<Item> {
-
-    public HealingItem(String name, int quantity, int quality) {
-        super(name, quantity, quality);
-    }
-
-    @Override
-    public void use(Creature creature) {
-        creature.setCurrentHp(creature.getCurrentHp() + super.getQuality());
-        super.decreaseQuantity(1);
-    }
-
-    
-
-}
->>>>>>> 271c09424254a94913a0ab1321bfb3ae66a15532
