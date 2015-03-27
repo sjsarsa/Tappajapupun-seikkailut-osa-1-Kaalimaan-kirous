@@ -5,6 +5,12 @@
  */
 package kanipeli.peli;
 
+import java.util.ArrayList;
+import java.util.List;
+import kanipeli.domain.Creature;
+import kanipeli.domain.CreatureOnField;
+import kanipeli.domain.PlayableCreature;
+import kanipeli.ui.level.Level;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,6 +23,14 @@ import static org.junit.Assert.*;
  * @author sjsarsa
  */
 public class FieldTest {
+    
+    private Field field;
+    private PlayableCreature player;
+    private CreatureOnField boss;
+    private Creature foe;
+    private List<Creature> randomEncounters;
+    private List<CreatureOnField> creaturesOnField;
+    boolean[][] impassables;
     
     public FieldTest() {
     }
@@ -31,12 +45,51 @@ public class FieldTest {
     
     @Before
     public void setUp() {
+        foe = new Creature("jeba", 0, 0, 0);
+        player = new PlayableCreature(impassables, 1, 1, "Seppo", 10, 3, 0);
+        boss = new CreatureOnField(impassables, 1, 1, "Vintiö", 10, 3, 2);
+        this.creaturesOnField = new ArrayList<>();
+        creaturesOnField.add(boss);
+        this.randomEncounters = new ArrayList<>();
+        randomEncounters.add(foe);
+        field = new Field(16, 16, player, creaturesOnField, randomEncounters);
+        Level level = new Level(field);
+        level.loadMap(0, 0, 0, 0);
+        impassables = level.getImpassables();
+        field.getPlayer().setImpassables(impassables);
     }
     
     @After
     public void tearDown() {
     }
     
+    @Test
+    public void getters() {
+        assertEquals(field.getCreaturesOnField(), creaturesOnField);
+        assertEquals(field.getHeight(), 16);
+        assertArrayEquals(field.getImpassables(), impassables);
+        assertEquals(field.getWidth(), 16);
+        assertEquals(field.getPlayer(), player);
+    }
+    
+    @Test
+    public void checkSpot() {
+        assertEquals(field.checkSpot(), boss);
+        field.getPlayer().moveRight(9);
+        assertEquals(field.checkSpot(), null);
+        field.getPlayer().moveLeft();
+        boss.takeDamage(1337);
+        assertEquals(field.checkSpot(), null);
+    }
+    
+    @Test
+    public void createRandomEncounter() {
+        Creature re = field.createRandomEncounter();
+        assertEquals(re.getName(), foe.getName());
+        assertEquals(re.getDamage(), foe.getDamage());
+        assertEquals(re.getMaxHp(), foe.getMaxHp());
+    }
+
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //

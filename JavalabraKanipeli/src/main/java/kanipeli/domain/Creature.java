@@ -38,6 +38,7 @@ public class Creature {
 
     public void takeDamage(int vahinko) {
         this.currentHp -= vahinko;
+        if (currentHp < 0) currentHp = 0;
     }
 
     public int getCurrentHp() {

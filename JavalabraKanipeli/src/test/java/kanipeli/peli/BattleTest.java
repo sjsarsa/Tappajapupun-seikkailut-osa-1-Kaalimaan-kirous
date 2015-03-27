@@ -20,14 +20,12 @@ import static org.junit.Assert.*;
  * @author Sami
  */
 public class BattleTest {
-    private Creature hahmo;
-    private Battle taistelu;
+    private PlayableCreature player;
+    private Creature foe;
+    private Battle battle;
     
     public BattleTest() {
-        Scanner lukija = new Scanner(System.in);
-        this.hahmo = new Creature("Pikkuhirviö", 15, 3, 0);
-        PlayableCreature sankari = new PlayableCreature(0, 0, "Hilipati", 20, 5,  0);
-        this.taistelu = new Battle(sankari, hahmo, lukija);
+        
     }
     
     @BeforeClass
@@ -41,11 +39,51 @@ public class BattleTest {
     @Before
     public void setUp() {
        
+       player = new PlayableCreature(null, 0, 0, "Seppo", 10, 3, 0);
+       foe = new Creature("Vintiö", 10, 3, 2);
+       battle = new Battle(null, null, player, foe);
     }
     
     @After
     public void tearDown() {
     }
+    
+    @Test
+    public void getters() {
+        assertEquals(battle.getEscaped(), false);
+        assertEquals(battle.getFoe(), foe);
+        assertEquals(battle.getLost(), false);
+        assertEquals(battle.getPlayer(), player);
+    }
+    @Test
+    public void attack() {
+       int damage = battle.attack(player, foe);
+       assertEquals(foe.getCurrentHp(), 10 - damage);
+       assertEquals(player.getCurrentHp(), 10);
+       damage = battle.attack(foe, player);
+       assertEquals(player.getCurrentHp(), 10 - damage);
+    }
+    
+    @Test
+    public void alive() {
+        assertEquals(battle.alive(foe), true);
+        foe.takeDamage(10);
+        assertEquals(battle.alive(foe), false);
+    }
+    
+    @Test
+    public void checkLevelUp() {
+        battle.checkLevelUp();
+        assertEquals(player.getLvl(), 1);
+        battle.checkLevelUp();
+        battle.checkLevelUp();
+        assertEquals(player.getLvl(), 2);
+        battle = new Battle(null, null, player, new Creature("Napero", 0, 0, 30));
+        battle.checkLevelUp();
+        assertEquals(player.getLvl(), 4);
+    }
+    
+  
     
 
     

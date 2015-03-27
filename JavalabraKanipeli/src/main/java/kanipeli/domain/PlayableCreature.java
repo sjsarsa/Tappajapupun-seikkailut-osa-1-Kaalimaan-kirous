@@ -4,50 +4,81 @@
  * and open the template in the editor.
  */
 package kanipeli.domain;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import kanipeli.peli.Field;
+
 /**
  *
  * @author Sami
  */
 public class PlayableCreature extends CreatureOnField {
+
     private int lvl = 1;
     private int exp = 0;
     private int requiredExp = 5;
     private int munny = 0;
     private ArrayList<Item> items = new ArrayList<Item>();
+    
+    public PlayableCreature(boolean[][] impassables, int x, int y, String Nimi, int maxHp, int damage, int exp) {
+        super(impassables, x, y, Nimi, maxHp, damage, exp);
+    }
 
-    public PlayableCreature(int x, int y, String Nimi, int maxHp, int damage, int exp) {
-        super(x, y, Nimi, maxHp, damage, exp);
+    public void addItem(Item item) {
+        if (!items.contains(item)) {
+            items.add(item);
+        } else {
+            for (Item i : items) {
+                if (i.equals(item)) {
+                    i.increaseQuantity(item.getQuantity());
+                }
+            }
+        }
+        Collections.sort(items);
+    }
+
+    public int getLvl() {
+        return lvl;
     }
 
     public boolean addExp(int i) {
         exp += i;
-        if (exp >= requiredExp) {
+        if (exp >= requiredExp) {   
+            exp -= requiredExp;
+            requiredExp = (int) (requiredExp * 1.75);         
             return true;
         }
-        requiredExp += requiredExp * 1.75;
         return false;
     }
     
-    public void levelUpDamage() {        
-        super.setDamage(super.getDamage() + (5 * lvl) / 3);       
+    public void levelUp() {
+        super.setMaxHp((int) (super.getMaxHp() * 1.2));
+        super.setDamage((int) (super.getDamage() * 1.2));
+        super.setCurrentHp(super.getMaxHp());
         lvl++;
-        System.out.println("Tuhovoimasi kasvoi!");
+    }
+
+    public void levelUpDamage() {        
+        super.setDamage(super.getDamage() + (30 * lvl) / 3);        
     }
     
-    public void levelUpHp() {
-        super.setMaxHp(super.getMaxHp() + (15 * lvl) / 3);
-        lvl++;
-        System.out.println("Kestävyytesi kasvoi!");
+    public void levelUpHp() {        
+        super.setMaxHp(super.getMaxHp() + (75 * lvl) / 3);
     }
     
     public ArrayList<Item> getItems() {
         return items;
     }
-
+    
     public int getMunny() {
         return munny;
     }
-     
+
+    public int getRequiredExp() {
+        return requiredExp;
+    }
+    
+    
     
 }

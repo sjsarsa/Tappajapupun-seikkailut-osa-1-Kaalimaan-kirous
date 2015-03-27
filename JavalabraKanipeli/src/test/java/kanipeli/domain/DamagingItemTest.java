@@ -14,11 +14,11 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author sjsarsa
+ * @author Sami
  */
-public class HealingItemTest {
+public class DamagingItemTest {
     
-    public HealingItemTest() {
+    public DamagingItemTest() {
     }
     
     @BeforeClass
@@ -39,26 +39,25 @@ public class HealingItemTest {
     
     @Test
     public void toStringToimii() {
-        Item potion = new HealingItem("potion", 1, 10);
-        assertEquals(potion.toString(), "potion: 1");
+        Item nuke = new DamagingItem("nuke", 1, 10000);
+        assertEquals(nuke.toString(), "nuke: 1");
     }
     
     @Test
     public void getters() {
-        Item potion = new HealingItem("potion", 1, 10);
-        assertEquals(potion.getName(), "potion");
-        assertEquals(potion.getQuantity(), 1);
+        Item nuke = new DamagingItem("nuke", 1, 10000);
+        assertEquals(nuke.getName(), "nuke");
+        assertEquals(nuke.getQuantity(), 1);
     }
     
     
     @Test
     public void use() {
-        Item potion = new HealingItem("potion", 1, 10);
+        Item nuke = new DamagingItem("nuke", 1, 10000);
         Creature heikki = new Creature("Heikki", 30, 1, 1);
-        heikki.takeDamage(13);
-        potion.use(heikki);
-        assertEquals(heikki.getCurrentHp(), 27);
-        assertEquals(potion.getQuantity(), 0);
+        nuke.use(heikki);
+        assertEquals(heikki.getCurrentHp(), 0);
+        assertEquals(nuke.getQuantity(), 0);
     }
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:

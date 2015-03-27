@@ -5,13 +5,13 @@
  */
 package kanipeli.peli;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 import kanipeli.domain.Creature;
 import kanipeli.domain.CreatureOnField;
 import kanipeli.domain.PlayableCreature;
+import kanipeli.ui.level.Level;
+
 
 /**
  *
@@ -19,141 +19,72 @@ import kanipeli.domain.PlayableCreature;
  */
 public class Field {
 
-    private int leveys;
-    private int korkeus;
-    private PlayableCreature pelaaja;
-    private CreatureOnField paavihollinen;
+    private int width;
+    private int height;
+    private PlayableCreature player;
+    private List<Creature> randomEncounters;
+    private List<CreatureOnField> creaturesOnField;
+    private boolean[][] impassables;
+    public Level level;
 
-    private List<CreatureOnField> kartallaOlevat;
-    private Scanner lukija;
-
-    public Field(int leveys, int korkeus, Scanner lukija) {
-        this.leveys = leveys;
-        this.korkeus = korkeus;
-        this.lukija = lukija;
-        this.pelaaja = new PlayableCreature(0, 0, "Hilipati", 20, 5, 0);
-        this.kartallaOlevat = new ArrayList();
-        this.paavihollinen = new CreatureOnField(leveys / 2, korkeus / 2, "Pedobear", 1000, 30, 0);
-        this.kartallaOlevat.add(paavihollinen);
+    public Field(int width, int height, PlayableCreature player, List<CreatureOnField> creaturesOnField, List<Creature> randomEncounters) {
+        this.width = width;
+        this.height = height;
+        this.player = player;
+        this.creaturesOnField = creaturesOnField;
+        this.randomEncounters = randomEncounters;
+        this.level = new Level(this);
+        level.loadMap(0, 0, 0, 0);
+        this.impassables = level.getImpassables();
+        player.setImpassables(impassables);
     }
 
-    public void run() {
-
-        while (true) {
-            System.out.println(luoJaTulostaKartta());
-            System.out.println("");
-            kysyJaLueSyote();
-        }
+    public List<CreatureOnField> getCreaturesOnField() {
+        return creaturesOnField;
     }
 
-    public boolean taistele(Creature vihollinen) {
-        System.out.println(vihollinen.getName() + "kävi kimppuusi!");
-        System.out.println("");
-        Battle taistelu = new Battle(pelaaja, vihollinen, lukija);
-        taistelu.run();
-        if (taistelu.getLoss()) {
-            System.out.println("Hävisit pelin.");
-        } else if (taistelu.getEscaped()) {
-            System.out.println("Lähdit pakoon senkin nössö.");
-            
-        } else {
-            System.out.println("Voitit!");
-            
+    public PlayableCreature getPlayer() {
+        return player;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public boolean[][] getImpassables() {
+        return impassables;
+    }
+
+    public CreatureOnField checkSpot() {
+        for (CreatureOnField h : creaturesOnField) {
+            if (player.getX() == h.getX() && player.getY() == h.getY()) {
+                if (h.getCurrentHp() > 0) {
+                    return h;
+                }
+            }
         }
-        if (taistelu.getLoss()) {
+        return null;
+    }
+
+    public boolean randomEncounter() {
+        if (checkSpot() != null) {
             return false;
-        }
-        if (!taistelu.getEscaped()) {
-            if (pelaaja.addExp(vihollinen.getExp())) {
-                levelUp();
+        } else {
+            Random rm = new Random();
+            if (rm.nextInt(15) == 1) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
-    private String luoJaTulostaKartta() {
-        StringBuilder sb = new StringBuilder();
-        char[][] kartta = new char[leveys][korkeus];
-
-        for (int x = 0; x < leveys; x++) {
-            for (int y = 0; y < korkeus; y++) {
-                kartta[x][y] = '.';
-            }
-        }
-        kartta[pelaaja.getX()][pelaaja.getY()] = '@';
-        for (CreatureOnField h : kartallaOlevat) {
-            kartta[h.getX()][h.getY()] = 'B';
-        }
-        kartta[paavihollinen.getX()][paavihollinen.getY()] = 'B';
-        for (int y = 0; y < korkeus; y++) {
-            for (int x = 0; x < leveys; x++) {
-                sb.append(kartta[x][y]);
-            }
-            sb.append("\n");
-        }
-        return sb.toString();
-    }
-
-    public void kysyJaLueSyote() {
-        System.out.println("");
-        String syote = lukija.nextLine();
-
-        for (int i = 0; i < syote.length(); i++) {
-            if (syote.charAt(i) == 's') {
-                if (pelaaja.getY() < korkeus - 1) {
-                    pelaaja.moveDown();
-                }
-                onLiikuttu();
-            }
-            if (syote.charAt(i) == 'a') {
-                if (pelaaja.getX() > 0) {
-                    pelaaja.moveLeft();
-                }
-                onLiikuttu();
-            }
-            if (syote.charAt(i) == 'w') {
-                if (pelaaja.getY() > 0) {
-                    pelaaja.moveUp();
-                }
-                onLiikuttu();
-            }
-            if (syote.charAt(i) == 'd') {
-                if (pelaaja.getX() < leveys - 1) {
-                    pelaaja.moveRight();
-                }
-                onLiikuttu();
-            }
-
-        }
-    }
-
-    public void onkoSamaRuutu(List<CreatureOnField> kartallaOlevat) {
-        for (CreatureOnField h : kartallaOlevat) {
-            if (pelaaja.getX() == h.getX() && pelaaja.getY() == h.getY()) {
-                taistele(h);
-            }
-        }
-    }
-
-    private void onLiikuttu() {
-        onkoSamaRuutu(kartallaOlevat);
+    public Creature createRandomEncounter() {
         Random rm = new Random();
-        Creature perusvihollinen = new Creature("Pikkuhirviö", 15, 3, 1);
-        if (rm.nextInt(3) == 1) {
-            taistele(perusvihollinen);
-        }
-
-    }
-
-    private void levelUp() {
-        System.out.println("Level up!");
-        System.out.println("Haluatko kehittää kestävyyttä (= 1) vai tuhovoimaa (= 2)?");
-        System.out.println("");
-        String komento = lukija.nextLine();
-        if (komento.equals("1")) {
-            pelaaja.levelUpHp();
-        } else if (komento.equals("2")) {
-            pelaaja.levelUpDamage();
-        }
+        Creature re = randomEncounters.get(rm.nextInt(randomEncounters.size()));
+        return new Creature(re.getName(), re.getMaxHp(), re.getDamage(), re.getExp());
     }
 }
