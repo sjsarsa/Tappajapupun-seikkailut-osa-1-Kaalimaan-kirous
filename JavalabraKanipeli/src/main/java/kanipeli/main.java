@@ -6,12 +6,15 @@
  */
 package kanipeli;
 
-import java.util.Scanner;
+import java.awt.Canvas;
 import java.util.ArrayList;
 import kanipeli.domain.*;
 import kanipeli.peli.Field;
 import kanipeli.peli.Game;
-import kanipeli.ui.UI;
+import kanipeli.ui.GamePanel;
+import kanipeli.ui.GameStateManager;
+import kanipeli.ui.MenuState;
+import kanipeli.ui.Screen;
 
 /**
  *
@@ -19,21 +22,18 @@ import kanipeli.ui.UI;
  */
 public class main {
 
-    public static void main(String[] args) {
-        PlayableCreature player = new PlayableCreature(null, 1, 1, "Hilipati", 200, 30, 0);
-        ArrayList<CreatureOnField> fieldDwellers = new ArrayList();
-        CreatureOnField boss = new CreatureOnField(null, 6, 6, "Kenkku", 3000, 500, 100);
-        fieldDwellers.add(boss);
-        ArrayList<Creature> randomEncounters = new ArrayList();
-        Creature randomEncounter = new Creature("Pikkuhirviö", 75, 20, 2);
-        Creature randomEncounter2 = new Creature("Pikkuhirviö", 100, 15, 3);
-        randomEncounters.add(randomEncounter);
-        randomEncounters.add(randomEncounter2);
-        Field field = new Field(16, 16, player, fieldDwellers, randomEncounters);
-        UI ui = new UI(field);
-        ArrayList<Field> fields = new ArrayList<Field>();
-        fields.add(field);
-        Game game = new Game(fields);
-        game.run();
+    public static void main(String[] args) {      
+        int width = 256, height = 256, scale = 3;
+        
+        Canvas canvas = new Canvas();
+        Screen screen = new Screen(width, height);
+        
+        GameStateManager gsm = new GameStateManager();
+        GamePanel frame = new  GamePanel(width, height, scale, canvas, gsm);
+        
+        MenuState ms = new MenuState(canvas, screen, gsm);
+        gsm.addState(0, ms);
+        gsm.setState(0);
+        gsm.run();
     }
 }

@@ -8,7 +8,7 @@ package kanipeli.ui.sprites;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import javax.imageio.ImageIO;
-import kanipeli.ui.UI;
+import kanipeli.ui.GamePanel;
 
 /**
  *
@@ -30,7 +30,7 @@ public class SpriteSheetLoader {
     
     public static Sprite[][] cutFiles(String fileName, int w, int h, int xOffs, int yOffs) {
         try {
-            BufferedImage image = ImageIO.read(UI.class.getResource(fileName));
+            BufferedImage image = ImageIO.read(GamePanel.class.getResource(fileName));
             
             int xTiles = (image.getWidth() - xOffs) / w;
             int yTiles = (image.getHeight() - yOffs) / h;

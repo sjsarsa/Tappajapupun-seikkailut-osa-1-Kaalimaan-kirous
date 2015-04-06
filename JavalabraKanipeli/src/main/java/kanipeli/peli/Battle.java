@@ -8,8 +8,6 @@ package kanipeli.peli;
 
 import java.util.Scanner;
 import kanipeli.domain.*;
-import kanipeli.ui.InputHandler;
-import kanipeli.ui.UI;
 
 /**
  *
@@ -19,51 +17,14 @@ public class Battle {
 
     private PlayableCreature player;
     private Creature foe;
-    private boolean escaped;
-    private boolean lost;
-    private UI ui;
-    private InputHandler input;
+    public boolean escaped;
+    public boolean lost;
 
-    public Battle(UI ui, InputHandler input, PlayableCreature player, Creature enemy) {
+    public Battle(PlayableCreature player, Creature enemy) {
         this.player = player;
         this.foe = enemy;
         this.escaped = false;
         this.lost = false;
-        this.ui = ui;
-        this.input = input;
-    }
-
-    public void fight() {
-        while (!escaped) {
-            ui.renderBattle(this);
-            if (input.actionSelected) {
-                if (playerTurn()) break;
-                if (enemyTurn()) break;
-            }
-        }
-        checkLevelUp();
-        
-    }
-
-    public boolean playerTurn() {
-        selectAction();
-        input.actionSelected = false;
-        if (!this.alive(foe)) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean enemyTurn() {
-        int damage = attack(foe, player); //enemy turn
-        for (int i = 0; i < 50; i++) {
-            ui.renderBattleEvent(this, damage, 2);
-        }
-        if (!alive(player)) {
-            lost = true;
-            return true;
-        }
-        return false;
     }
 
     public void checkLevelUp() {
@@ -72,19 +33,6 @@ public class Battle {
             while (player.addExp(0)) {
                 levelUp();
             }
-        }
-    }
-
-    public void selectAction() {
-        if (ui.currentChoice == 0) {
-            int damage = this.attack(player, this.getFoe());
-            for (int i = 0; i < 50; i++) {
-                ui.renderBattleEvent(this, damage, 0);
-            }
-        }
-        if (ui.currentChoice == 1) ;
-        if (ui.currentChoice == 2) {
-            escaped = true;
         }
     }
 

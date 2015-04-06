@@ -59,26 +59,19 @@ public class Level {
         return impassables;
     }
     
-    public void renderBattle(int xScroll, int yScroll, Screen screen) {
-        
-        int xo = xScroll >> 4;
-        int yo = yScroll >> 4;
+    public void renderBattle(Screen screen) {
 
         int w = (screen.w * 15) >> 4;
         int h = (screen.h * 15) >> 4;
         
-//        screen.setOffSets(xScroll, yScroll);
-        for (int y = yo; y <= h + yo; y++) {
-            for (int x = xo; x <= w + xo; x++) {
+        for (int y = 0; y <= h; y++) {
+            for (int x = 0; x <= w; x++) {
                 Tile.tiles[6].render(x, y, screen);
             }
         }
-        
         Tile.tiles[4].render(0, 1, screen); //playerBattle
-        Tile.tiles[5].render(2, 1, screen); //critterBattle
+        Tile.tiles[5].render(2, 1, screen); //critterBattle     
         
-        
-//        screen.setOffSets(0, 0);
     }
     
  
