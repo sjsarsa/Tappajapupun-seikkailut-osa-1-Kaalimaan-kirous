@@ -42,6 +42,7 @@ public class Battle {
             }
         }
         checkLevelUp();
+        
     }
 
     public boolean playerTurn() {
