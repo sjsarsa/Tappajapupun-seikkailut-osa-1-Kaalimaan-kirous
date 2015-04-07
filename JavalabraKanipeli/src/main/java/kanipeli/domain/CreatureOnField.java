@@ -17,12 +17,18 @@ public class CreatureOnField extends Creature {
     private int y;
     private boolean[][] impassables;
     public boolean moved = false;
+    private int fieldTile;
 
-    public CreatureOnField(boolean[][] impassables, int x, int y, String name, int maxHp, int damage, int exp) {
-        super(name, maxHp, damage, exp);
+    public CreatureOnField(int fieldTile, int battleTile, boolean[][] impassables, int x, int y, String name, int maxHp, int damage, int exp) {
+        super(battleTile, name, maxHp, damage, exp);
         this.x = x;
         this.y = y;
         this.impassables = impassables;
+        this.fieldTile = fieldTile;
+    }
+
+    public int getFieldTile() {
+        return fieldTile;
     }
 
     public int getX() {
@@ -31,6 +37,14 @@ public class CreatureOnField extends Creature {
 
     public int getY() {
         return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public void moveDown(int maxY) {

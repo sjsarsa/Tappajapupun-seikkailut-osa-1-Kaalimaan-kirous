@@ -45,9 +45,9 @@ public class FieldTest {
     
     @Before
     public void setUp() {
-        foe = new Creature("jeba", 0, 0, 0);
-        player = new PlayableCreature(impassables, 1, 1, "Seppo", 10, 3, 0);
-        boss = new CreatureOnField(impassables, 1, 1, "Vintiö", 10, 3, 2);
+        foe = new Creature(5, "jeba", 0, 0, 0);
+        player = new PlayableCreature(2, 4, impassables, 1, 1, "Seppo", 10, 3, 0);
+        boss = new CreatureOnField(3, 5, impassables, 1, 1, "Vintiö", 10, 3, 2);
         this.creaturesOnField = new ArrayList<>();
         creaturesOnField.add(boss);
         this.randomEncounters = new ArrayList<>();

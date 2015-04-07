@@ -55,7 +55,7 @@ public class DamagingItemTest {
     @Test
     public void use() {
         Item nuke = new DamagingItem("nuke", 1, 10000);
-        Creature heikki = new Creature("Heikki", 30, 1, 1);
+        Creature heikki = new Creature(5, "Heikki", 30, 1, 1);
         nuke.use(heikki);
         assertEquals(heikki.getCurrentHp(), 0);
         assertEquals(nuke.getQuantity(), 0);

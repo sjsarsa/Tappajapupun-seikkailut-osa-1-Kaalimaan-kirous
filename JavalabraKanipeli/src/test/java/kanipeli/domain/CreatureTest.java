@@ -22,7 +22,7 @@ public class CreatureTest {
     private Creature critter;
     
     public CreatureTest() {
-        critter = new Creature("Einari", 10, 1, 1);
+        critter = new Creature(5, "Einari", 10, 1, 1);
     }
     
     @BeforeClass
@@ -40,6 +40,11 @@ public class CreatureTest {
     
     @After
     public void tearDown() {
+    }
+    
+    @Test
+    public void getBattleTile() {
+        assertEquals(critter.getBattleTile(), 5);
     }
     
     @Test

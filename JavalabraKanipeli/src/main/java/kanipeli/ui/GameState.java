@@ -11,7 +11,6 @@ package kanipeli.ui;
  */
 public interface GameState {
     
-    public abstract void render();
     public abstract void run();
     public abstract void keyPressed(int k);
 }

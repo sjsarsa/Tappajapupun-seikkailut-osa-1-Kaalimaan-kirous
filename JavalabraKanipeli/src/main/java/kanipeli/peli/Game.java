@@ -18,15 +18,15 @@ public class Game {
     private Field currentField;
 
     public Game() {
-        PlayableCreature player = new PlayableCreature(null, 1, 1, "Hilipati", 200, 30, 0);
+        PlayableCreature player = new PlayableCreature(2, 4, null, 1, 1, "Hilipati", 200, 30, 0);
         
         ArrayList<CreatureOnField> fieldDwellers = new ArrayList();
-        CreatureOnField boss = new CreatureOnField(null, 6, 6, "Kenkku", 3000, 500, 100);
+        CreatureOnField boss = new CreatureOnField(3, 5, null, 6, 6, "Kenkku", 3000, 500, 100);
         fieldDwellers.add(boss);
         
         ArrayList<Creature> randomEncounters = new ArrayList();
-        Creature randomEncounter = new Creature("Pikkuhirviö", 75, 20, 2);
-        Creature randomEncounter2 = new Creature("Pikkuhirviö", 100, 15, 3);
+        Creature randomEncounter = new Creature(5, "Pikkuhirviö", 75, 20, 2);
+        Creature randomEncounter2 = new Creature(5, "Pikkuhirviö", 100, 15, 3);
         randomEncounters.add(randomEncounter);
         randomEncounters.add(randomEncounter2);
         

@@ -50,7 +50,7 @@ public class FieldState implements GameState {
         checkSpot();
     }
 
-    public void render() {
+    private void render() {
         BufferStrategy bs = canvas.getBufferStrategy();
         if (bs == null) {
             canvas.createBufferStrategy(3);
@@ -101,14 +101,14 @@ public class FieldState implements GameState {
         }
     }
 
-    public void checkSpot() {
+    private void checkSpot() {
         CreatureOnField cof = field.checkSpot();
         if (cof != null) {
             fight(cof);
         }
     }
 
-    public void checkRandomEncounter() {
+    private void checkRandomEncounter() {
         if (field.getPlayer().moved && field.randomEncounter()) {
             Creature foe = field.createRandomEncounter();
             fight(foe);
@@ -116,7 +116,7 @@ public class FieldState implements GameState {
         field.getPlayer().moved = false;
     }
 
-    public void fight(Creature foe) {
+    private void fight(Creature foe) {
         Battle battle = new Battle(field.getPlayer(), foe);
         BattleState bs = new BattleState(canvas, screen, battle, gsm, image);
         gsm.addState(2, bs);

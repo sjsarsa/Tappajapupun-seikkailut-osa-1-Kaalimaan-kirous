@@ -22,12 +22,6 @@ public class GameStateManager {
     public static final int FIELDSTATE = 1;
     public static final int BATTLESTATE = 2;
 
-    public void run() {
-        while (!stop) {
-            gameStates[currentState].run();
-        }
-    }
-
     public void addState(int index, GameState state) {
         gameStates[index] = state;
     }
@@ -35,15 +29,19 @@ public class GameStateManager {
     public void setState(int index) {
         previousState = currentState;
         currentState = index;
+        for (int i = 0; i < 30; i++) gameStates[currentState].run();
     }
 
-    public void runState(int state) {
-        currentState = state;
-        gameStates[state].run();
+    public void runState(int index) {
+        previousState = currentState;
+        currentState = index;
+        for (int i = 0; i < 30; i++) gameStates[currentState].run();
     }
 
     public void keyPressed(int k) {
+        for (int i = 0; i < 5; i++) gameStates[currentState].run();
         gameStates[currentState].keyPressed(k);
+        for (int i = 0; i < 5; i++) gameStates[currentState].run();
     }
 
     public int getState() {

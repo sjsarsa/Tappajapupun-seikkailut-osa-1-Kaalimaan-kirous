@@ -55,7 +55,7 @@ public class HealingItemTest {
     @Test
     public void use() {
         Item potion = new HealingItem("potion", 1, 10);
-        Creature heikki = new Creature("Heikki", 30, 1, 1);
+        Creature heikki = new Creature(5, "Heikki", 30, 1, 1);
         heikki.takeDamage(13);
         potion.use(heikki);
         assertEquals(heikki.getCurrentHp(), 27);

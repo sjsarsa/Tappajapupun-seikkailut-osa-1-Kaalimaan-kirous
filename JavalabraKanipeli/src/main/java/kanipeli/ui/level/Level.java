@@ -58,31 +58,13 @@ public class Level {
         }
         return impassables;
     }
-    
-    public void renderBattle(Screen screen) {
-
-        int w = (screen.w * 15) >> 4;
-        int h = (screen.h * 15) >> 4;
-        
-        for (int y = 0; y <= h; y++) {
-            for (int x = 0; x <= w; x++) {
-                Tile.tiles[6].render(x, y, screen);
-            }
-        }
-        Tile.tiles[4].render(0, 1, screen); //playerBattle
-        Tile.tiles[5].render(2, 1, screen); //critterBattle     
-        
-    }
-    
- 
-
+   
     public Tile getTile(int x, int y) {
         if (x < 0 || y < 0 || x >= w || y >= h) {
             return Tile.rock;
         }
         return Tile.tiles[tiles[x + y * h]];
     }
-    
     
     public void loadMap(int x0, int y0, int x1, int y1) {
         Sprite sprite = Sprites.level[x0][y0];
@@ -97,10 +79,9 @@ public class Level {
                 }
                 for (CreatureOnField cof : field.getCreaturesOnField()) {
                     if (cof.getCurrentHp() > 0 && cof.getX() == x && cof.getY() == y) {
-                        tiles[x + x1 + (y + y1) * h] = Tile.boss.id;
+                        tiles[x + x1 + (y + y1) * h] = Tile.tiles[cof.getFieldTile()].id;
                     }
-                }
-            
+                }           
             }
         }
     }

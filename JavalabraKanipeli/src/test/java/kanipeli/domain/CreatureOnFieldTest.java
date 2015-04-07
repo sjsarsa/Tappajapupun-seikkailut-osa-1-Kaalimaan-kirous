@@ -37,7 +37,7 @@ public class CreatureOnFieldTest {
     @Before
     public void setUp() {
         impassables = new boolean[16][16];
-        joppe = new CreatureOnField(impassables, 1, 1, "Joppe", 30, 10, 0);
+        joppe = new CreatureOnField(3, 5, impassables, 1, 1, "Joppe", 30, 10, 0);
     }
 
     @After
@@ -45,9 +45,14 @@ public class CreatureOnFieldTest {
     }
 
     @Test
-    public void getters() {
+    public void gettersSetters() {
+        assertEquals(joppe.getFieldTile(), 3);
         assertEquals(joppe.getX(), 1);
         assertEquals(joppe.getY(), 1);
+        joppe.setX(5);
+        joppe.setY(6);
+        assertEquals(joppe.getX(), 5);
+        assertEquals(joppe.getY(), 6);
     }
 
     @Test

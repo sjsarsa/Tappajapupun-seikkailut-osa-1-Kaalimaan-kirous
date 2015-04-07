@@ -11,9 +11,9 @@ import kanipeli.ui.sprites.Sprites;
  *
  * @author Sami
  */
-public class BossBattle extends Tile{
+public class BossTile extends Tile{
 
-    public BossBattle(int id) {
+    public BossTile(int id) {
         super(id);
         tile = Sprites.terrain[3][0];
     }

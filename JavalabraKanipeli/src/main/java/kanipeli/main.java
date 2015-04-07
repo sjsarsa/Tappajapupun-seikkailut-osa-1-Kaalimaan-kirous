@@ -33,7 +33,6 @@ public class main {
         
         MenuState ms = new MenuState(canvas, screen, gsm);
         gsm.addState(0, ms);
-        gsm.setState(0);
-        gsm.run();
+        gsm.runState(0);
     }
 }

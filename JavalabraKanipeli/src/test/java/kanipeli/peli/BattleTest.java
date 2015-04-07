@@ -40,8 +40,8 @@ public class BattleTest {
     @Before
     public void setUp() {
        
-       player = new PlayableCreature(null, 0, 0, "Seppo", 10, 3, 0);
-       foe = new Creature("Vintiö", 10, 3, 2);
+       player = new PlayableCreature(2, 4, null, 0, 0, "Seppo", 10, 3, 0);
+       foe = new Creature(5, "Vintiö", 10, 3, 2);
        battle = new Battle(player, foe);
     }
     
@@ -79,7 +79,7 @@ public class BattleTest {
         battle.checkLevelUp();
         battle.checkLevelUp();
         assertEquals(player.getLvl(), 2);
-        battle = new Battle(player, new Creature("Napero", 0, 0, 30));
+        battle = new Battle(player, new Creature(5, "Napero", 0, 0, 30));
         battle.checkLevelUp();
         assertEquals(player.getLvl(), 4);
     }  

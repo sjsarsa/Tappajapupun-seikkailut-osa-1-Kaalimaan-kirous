@@ -32,7 +32,7 @@ public class PlayableCreatureTest {
     
     @Before
     public void setUp() {
-        vilperi = new PlayableCreature(null, 0, 0, "vilperi", 100, 100, 0);
+        vilperi = new PlayableCreature(2, 4, null, 0, 0, "vilperi", 100, 100, 0);
     }
     
     @After

@@ -25,7 +25,7 @@ public class Tile {
     public static Tile grass = new GrassTile(0);
     public static Tile rock = new RockTile(1);
     public static Tile player = new PlayerTile(2);
-    public static Tile boss  = new BossBattle(3);
+    public static Tile boss  = new BossTile(3);
 //    battle tiles
     public static Tile playerBattle = new PlayerBattle(4);
     public static Tile critterBattle = new CritterBattle(5);

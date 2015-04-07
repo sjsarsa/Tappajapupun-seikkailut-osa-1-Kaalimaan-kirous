@@ -86,6 +86,6 @@ public class Field {
     public Creature createRandomEncounter() {
         Random rm = new Random();
         Creature re = randomEncounters.get(rm.nextInt(randomEncounters.size()));
-        return new Creature(re.getName(), re.getMaxHp(), re.getDamage(), re.getExp());
+        return new Creature(re.getBattleTile(), re.getName(), re.getMaxHp(), re.getDamage(), re.getExp());
     }
 }

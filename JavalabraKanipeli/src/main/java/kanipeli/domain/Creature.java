@@ -20,13 +20,19 @@ public class Creature {
     private int damage;
     private int exp;
     private Random rm = new Random();
+    private int battleTile;
     
-    public Creature(String name, int maxHp, int damage, int exp) {
+    public Creature(int battleTile, String name, int maxHp, int damage, int exp) {
         this.name = name;
         this.maxHp = maxHp;
         this.currentHp = maxHp;
         this.damage = damage;
         this.exp = exp;
+        this.battleTile = battleTile;
+    }
+
+    public int getBattleTile() {
+        return battleTile;
     }
    
     public int getExp() {

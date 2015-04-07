@@ -22,8 +22,8 @@ public class PlayableCreature extends CreatureOnField {
     private int munny = 0;
     private ArrayList<Item> items = new ArrayList<Item>();
     
-    public PlayableCreature(boolean[][] impassables, int x, int y, String Nimi, int maxHp, int damage, int exp) {
-        super(impassables, x, y, Nimi, maxHp, damage, exp);
+    public PlayableCreature(int fieldTile, int battleTile, boolean[][] impassables, int x, int y, String Nimi, int maxHp, int damage, int exp) {
+        super(fieldTile, battleTile, impassables, x, y, Nimi, maxHp, damage, exp);
     }
 
     public void addItem(Item item) {

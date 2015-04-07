@@ -44,6 +44,7 @@ public class MenuState implements GameState, Runnable {
 
     @Override
     public void run() {
+        
         render();
         if (actionSelected) {
             actionSelected();
@@ -51,8 +52,7 @@ public class MenuState implements GameState, Runnable {
         actionSelected = false;
     }
 
-    @Override
-    public void render() {
+    private void render() {
         BufferStrategy bs = canvas.getBufferStrategy();
         if (bs == null) {
             canvas.createBufferStrategy(3);
@@ -61,6 +61,9 @@ public class MenuState implements GameState, Runnable {
         }
         Graphics g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, canvas.getWidth(), canvas.getHeight(), null);
+        g.setColor(Color.BLACK);
+        g.fillRect(30 * scale, 40 * scale, 40 * options.length, 120);
+        
         for (int i = 0; i < options.length; i++) {
             if (i == currentChoice) {
                 g.setColor(Color.BLUE);
@@ -100,9 +103,11 @@ public class MenuState implements GameState, Runnable {
             newGame();
         }
         if (currentChoice == 1) {
-            gsm.setState(gsm.getPreviousState());
+            if (gsm.getPreviousState() != 0) gsm.setState(gsm.getPreviousState());
         }
-        if (currentChoice == 3) gsm.stop = true;
+        if (currentChoice == 3) {
+            exit = true;
+        }
     }
 
     private void newGame() {
