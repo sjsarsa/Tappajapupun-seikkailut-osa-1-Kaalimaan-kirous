@@ -39,9 +39,9 @@ public class GameStateManager {
     }
 
     public void keyPressed(int k) {
-        for (int i = 0; i < 5; i++) gameStates[currentState].run();
+//        for (int i = 0; i < 4; i++) gameStates[currentState].run();
         gameStates[currentState].keyPressed(k);
-        for (int i = 0; i < 5; i++) gameStates[currentState].run();
+        for (int i = 0; i < 3; i++) gameStates[currentState].run();
     }
 
     public int getState() {

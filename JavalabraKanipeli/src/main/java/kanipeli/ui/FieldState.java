@@ -38,16 +38,20 @@ public class FieldState implements GameState {
         this.canvas = canvas;
         this.screen = screen;
         this.game = game;
-        this.field = game.getCurrentField();
         this.gsm = gsm;
         this.image = image;
         this.pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+        this.field = game.getCurrentField();
     }
 
     public void run() {
         render();
-        checkRandomEncounter();
-        checkSpot();
+        if (field.getPlayer().moved) {
+            checkRandomEncounter();
+            checkSpot();
+            this.field = game.getCurrentField();
+            field.getPlayer().moved = false;
+        }
     }
 
     private void render() {
@@ -106,14 +110,15 @@ public class FieldState implements GameState {
         if (cof != null) {
             fight(cof);
         }
+         field.checkEdge();
     }
 
     private void checkRandomEncounter() {
-        if (field.getPlayer().moved && field.randomEncounter()) {
+        if (field.randomEncounter()) {
             Creature foe = field.createRandomEncounter();
             fight(foe);
         }
-        field.getPlayer().moved = false;
+
     }
 
     private void fight(Creature foe) {

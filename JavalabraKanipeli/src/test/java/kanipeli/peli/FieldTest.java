@@ -52,7 +52,9 @@ public class FieldTest {
         creaturesOnField.add(boss);
         this.randomEncounters = new ArrayList<>();
         randomEncounters.add(foe);
-        field = new Field(16, 16, player, creaturesOnField, randomEncounters);
+        Game game = new Game();
+        field = new Field(game, null, 16, 16, player, creaturesOnField, randomEncounters);
+        field.initField();
         Level level = new Level(field);
         level.loadMap(0, 0, 0, 0);
         impassables = level.getImpassables();

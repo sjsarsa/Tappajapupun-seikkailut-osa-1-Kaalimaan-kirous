@@ -19,6 +19,7 @@ public class Level {
 
     int w;
     int h;
+    int transition = -65536; //rgb (255, 0, 0)
     int blackRock =  -16777216; // rgb (0, 0, 0)
     int rock = -8355840; // rgb (128, 128, 128) ColourGrabber value
     int grass = -11731200; // rgb(76, 255, 0)
@@ -67,10 +68,17 @@ public class Level {
     }
     
     public void loadMap(int x0, int y0, int x1, int y1) {
-        Sprite sprite = Sprites.level[x0][y0];
+        Sprite sprite = field.sprite;
         for (int y = 0; y < sprite.h; y++) {
             for (int x = 0; x < sprite.w; x++) {
                 tiles[x + x1 + (y + y1) * h] = Tile.grass.id;
+                if (sprite.pixels[x + y * sprite.h] == transition) {
+                    if (x == 0) field.addExit(0, x, y);
+                    if (y == 0) field.addExit(1, x, y);
+                    if (x == field.getWidth() - 1) field.addExit(2, x, y);       
+                    if (y == field.getHeight() - 1) field.addExit(3, x, y);
+                    tiles[x + x1 + (y + y1) * h] = Tile.player.id;
+                }
                 if (sprite.pixels[x + y * sprite.h] == blackRock) {
                     tiles[x + x1 + (y + y1) * h] = Tile.rock.id;
                 }
