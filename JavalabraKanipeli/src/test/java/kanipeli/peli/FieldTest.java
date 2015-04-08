@@ -106,15 +106,67 @@ public class FieldTest {
         field.addConnectedField(0, game.getCurrentField());
         assertEquals(field.getConnectedFields()[0], game.getCurrentField());
     }
+    
     @Test
-    public void checkEdge() {
+    public void checkLeftEdge() {
         field = game.getCurrentField();
+        player = field.getPlayer();
         field.checkEdge();
         assertEquals(game.getCurrentField(), field);
         player.setX(0);
         field.checkEdge();
         assertEquals(player.getX(), field.getConnectedFields()[0].getExits()[2][0]);
         assertEquals(player.getY(), field.getConnectedFields()[0].getExits()[2][1]);
+        
+        field.addConnectedField(0, null);
+        player.setX(0);
+        field.checkEdge();
+        assertEquals(player.getX(), 0);
+    }
+    
+    @Test
+    public void checkRightEdge() {
+        field = game.getCurrentField();
+        player = field.getPlayer();
+        player.setX(15);
+        field.checkEdge();
+        assertEquals(player.getX(), field.getConnectedFields()[2].getExits()[0][0]);
+        assertEquals(player.getY(), field.getConnectedFields()[2].getExits()[0][1]);
+        
+        field.addConnectedField(2, null);
+        player.setX(15);
+        field.checkEdge();
+        assertEquals(player.getX(), 15);
+    }
+    
+    @Test
+    public void checkUpperEdge() {
+        field = game.getCurrentField();
+        player = field.getPlayer();
+        player.setY(0);
+        field.checkEdge();
+        assertEquals(player.getX(), field.getConnectedFields()[1].getExits()[3][0]);
+        assertEquals(player.getY(), field.getConnectedFields()[1].getExits()[3][1]);
+        
+        field.addConnectedField(1, null);
+        player.setY(0);
+        field.checkEdge();
+        assertEquals(player.getY(), 0);
+    }
+    
+    @Test
+    public void checkLowerEdge() {
+        field = game.getCurrentField();
+        player = field.getPlayer();
+        player.setY(15);
+        field.checkEdge();
+        assertEquals(player.getX(), field.getConnectedFields()[3].getExits()[1][0]);
+        assertEquals(player.getY(), field.getConnectedFields()[3].getExits()[1][1]);
+        
+        field.addConnectedField(3, null);
+        player.setY(15);
+        field.checkEdge();
+        assertEquals(player.getY(), 15);
     }
 
     // TODO add test methods here.
