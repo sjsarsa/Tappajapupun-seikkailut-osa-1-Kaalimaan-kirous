@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import kanipeli.AudioPlayer;
 import kanipeli.domain.Creature;
 import kanipeli.peli.Battle;
 import kanipeli.ui.Screen;
@@ -34,6 +35,9 @@ public class BattleState implements GameState {
     private Battle battle;
     private Graphics g;
     private GameStateManager gsm;
+    private AudioPlayer battleMusic;
+    private AudioPlayer fieldMusic;
+    private AudioPlayer gameOverMusic = new AudioPlayer("/audio/gameOver.wav");
     private boolean actionSelected;
 
     private String[] options = new String[]{
@@ -45,7 +49,7 @@ public class BattleState implements GameState {
     private int currentChoice = 0;
     private int currentItem = 0;
 
-    public BattleState(Canvas canvas, Screen screen, Battle battle, GameStateManager gsm, BufferedImage image) {
+    public BattleState(Canvas canvas, Screen screen, Battle battle, GameStateManager gsm, BufferedImage image, AudioPlayer fieldMusic, AudioPlayer battleMusic) {
         this.canvas = canvas;
         this.height = HEIGHT;
         this.width = WIDTH;
@@ -56,23 +60,35 @@ public class BattleState implements GameState {
         this.items = items;
         this.bs = canvas.getBufferStrategy();
         this.gsm = gsm;
+        this.fieldMusic = fieldMusic;
+        this.battleMusic = battleMusic;
     }
 
     public void run() {
-        if (battle.getPlayer().getCurrentHp() < 0) return;
-        if (battle.escaped) gsm.setState(1);
-            render();
-            drawOptions();
-            bs.show();
-            if (actionSelected) {
-                if (playerTurn()) {
-                    battle.checkLevelUp();
-                    gsm.setState(1);   
-                }
-                else if (enemyTurn()) {
-                    gsm.setState(0);
+        if (battle.getPlayer().getCurrentHp() == 0) return;
+        if (battle.escaped) {
+            gsm.setState(1);
+            battleMusic.stop();
+            fieldMusic.play();
+        }
+        render();
+        drawOptions();
+        bs.show();
+        if (actionSelected) {
+            if (playerTurn()) {
+                battle.checkLevelUp();
+                battleMusic.stop();
+                fieldMusic.play();
+                gsm.setState(1);
+            }
+            else if (enemyTurn()) {
+                battleMusic.stop();
+                gameOverMusic.play();
+                for (int i = 0; i < 10; i++) {
+                    battleLost();
                 }
             }
+        }
     }
 
     public boolean playerTurn() {
@@ -91,10 +107,6 @@ public class BattleState implements GameState {
         }
         if (!battle.alive(battle.getPlayer())) {
             battle.lost = true;
-            for (int i = 0; i < 200; i++) {
-                battleLost();
-
-            }
             return true;
         }
         return false;
@@ -130,6 +142,10 @@ public class BattleState implements GameState {
             }
         }
          if (keyCode == KeyEvent.VK_ESCAPE) {
+            if (battle.lost) {
+                gameOverMusic.stop();
+                gsm.runState(0);
+            }
             gsm.setState(0);
         }
     }

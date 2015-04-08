@@ -6,6 +6,7 @@
 package kanipeli.ui.states;
 
 import java.util.ArrayList;
+import kanipeli.AudioPlayer;
 
 /**
  *
@@ -16,6 +17,9 @@ public class GameStateManager {
     private GameState[] gameStates = new GameState[3];
     private int currentState = 0;
     private int previousState = 0;
+    private AudioPlayer menuMusic = new AudioPlayer("/audio/menu.wav");
+    private AudioPlayer battleMusic = new AudioPlayer("/audio/battle.wav");
+    private AudioPlayer fieldMusic = new AudioPlayer("/audio/field.wav");
     public boolean stop;
  
     public static final int MENUSTATE = 0;
@@ -27,12 +31,17 @@ public class GameStateManager {
     }
 
     public void setState(int index) {
+        if (index != 0) menuMusic.stop();
         previousState = currentState;
+        
+        
         currentState = index;
+        
         for (int i = 0; i < 30; i++) gameStates[currentState].run();
     }
 
     public void runState(int index) {
+        menuMusic.play();
         previousState = currentState;
         currentState = index;
         for (int i = 0; i < 30; i++) gameStates[currentState].run();

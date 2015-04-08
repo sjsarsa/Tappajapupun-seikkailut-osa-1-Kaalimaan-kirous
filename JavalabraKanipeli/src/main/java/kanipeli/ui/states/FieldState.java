@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import kanipeli.AudioPlayer;
 import kanipeli.domain.Creature;
 import kanipeli.domain.CreatureOnField;
 import kanipeli.peli.Battle;
@@ -34,6 +35,9 @@ public class FieldState implements GameState {
     private Field field;
     private int xScroll = 0, yScroll = 0;
     private GameStateManager gsm;
+    private AudioPlayer bossBattleMusic = new AudioPlayer("/audio/bossBattle.wav");
+    private AudioPlayer battleMusic = new AudioPlayer("/audio/battle.wav");
+    private AudioPlayer fieldMusic = new AudioPlayer("/audio/field.wav");
 
     public FieldState(Canvas canvas, Screen screen, Game game, GameStateManager gsm, BufferedImage image) {
         this.canvas = canvas;
@@ -43,6 +47,7 @@ public class FieldState implements GameState {
         this.image = image;
         this.pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
         this.field = game.getCurrentField();
+        fieldMusic.play();
     }
 
     public void run() {
@@ -108,22 +113,25 @@ public class FieldState implements GameState {
     private void checkSpot() {
         CreatureOnField cof = field.checkSpot();
         if (cof != null) {
-            fight(cof);
+            fieldMusic.stop();
+            bossBattleMusic.play();
+            fight(cof, bossBattleMusic);
         }
-         field.checkEdge();
+        field.checkEdge();
     }
 
     private void checkRandomEncounter() {
         if (field.randomEncounter()) {
             Creature foe = field.createRandomEncounter();
-            fight(foe);
+            fieldMusic.stop();
+            battleMusic.play();
+            fight(foe, battleMusic);
         }
-
     }
 
-    private void fight(Creature foe) {
+    private void fight(Creature foe, AudioPlayer music) {
         Battle battle = new Battle(field.getPlayer(), foe);
-        BattleState bs = new BattleState(canvas, screen, battle, gsm, image);
+        BattleState bs = new BattleState(canvas, screen, battle, gsm, image, fieldMusic, music);
         gsm.addState(2, bs);
         gsm.setState(2);
     }
