@@ -5,6 +5,7 @@
  */
 package kanipeli;
 
+import java.io.File;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -20,13 +21,15 @@ public class AudioPlayer {
     public AudioPlayer(String s) {
         
         try {
-            AudioInputStream ais = AudioSystem.getAudioInputStream(getClass().getResourceAsStream(s));
-            AudioFormat baseFormat = ais.getFormat();
-            AudioFormat decodeFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, baseFormat.getSampleRate(),
+            AudioInputStream in = AudioSystem.getAudioInputStream(getClass().getResourceAsStream(s));
+//            File file = new File(s);
+//            AudioInputStream in = AudioSystem.getAudioInputStream(file);
+            AudioFormat baseFormat = in.getFormat();
+            AudioFormat decodedFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, baseFormat.getSampleRate(),
                     16, 2, baseFormat.getChannels() * 2, baseFormat.getSampleRate(), false);
-            AudioInputStream dais = AudioSystem.getAudioInputStream(decodeFormat, ais);
+            AudioInputStream din = AudioSystem.getAudioInputStream(decodedFormat, in);
             clip = AudioSystem.getClip();
-            clip.open(dais);
+            clip.open(din);
         } catch (Exception e) {
             e.printStackTrace();
         }

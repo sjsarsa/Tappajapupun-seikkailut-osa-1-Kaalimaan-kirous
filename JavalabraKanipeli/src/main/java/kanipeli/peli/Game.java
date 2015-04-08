@@ -21,7 +21,7 @@ public class Game {
     // 0 = left, 1 = up, 2 = right, 3 = down
 
     public Game() {
-        PlayableCreature player = new PlayableCreature(2, 4, null, 1, 1, "Hilipati", 200, 30, 0);
+        PlayableCreature player = new PlayableCreature(2, 4, null, 1, 1, "Tappajapupu", 200, 30, 0);
         
         ArrayList<CreatureOnField> fieldDwellers = new ArrayList();
         CreatureOnField boss = new CreatureOnField(3, 5, null, 6, 6, "Kenkku", 10000, 500, 100000);

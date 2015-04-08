@@ -18,8 +18,9 @@ public class GameStateManager {
     private int currentState = 0;
     private int previousState = 0;
     private AudioPlayer menuMusic = new AudioPlayer("/audio/menu.wav");
-    private AudioPlayer battleMusic = new AudioPlayer("/audio/battle.wav");
-    private AudioPlayer fieldMusic = new AudioPlayer("/audio/field.wav");
+//    private AudioPlayer menuMusic = new AudioPlayer("/audio/niinpä.mp3");
+//    private AudioPlayer battleMusic = new AudioPlayer("/audio/battle.wav");
+//    private AudioPlayer fieldMusic = new AudioPlayer("/audio/field.wav");
     public boolean stop;
  
     public static final int MENUSTATE = 0;
