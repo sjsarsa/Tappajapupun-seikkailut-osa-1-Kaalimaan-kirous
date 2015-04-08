@@ -107,7 +107,7 @@ public class BattleState implements GameState {
             try {
             drawDamage(damage, 2);
             drawDamage(damage, 2);
-            Thread.sleep(1000);
+            Thread.sleep(700);
             } catch (InterruptedException e) {
                 System.out.println("lol");
             }
@@ -125,7 +125,7 @@ public class BattleState implements GameState {
             try {
                 drawDamage(damage, 0);
                 drawDamage(damage, 0);
-                Thread.sleep(1000);
+                Thread.sleep(700);
             } catch (InterruptedException e) {
                 System.out.println("lol");
             }
