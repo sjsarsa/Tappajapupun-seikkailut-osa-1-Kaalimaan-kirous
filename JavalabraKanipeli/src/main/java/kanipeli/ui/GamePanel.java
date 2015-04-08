@@ -21,13 +21,14 @@ import javax.swing.JFrame;
 public class GamePanel  implements KeyListener{
     
     private GameStateManager gsm;
+    public JFrame frame;
     
     public GamePanel(int width, int height, int scale, Canvas canvas, GameStateManager gsm) {     
         this.gsm = gsm;
         canvas.setPreferredSize(new Dimension(width * scale, height * scale));
 //        canvas.setMinimumSize(new Dimension(WIDTH * scale, HEIGHT * scale));
 //        canvas.setMaximumSize(new Dimension(WIDTH * scale, HEIGHT * scale));
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.add(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();

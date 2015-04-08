@@ -101,7 +101,6 @@ public class FieldState implements GameState {
         }
 
         if (keyCode == KeyEvent.VK_ESCAPE) {
-            MenuState ms = new MenuState(canvas, screen, gsm);
             gsm.setState(0);
         }
     }

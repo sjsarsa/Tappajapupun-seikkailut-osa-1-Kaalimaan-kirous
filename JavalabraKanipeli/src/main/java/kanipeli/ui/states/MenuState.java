@@ -7,13 +7,16 @@ package kanipeli.ui.states;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import kanipeli.peli.Game;
+import kanipeli.ui.GamePanel;
 import kanipeli.ui.Screen;
+import kanipeli.ui.level.Tile;
 
 /**
  *
@@ -21,8 +24,8 @@ import kanipeli.ui.Screen;
  */
 public class MenuState implements GameState, Runnable {
 
-    private static int HEIGHT = 256, WIDTH = 256, scale = 3;
-    private static BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+    private static int height = 256, width = 256, scale = 3;
+    private static BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     private static int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private Canvas canvas;
     private Screen screen;
@@ -30,11 +33,9 @@ public class MenuState implements GameState, Runnable {
     private String[] options = new String[]{
         "New Game",
         "Continue",
-        "Status",
         "Exit"
     };
     private int currentChoice = 0;
-    private boolean exit = false;
     private boolean actionSelected = false;
 
     public MenuState(Canvas canvas, Screen screen, GameStateManager gsm) {
@@ -45,7 +46,7 @@ public class MenuState implements GameState, Runnable {
 
     @Override
     public void run() {
-        
+
         render();
         if (actionSelected) {
             actionSelected();
@@ -60,21 +61,39 @@ public class MenuState implements GameState, Runnable {
             canvas.requestFocus();
             return;
         }
+        int w = (screen.w * 15) >> 4;
+        int h = (screen.h * 15) >> 4;
+
+        for (int y = 0; y <= h; y++) {
+            for (int x = 0; x <= w; x++) {
+                Tile.MenuBlack.render(x, y, screen); //empty battle tile (white)
+            }
+        }
+        Tile.playerBattle.render(1, 2, screen);
+        for (int y = 0; y < screen.h; y++) {
+            for (int x = 0; x < screen.w; x++) {
+                pixels[x + y * width] = screen.pixels[x + y * screen.w];
+            }
+        }
         Graphics g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, canvas.getWidth(), canvas.getHeight(), null);
         g.setColor(Color.BLACK);
-        g.fillRect(30 * scale, 40 * scale, 40 * options.length, 120);
-        
+//        g.fillRect(0, 0, height * scale * 2, width * scale * 2);
+        drawOptions(g);
+        g.dispose();
+        bs.show();
+    }
+    
+    private void drawOptions(Graphics g) {
+        g.setFont(new Font("Century Gothic", Font.BOLD, 28));
         for (int i = 0; i < options.length; i++) {
             if (i == currentChoice) {
                 g.setColor(Color.BLUE);
             } else {
                 g.setColor(Color.RED);
             }
-            g.drawString(options[i], 45 * scale, 50 * scale + i * 25);
+            g.drawString(options[i], 45 * scale, 50 * scale + i * 40);
         }
-        g.dispose();
-        bs.show();
     }
 
     @Override
@@ -96,7 +115,9 @@ public class MenuState implements GameState, Runnable {
             }
             render();
         }
-        if (keyCode == KeyEvent.VK_ESCAPE) ;
+        if (keyCode == KeyEvent.VK_ESCAPE) {
+            gsm.setState(gsm.getPreviousState());
+        }
     }
 
     private void actionSelected() {
@@ -104,10 +125,12 @@ public class MenuState implements GameState, Runnable {
             newGame();
         }
         if (currentChoice == 1) {
-            if (gsm.getPreviousState() != 0) gsm.setState(gsm.getPreviousState());
+            if (gsm.getPreviousState() != 0) {
+                gsm.setState(gsm.getPreviousState());
+            }
         }
-        if (currentChoice == 3) {
-            exit = true;
+        if (currentChoice == 2) {
+            System.exit(0);
         }
     }
 

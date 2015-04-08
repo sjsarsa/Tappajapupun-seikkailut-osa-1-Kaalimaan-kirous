@@ -26,10 +26,14 @@ public class Tile {
     public static Tile rock = new RockTile(1);
     public static Tile player = new PlayerTile(2);
     public static Tile boss  = new BossTile(3);
+    public static Tile BlackBunny = new BlackBunnyTile(8);
 //    battle tiles
+    public static Tile MenuBlack = new BlackMenuTile(7);
     public static Tile playerBattle = new PlayerBattle(4);
     public static Tile critterBattle = new CritterBattle(5);
     public static Tile BattleEmpty = new BattleEmptyTile(6);
+    public static Tile BlackBunnyBattle = new BlackBunnyBattleTile(9);
+    
     
     public Tile(int id) {
         this.id = id;

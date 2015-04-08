@@ -28,12 +28,12 @@ public class Game {
         fieldDwellers.add(boss);
         
         ArrayList<CreatureOnField> fieldDwellers2 = new ArrayList();
-        CreatureOnField miniBoss = new CreatureOnField(2, 5, null, 6, 6, "Höpö", 3000, 300, 100);
-        fieldDwellers2.add(miniBoss);
+        CreatureOnField blackBunny = new CreatureOnField(8, 9, null, 6, 6, "Höpö", 3000, 300, 100);
+        fieldDwellers2.add(blackBunny);
         
         ArrayList<Creature> randomEncounters = new ArrayList();
-        Creature re = new Creature(5, "Pikkuhirviö", 75, 20, 2);
-        Creature re2 = new Creature(5, "Pikkuhirviö", 100, 15, 3);
+        Creature re = new Creature(5, "Pikkuhirviö", 75, 20, 200);
+        Creature re2 = new Creature(5, "Pikkuhirviö", 100, 15, 300);
         randomEncounters.add(re);
         randomEncounters.add(re2);
         
