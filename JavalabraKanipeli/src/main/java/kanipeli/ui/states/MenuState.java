@@ -137,6 +137,7 @@ public class MenuState implements GameState, Runnable {
     private void newGame() {
         Game game = new Game();
         FieldState fs = new FieldState(canvas, screen, game, gsm, image);
+//        gsm.music.stop();
         gsm.addState(1, fs);
         gsm.setState(1);
     }

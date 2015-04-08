@@ -5,57 +5,103 @@
  */
 package kanipeli;
 
-import java.io.File;
+import java.io.IOException;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.SourceDataLine;
 
 /**
  *
  * @author Sami
  */
-public class AudioPlayer {
-    
+public class AudioPlayer implements Runnable {
+
     private Clip clip;
-    
+    private SourceDataLine sdl;
+    private AudioInputStream in;
+    private Thread t;
+
     public AudioPlayer(String s) {
-        
+
         try {
-            AudioInputStream in = AudioSystem.getAudioInputStream(getClass().getResourceAsStream(s));
-//            File file = new File(s);
+            in = AudioSystem.getAudioInputStream(getClass().getResourceAsStream(s));
+//            File file = new File("src/main/resources" + s);
 //            AudioInputStream in = AudioSystem.getAudioInputStream(file);
             AudioFormat baseFormat = in.getFormat();
             AudioFormat decodedFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, baseFormat.getSampleRate(),
                     16, 2, baseFormat.getChannels() * 2, baseFormat.getSampleRate(), false);
             AudioInputStream din = AudioSystem.getAudioInputStream(decodedFormat, in);
-            DataLine.Info info = new DataLine.Info(Clip.class, baseFormat);
+//            DataLine.Info info = new DataLine.Info(Clip.class, baseFormat);
 //            clip = AudioSystem.getClip();
-            clip = (Clip)AudioSystem.getLine(info);
-            clip.open(din);
+//            clip = (Clip)AudioSystem.getLine(info);
+//            clip.open(din);
+            DataLine.Info info = new DataLine.Info(SourceDataLine.class, baseFormat);
+            sdl = (SourceDataLine) AudioSystem.getLine(info);
+            sdl.open(decodedFormat);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    public void play() {
-        if (clip == null) return;
-        stop();
-        clip.setFramePosition(0);
-        clip.start();
-    }
-    
-    public void stop() {
-        if(clip.isRunning()) clip.stop();
-    }
-    
-    public void close() {
-        stop();
-        clip.close();
-    }
-    
 
+    public void play() {
+        if (t == null) {
+            t = new Thread(this);
+            t.setPriority(2);
+            t.start();
+        } else {
+            start();
+        }
+//        if (clip == null) return;
+//        stop();
+//        clip.setFramePosition(0);
+//        clip.start();
+    }
     
-    
+    public void start() {
+        try {
+            if (sdl == null) {
+                return;
+            }
+            stop();
+            sdl.start();
+            int BUFFER_SIZE = 4096;
+
+            byte[] bytesBuffer = new byte[BUFFER_SIZE];
+            int bytesRead = -1;
+
+            while ((bytesRead = in.read(bytesBuffer)) != -1) {
+                sdl.write(bytesBuffer, 0, bytesRead);
+                Thread.sleep(20);
+            }
+            Thread.sleep(1000);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException ie) {
+            System.out.println("audio interrupted");
+        }
+    }
+
+    public void stop() {
+//        if(clip.isRunning()) clip.stop();
+        if (sdl.isRunning()) {
+            sdl.flush();
+            sdl.drain();
+            sdl.stop();
+            sdl.close();
+        }
+    }
+
+//    public void close() {
+//        stop();
+//        clip.close();
+//
+//    }
+
+    @Override
+    public void run() {
+        start();
+    }
 }

@@ -7,10 +7,6 @@
 package kanipeli;
  
 import java.awt.Canvas;
-import java.util.ArrayList;
-import kanipeli.domain.*;
-import kanipeli.peli.Field;
-import kanipeli.peli.Game;
 import kanipeli.ui.GamePanel;
 import kanipeli.ui.states.GameStateManager;
 import kanipeli.ui.states.MenuState;
@@ -33,6 +29,6 @@ public class main {
         
         MenuState ms = new MenuState(canvas, screen, gsm);
         gsm.addState(0, ms);
-        gsm.runState(0);
+        gsm.init();
     }
 }

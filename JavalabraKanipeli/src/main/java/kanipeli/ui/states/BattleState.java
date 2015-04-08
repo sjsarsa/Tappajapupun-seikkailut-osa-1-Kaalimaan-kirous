@@ -49,7 +49,7 @@ public class BattleState implements GameState {
     private int currentChoice = 0;
     private int currentItem = 0;
 
-    public BattleState(Canvas canvas, Screen screen, Battle battle, GameStateManager gsm, BufferedImage image, AudioPlayer fieldMusic, AudioPlayer battleMusic) {
+    public BattleState(Canvas canvas, Screen screen, Battle battle, GameStateManager gsm, BufferedImage image) {
         this.canvas = canvas;
         this.height = HEIGHT;
         this.width = WIDTH;
@@ -60,16 +60,15 @@ public class BattleState implements GameState {
         this.items = items;
         this.bs = canvas.getBufferStrategy();
         this.gsm = gsm;
-        this.fieldMusic = fieldMusic;
-        this.battleMusic = battleMusic;
     }
 
     public void run() {
         if (battle.getPlayer().getCurrentHp() == 0) return;
-        if (battle.escaped) {
+        if (battle.escaped && !battle.lost) {
             gsm.setState(1);
-            battleMusic.stop();
-            fieldMusic.play();
+            gsm.music.stop();
+            gsm.music = new AudioPlayer("/audio/field.wav");
+            gsm.music.play();
         }
         render();
         drawOptions();
@@ -77,14 +76,16 @@ public class BattleState implements GameState {
         if (actionSelected) {
             if (playerTurn()) {
                 battle.checkLevelUp();
-                battleMusic.stop();
-                fieldMusic.play();
+                gsm.music.stop();
+                gsm.music = new AudioPlayer("/audio/field.wav");
+                gsm.music.play();             
                 gsm.setState(1);
             }
             else if (enemyTurn()) {
-                battleMusic.stop();
-                gameOverMusic.play();
-                for (int i = 0; i < 10; i++) {
+                gsm.music.stop();
+                gsm.music = new AudioPlayer("/audio/gameOver.wav");
+                gsm.music.play();
+                for (int i = 0; i < 2; i++) {
                     battleLost();
                 }
             }
@@ -102,9 +103,15 @@ public class BattleState implements GameState {
 
     public boolean enemyTurn() {
         int damage = battle.attack(battle.getFoe(), battle.getPlayer()); //enemy turn
-        for (int i = 0; i < 50; i++) {
+//        for (int i = 0; i < 30; i++) {
+            try {
             drawDamage(damage, 2);
-        }
+            drawDamage(damage, 2);
+            Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println("lol");
+            }
+//        }
         if (!battle.alive(battle.getPlayer())) {
             battle.lost = true;
             return true;
@@ -115,8 +122,12 @@ public class BattleState implements GameState {
     public void selectAction() {
         if (currentChoice == 0) {
             int damage = battle.attack(battle.getPlayer(), battle.getFoe());
-            for (int i = 0; i < 50; i++) {
+            try {
                 drawDamage(damage, 0);
+                drawDamage(damage, 0);
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println("lol");
             }
         }
         if (currentChoice == 1) ;
@@ -143,8 +154,10 @@ public class BattleState implements GameState {
         }
          if (keyCode == KeyEvent.VK_ESCAPE) {
             if (battle.lost) {
-                gameOverMusic.stop();
-                gsm.runState(0);
+                gsm.music.stop();
+                gsm.music = new AudioPlayer("/audio/menu.wav");
+                gsm.music.play();
+                gsm.setState(0);
             }
             gsm.setState(0);
         }

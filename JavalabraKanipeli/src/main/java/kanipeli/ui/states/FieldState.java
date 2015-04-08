@@ -35,9 +35,6 @@ public class FieldState implements GameState {
     private Field field;
     private int xScroll = 0, yScroll = 0;
     private GameStateManager gsm;
-    private AudioPlayer bossBattleMusic = new AudioPlayer("/audio/bossBattle.wav");
-    private AudioPlayer battleMusic = new AudioPlayer("/audio/battle.wav");
-    private AudioPlayer fieldMusic = new AudioPlayer("/audio/field.wav");
 
     public FieldState(Canvas canvas, Screen screen, Game game, GameStateManager gsm, BufferedImage image) {
         this.canvas = canvas;
@@ -47,7 +44,13 @@ public class FieldState implements GameState {
         this.image = image;
         this.pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
         this.field = game.getCurrentField();
-        fieldMusic.play();
+        gsm.music.stop();
+        gsm.music = new AudioPlayer("/audio/field.wav");
+        gsm.music.play();
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public void run() {
@@ -113,9 +116,10 @@ public class FieldState implements GameState {
     private void checkSpot() {
         CreatureOnField cof = field.checkSpot();
         if (cof != null) {
-            fieldMusic.stop();
-            bossBattleMusic.play();
-            fight(cof, bossBattleMusic);
+            gsm.music.stop();
+            gsm.music = new AudioPlayer("/audio/bossBattle.wav");
+            gsm.music.play();
+            fight(cof);
         }
         field.checkEdge();
     }
@@ -123,15 +127,16 @@ public class FieldState implements GameState {
     private void checkRandomEncounter() {
         if (field.randomEncounter()) {
             Creature foe = field.createRandomEncounter();
-            fieldMusic.stop();
-            battleMusic.play();
-            fight(foe, battleMusic);
+            gsm.music.stop();
+            gsm.music = new AudioPlayer("/audio/battle.wav");
+            gsm.music.play();
+            fight(foe);
         }
     }
 
-    private void fight(Creature foe, AudioPlayer music) {
+    private void fight(Creature foe) {
         Battle battle = new Battle(field.getPlayer(), foe);
-        BattleState bs = new BattleState(canvas, screen, battle, gsm, image, fieldMusic, music);
+        BattleState bs = new BattleState(canvas, screen, battle, gsm, image);
         gsm.addState(2, bs);
         gsm.setState(2);
     }
