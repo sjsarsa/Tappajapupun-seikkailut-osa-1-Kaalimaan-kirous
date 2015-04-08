@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kanipeli.ui;
+package kanipeli.ui.states;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import kanipeli.domain.Creature;
 import kanipeli.peli.Battle;
+import kanipeli.ui.Screen;
 import kanipeli.ui.level.Tile;
 
 /**

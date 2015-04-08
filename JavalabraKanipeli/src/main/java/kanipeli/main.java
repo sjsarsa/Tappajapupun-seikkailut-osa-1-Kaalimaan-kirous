@@ -5,15 +5,15 @@
  * and open the template in the editor.
  */
 package kanipeli;
-
+ 
 import java.awt.Canvas;
 import java.util.ArrayList;
 import kanipeli.domain.*;
 import kanipeli.peli.Field;
 import kanipeli.peli.Game;
 import kanipeli.ui.GamePanel;
-import kanipeli.ui.GameStateManager;
-import kanipeli.ui.MenuState;
+import kanipeli.ui.states.GameStateManager;
+import kanipeli.ui.states.MenuState;
 import kanipeli.ui.Screen;
 
 /**

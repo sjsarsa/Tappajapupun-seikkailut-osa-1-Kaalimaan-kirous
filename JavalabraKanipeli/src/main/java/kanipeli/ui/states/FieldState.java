@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kanipeli.ui;
+package kanipeli.ui.states;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -16,6 +16,7 @@ import kanipeli.domain.CreatureOnField;
 import kanipeli.peli.Battle;
 import kanipeli.peli.Field;
 import kanipeli.peli.Game;
+import kanipeli.ui.Screen;
 import kanipeli.ui.level.Level;
 
 /**

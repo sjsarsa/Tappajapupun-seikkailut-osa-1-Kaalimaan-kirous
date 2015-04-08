@@ -5,6 +5,7 @@
  */
 package kanipeli.ui;
 
+import kanipeli.ui.states.GameStateManager;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;

@@ -24,31 +24,39 @@ public class Game {
         PlayableCreature player = new PlayableCreature(2, 4, null, 1, 1, "Hilipati", 200, 30, 0);
         
         ArrayList<CreatureOnField> fieldDwellers = new ArrayList();
-        CreatureOnField boss = new CreatureOnField(3, 5, null, 6, 6, "Kenkku", 3000, 500, 100);
+        CreatureOnField boss = new CreatureOnField(3, 5, null, 6, 6, "Kenkku", 10000, 500, 100000);
         fieldDwellers.add(boss);
         
+        ArrayList<CreatureOnField> fieldDwellers2 = new ArrayList();
+        CreatureOnField miniBoss = new CreatureOnField(2, 5, null, 6, 6, "Höpö", 3000, 300, 100);
+        fieldDwellers2.add(miniBoss);
+        
         ArrayList<Creature> randomEncounters = new ArrayList();
-        Creature randomEncounter = new Creature(5, "Pikkuhirviö", 75, 20, 2);
-        Creature randomEncounter2 = new Creature(5, "Pikkuhirviö", 100, 15, 3);
-        randomEncounters.add(randomEncounter);
-        randomEncounters.add(randomEncounter2);
+        Creature re = new Creature(5, "Pikkuhirviö", 75, 20, 2);
+        Creature re2 = new Creature(5, "Pikkuhirviö", 100, 15, 3);
+        randomEncounters.add(re);
+        randomEncounters.add(re2);
         
-        Field field1 = new Field(this, Sprites.level[0][0], 16, 16, player, fieldDwellers, randomEncounters);
-        Field field2 = new Field(this, Sprites.levelUpOne[0][0], 16, 16, player, fieldDwellers, randomEncounters);
-        Field field3 = new Field(this, Sprites.levelDownOne[0][0], 16, 16, player, fieldDwellers, randomEncounters);
-        Field field4 = new Field(this, Sprites.levelRightOne[0][0], 16, 16, player, fieldDwellers, randomEncounters);
-        Field field5 = new Field(this, Sprites.levelLeftOne[0][0], 16, 16, player, fieldDwellers, randomEncounters);
+        ArrayList<Creature> randomEncounters2 = new ArrayList();
+        Creature re21 = new Creature(5, "Isompi hirviö", 450, 75, 8);
+        Creature re22 = new Creature(5, "Isompi hirviö", 300, 150, 10);
+        randomEncounters2.add(re21);
+        randomEncounters2.add(re22);
+        
+        int w = 16;
+        int h = 16;
+        Field startingField = new Field(this, Sprites.level[0][0], player, fieldDwellers, randomEncounters);
+        Field fieldUpOne = new Field(this, Sprites.levelUpOne[0][0], player, fieldDwellers2, randomEncounters2);
+        Field fieldDownOne = new Field(this, Sprites.levelDownOne[0][0], player, fieldDwellers2, randomEncounters2);
+        Field fieldRightOne = new Field(this, Sprites.levelRightOne[0][0], player, fieldDwellers2, randomEncounters2);
+        Field fieldLeftOne = new Field(this, Sprites.levelLeftOne[0][0], player, fieldDwellers2, randomEncounters2);
+        
+        connectFieldDown(startingField, fieldDownOne);
+        connectFieldUp(startingField, fieldUpOne);
+        connectFieldLeft(startingField, fieldLeftOne);
+        connectFieldRight(startingField, fieldRightOne);
 
-        field1.addConnectedField(1, field2);
-        field1.addConnectedField(3, field3);
-        field1.addConnectedField(2, field4);
-        field1.addConnectedField(0, field5);
-        
-        field2.addConnectedField(3, field1);
-        field3.addConnectedField(1, field1);
-        field4.addConnectedField(0, field1);
-        field5.addConnectedField(2, field1);
-        currentField = field1;
+        currentField = startingField;
         currentField.initField();
     }
 
@@ -60,5 +68,26 @@ public class Game {
         currentField.initField();
         this.currentField = currentField;
     }
+    
+    private void connectFieldUp(Field field1, Field field2) {
+        field1.addConnectedField(1, field2);
+        field2.addConnectedField(3, field1);
+    }
+    
+    private void connectFieldDown(Field field1, Field field2) {
+        field1.addConnectedField(3, field2);
+        field2.addConnectedField(1, field1);
+    }
+    
+    private void connectFieldRight(Field field1, Field field2) {
+        field1.addConnectedField(2, field2);
+        field2.addConnectedField(0, field1);
+    }
+    
+    private void connectFieldLeft(Field field1, Field field2) {
+        field1.addConnectedField(0, field2);
+        field2.addConnectedField(2, field1);
+    }
+    
       
 }

@@ -11,6 +11,7 @@ import kanipeli.domain.Creature;
 import kanipeli.domain.CreatureOnField;
 import kanipeli.domain.PlayableCreature;
 import kanipeli.ui.level.Level;
+import kanipeli.ui.sprites.Sprites;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -30,6 +31,7 @@ public class FieldTest {
     private Creature foe;
     private List<Creature> randomEncounters;
     private List<CreatureOnField> creaturesOnField;
+    private Game game;
     boolean[][] impassables;
     
     public FieldTest() {
@@ -52,8 +54,8 @@ public class FieldTest {
         creaturesOnField.add(boss);
         this.randomEncounters = new ArrayList<>();
         randomEncounters.add(foe);
-        Game game = new Game();
-        field = new Field(game, null, 16, 16, player, creaturesOnField, randomEncounters);
+        game = new Game();
+        field = new Field(game, Sprites.level[0][0], player, creaturesOnField, randomEncounters);
         field.initField();
         Level level = new Level(field);
         level.loadMap(0, 0, 0, 0);
@@ -80,6 +82,13 @@ public class FieldTest {
         field.getPlayer().moveRight(9);
         assertEquals(field.checkSpot(), null);
         field.getPlayer().moveLeft();
+        
+        //boss gets maxhp back if not defeated
+        boss.takeDamage(5);       
+        field.checkSpot();
+        assertEquals(field.checkSpot(), boss);
+        assertEquals(boss.getCurrentHp(), boss.getMaxHp());
+        
         boss.takeDamage(1337);
         assertEquals(field.checkSpot(), null);
     }
@@ -90,6 +99,22 @@ public class FieldTest {
         assertEquals(re.getName(), foe.getName());
         assertEquals(re.getDamage(), foe.getDamage());
         assertEquals(re.getMaxHp(), foe.getMaxHp());
+    }
+    
+    @Test
+    public void addConnectedField() {
+        field.addConnectedField(0, game.getCurrentField());
+        assertEquals(field.getConnectedFields()[0], game.getCurrentField());
+    }
+    @Test
+    public void checkEdge() {
+        field = game.getCurrentField();
+        field.checkEdge();
+        assertEquals(game.getCurrentField(), field);
+        player.setX(0);
+        field.checkEdge();
+        assertEquals(player.getX(), field.getConnectedFields()[0].getExits()[2][0]);
+        assertEquals(player.getY(), field.getConnectedFields()[0].getExits()[2][1]);
     }
 
     // TODO add test methods here.

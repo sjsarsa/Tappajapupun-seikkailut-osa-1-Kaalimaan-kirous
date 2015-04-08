@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kanipeli.ui;
+package kanipeli.ui.states;
 
 import java.util.ArrayList;
 

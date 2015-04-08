@@ -32,9 +32,9 @@ public class Field {
     public Level level;
     public Sprite sprite;
 
-    public Field(Game game, Sprite sprite, int width, int height, PlayableCreature player, List<CreatureOnField> creaturesOnField, List<Creature> randomEncounters) {
-        this.width = width;
-        this.height = height;
+    public Field(Game game, Sprite sprite, PlayableCreature player, List<CreatureOnField> creaturesOnField, List<Creature> randomEncounters) {
+        this.width = sprite.w;
+        this.height = sprite.h;
         this.player = player;
         this.creaturesOnField = creaturesOnField;
         this.randomEncounters = randomEncounters;
@@ -60,6 +60,14 @@ public class Field {
         connectedFields[i] = field;
     }
 
+    public int[][] getExits() {
+        return exits;
+    }
+
+    public Field[] getConnectedFields() {
+        return connectedFields;
+    }
+
     public List<CreatureOnField> getCreaturesOnField() {
         return creaturesOnField;
     }
@@ -79,54 +87,43 @@ public class Field {
     public boolean[][] getImpassables() {
         return impassables;
     }
+    
     public void checkEdge() {
         if (player.getX() == 0) {
-                System.out.println("0");
+            if (connectedFields[0] != null) {
                 game.setCurrentField(connectedFields[0]);
                 player.setX(connectedFields[0].exits[2][0]);
                 player.setY(connectedFields[0].exits[2][1]);
-                System.out.println("x " + player.getX());
-                System.out.println("y " + player.getY());
+            }    
         }
         else if (player.getY() == 0) {
-//            if (connectedFields[1] != null) {
-                System.out.println("1");
+            if (connectedFields[1] != null) {
                 game.setCurrentField(connectedFields[1]);
                 player.setX(connectedFields[1].exits[3][0]);
                 player.setY(connectedFields[1].exits[3][1]);
-                System.out.println("x " + player.getX());
-                System.out.println("y " + player.getY());
-       
-//            }
+            }
         }
         else if (player.getX() == width - 1) {
-//            if (connectedFields[2] != null) {
-                System.out.println("2");
+            if (connectedFields[2] != null) {
                 game.setCurrentField(connectedFields[2]);
                 player.setX(connectedFields[2].exits[0][0]);
                 player.setY(connectedFields[2].exits[0][1]);
-                System.out.println("x " + player.getX());
-                System.out.println("y " + player.getY());
-          
-//            }
+            }
         }
         else if (player.getY() == height - 1) {
-
-//            if (connectedFields[3] != null) {
-                System.out.println("3");
+            if (connectedFields[3] != null) {
                 game.setCurrentField(connectedFields[3]);
                 player.setX(connectedFields[3].exits[1][0]);
                 player.setY(connectedFields[3].exits[1][1]);
-                System.out.println("x " + player.getX());
-                System.out.println("y " + player.getY());
-
-//            }
+            }
         }
     }
+    
     public CreatureOnField checkSpot() {
         for (CreatureOnField h : creaturesOnField) {
             if (player.getX() == h.getX() && player.getY() == h.getY()) {
                 if (h.getCurrentHp() > 0) {
+                    h.setCurrentHp(h.getMaxHp());
                     return h;
                 }
             }
