@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import kanipeli.domain.Creature;
 import kanipeli.domain.CreatureOnField;
 import kanipeli.domain.PlayableCreature;
-import kanipeli.ui.sprites.Sprites;
+import kanipeli.ui.sprites.SpriteSheet;
 
 /**
- *
+ *Creates the fields and creatures of the game.
  * @author Sami
  */
 public class Game {
@@ -49,11 +49,11 @@ public class Game {
         
         int w = 16;
         int h = 16;
-        Field startingField = new Field(this, Sprites.level[0][0], player, fieldDwellers, randomEncounters);
-        Field fieldUpOne = new Field(this, Sprites.levelUpOne[0][0], player, fieldDwellers2, randomEncounters2);
-        Field fieldDownOne = new Field(this, Sprites.levelDownOne[0][0], player, fieldDwellers2, randomEncounters2);
-        Field fieldRightOne = new Field(this, Sprites.levelRightOne[0][0], player, fieldDwellers2, randomEncounters2);
-        Field fieldLeftOne = new Field(this, Sprites.levelLeftOne[0][0], player, fieldDwellers2, randomEncounters2);
+        Field startingField = new Field(this, SpriteSheet.level[0][0], player, fieldDwellers, randomEncounters);
+        Field fieldUpOne = new Field(this, SpriteSheet.levelUpOne[0][0], player, fieldDwellers2, randomEncounters2);
+        Field fieldDownOne = new Field(this, SpriteSheet.levelDownOne[0][0], player, fieldDwellers2, randomEncounters2);
+        Field fieldRightOne = new Field(this, SpriteSheet.levelRightOne[0][0], player, fieldDwellers2, randomEncounters2);
+        Field fieldLeftOne = new Field(this, SpriteSheet.levelLeftOne[0][0], player, fieldDwellers2, randomEncounters2);
         
         connectFieldDown(startingField, fieldDownOne);
         connectFieldUp(startingField, fieldUpOne);

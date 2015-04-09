@@ -6,7 +6,7 @@
 package kanipeli.ui.states;
 
 /**
- *
+ *An interface for game states for the game state manager.
  * @author sjsarsa
  */
 public interface GameState {

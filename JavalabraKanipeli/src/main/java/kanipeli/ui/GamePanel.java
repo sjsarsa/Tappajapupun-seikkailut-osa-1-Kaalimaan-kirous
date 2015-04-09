@@ -15,7 +15,8 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 /**
- *
+ *The panel for the game, displaying graphics and such.
+ * Also listens to keys being pressed.
  * @author Sami
  */
 public class GamePanel  implements KeyListener{

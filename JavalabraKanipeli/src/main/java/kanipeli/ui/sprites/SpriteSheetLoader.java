@@ -11,7 +11,8 @@ import javax.imageio.ImageIO;
 import kanipeli.ui.GamePanel;
 
 /**
- *
+ *Loads an image file and cuts it into sprites. 
+ * The sprites are put in a two dimensional array.
  * @author Sami
  */
 public class SpriteSheetLoader {

@@ -11,7 +11,7 @@ import kanipeli.domain.Creature;
 import kanipeli.domain.CreatureOnField;
 import kanipeli.domain.PlayableCreature;
 import kanipeli.ui.level.Level;
-import kanipeli.ui.sprites.Sprites;
+import kanipeli.ui.sprites.SpriteSheet;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -67,7 +67,7 @@ public class FieldTest {
         this.randomEncounters = new ArrayList<>();
         randomEncounters.add(foe);
         game = new Game();
-        field = new Field(game, Sprites.level[0][0], player, creaturesOnField, randomEncounters);
+        field = new Field(game, SpriteSheet.level[0][0], player, creaturesOnField, randomEncounters);
         field.initField();
         Level level = new Level(field);
         level.loadMap(0, 0, 0, 0);

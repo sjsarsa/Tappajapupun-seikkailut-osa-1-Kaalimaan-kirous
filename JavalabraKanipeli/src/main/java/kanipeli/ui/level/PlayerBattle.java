@@ -5,10 +5,10 @@
  */
 package kanipeli.ui.level;
 
-import kanipeli.ui.sprites.Sprites;
+import kanipeli.ui.sprites.SpriteSheet;
 
 /**
- *
+ *Main characters battle tile.
  * @author Sami
  */
 public class PlayerBattle extends Tile{
@@ -20,7 +20,7 @@ public class PlayerBattle extends Tile{
     public PlayerBattle(int id) {
         super(id);
 
-        tile = Sprites.battle[0][0];
+        tile = SpriteSheet.battle[0][0];
     }
 
 }

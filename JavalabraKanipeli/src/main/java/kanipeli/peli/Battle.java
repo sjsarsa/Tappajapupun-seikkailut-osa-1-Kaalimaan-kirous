@@ -10,27 +10,19 @@ import java.util.Scanner;
 import kanipeli.domain.*;
 
 /**
- *
+ *Contains the logic for battles
  * @author Sami
  */
 public class Battle {
 
     private PlayableCreature player;
     private Creature foe;
+    private boolean escaped;
+    private boolean lost;
 
     /**
      *
-     */
-    public boolean escaped;
-
-    /**
-     *
-     */
-    public boolean lost;
-
-    /**
-     *
-     * @param player
+     * @param player 
      * @param enemy
      */
     public Battle(PlayableCreature player, Creature enemy) {
@@ -41,7 +33,9 @@ public class Battle {
     }
 
     /**
-     *
+     *Checks first if player hasn't lost or escaped and then adds experience to
+     * player according to the defeated enemy. If enough experience points are
+     * added calls for level up as long as experience points suffice.
      */
     public void checkLevelUp() {
         if (!lost && !escaped && player.addExp(foe.getExp())) {
@@ -53,7 +47,7 @@ public class Battle {
     }
 
     /**
-     *
+     *Going to change, hopefully to better.
      */
     public void levelUp() {
         player.levelUpHp();
@@ -62,9 +56,9 @@ public class Battle {
     }
 
     /**
-     *
-     * @param creature
-     * @return
+     *Checks whether a creature has any health left.
+     * @param creature yes, it's a creature
+     * @return true if still alive, else false
      */
     public boolean alive(Creature creature) {
         if (creature.getCurrentHp() <= 0) {
@@ -74,14 +68,16 @@ public class Battle {
     }
 
     /**
-     *
-     * @param attacker
-     * @param victim
-     * @return
+     *Inflicts damage upon the victim according to the damage factor of the
+     * attacker.
+     * @param attacker damage dealer
+     * @param victim damage receiver
+     * @return the amount of damage inflicted
      */
     public int attack(Creature attacker, Creature victim) {
         int damage = attacker.attack();
         victim.takeDamage(damage);
+        if (!alive(player)) lost = true;
         return damage;
     }
 
@@ -95,34 +91,23 @@ public class Battle {
 //        }
 //    }
 
-    /**
-     *
-     * @return
-     */
-        public boolean getEscaped() {
+
+    public boolean getEscaped() {
         return escaped;
     }
 
-    /**
-     *
-     * @return
-     */
+    public void setEscaped(boolean escaped) {
+        this.escaped = escaped;
+    }
+
     public boolean getLost() {
         return lost;
     }
 
-    /**
-     *
-     * @return
-     */
     public PlayableCreature getPlayer() {
         return player;
     }
 
-    /**
-     *
-     * @return
-     */
     public Creature getFoe() {
         return foe;
     }

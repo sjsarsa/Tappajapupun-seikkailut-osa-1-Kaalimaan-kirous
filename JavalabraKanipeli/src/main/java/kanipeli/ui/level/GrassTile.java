@@ -5,12 +5,12 @@
  */
 package kanipeli.ui.level;
 
-import kanipeli.ui.sprites.Sprites;
+import kanipeli.ui.sprites.SpriteSheet;
 
 
 
 /**
- *
+ *Tile for grass
  * @author Sami
  */
 public class GrassTile extends Tile {
@@ -21,7 +21,7 @@ public class GrassTile extends Tile {
      */
     public GrassTile(int id) {
         super(id);
-        tile = Sprites.terrain[0][0];
+        tile = SpriteSheet.terrain[0][0];
     }
 
 }

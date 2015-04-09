@@ -6,10 +6,13 @@
 package kanipeli.ui.states;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import kanipeli.AudioPlayer;
 
 /**
- *
+ *Contains and manages game states and music to be played.
+ * Sends info of keys being pressed to game states.
  * @author sjsarsa
  */
 public class GameStateManager {
@@ -17,12 +20,12 @@ public class GameStateManager {
     private GameState[] gameStates = new GameState[3];
     private int currentState = 0;
     private int previousState = 0;
-    private AudioPlayer[] songs = new AudioPlayer[10];
-    private AudioPlayer menuMusic = new AudioPlayer("/audio/menu.wav");
-    private AudioPlayer fieldMusic = new AudioPlayer("/audio/field.wav");
-    private AudioPlayer battleMusic = new AudioPlayer("/audio/battle.wav");
-    private AudioPlayer bossBattleMusic = new AudioPlayer("/audio/bossBattle.wav");
-    private AudioPlayer gameOverMusic = new AudioPlayer("/audio/gameOver.wav");
+
+    private String menuMusic = "/audio/menu.wav";
+    private String fieldMusic = "/audio/field.wav";
+    private String battleMusic = "/audio/battle.wav";
+    private String bossBattleMusic = "/audio/bossBattle.wav";
+    private String gameOverMusic = "/audio/gameOver.wav";
     private AudioPlayer music;
 //    public static final int MENUSTATE = 0;
 //    public static final int FIELDSTATE = 1;
@@ -37,29 +40,35 @@ public class GameStateManager {
         gameStates[index] = state;
     }
 
-    public void setMusic(AudioPlayer song) {
+    public void setMusic(String song) {
         music.stop();
-        music = song;
+        try {
+            Thread.sleep(100);        
+        music = new AudioPlayer(song);
+        Thread.sleep(50);
         music.play();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(GameStateManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public AudioPlayer getBattleMusic() {
+    public String getBattleMusic() {
         return battleMusic;
     }
 
-    public AudioPlayer getBossBattleMusic() {
+    public String getBossBattleMusic() {
         return bossBattleMusic;
     }
 
-    public AudioPlayer getFieldMusic() {
+    public String getFieldMusic() {
         return fieldMusic;
     }
 
-    public AudioPlayer getGameOverMusic() {
+    public String getGameOverMusic() {
         return gameOverMusic;
     }
 
-    public AudioPlayer getMenuMusic() {
+    public String getMenuMusic() {
         return menuMusic;
     }
 
@@ -86,19 +95,7 @@ public class GameStateManager {
      *
      */
     public void init() {
-//        AudioPlayer menuMusic = new AudioPlayer("/audio/menu.wav");
-//        AudioPlayer fieldMusic = new AudioPlayer("/audio/field.wav");
-//        AudioPlayer battleMusic = new AudioPlayer("/audio/battle.wav");
-//        AudioPlayer bossBattleMusic = new AudioPlayer("/audio/bossBattle.wav");
-//        AudioPlayer gameOverMusic = new AudioPlayer("/audio/gameOver.wav");
-//        songs[0] = menuMusic;
-//        songs[1] = fieldMusic;
-//        songs[2] = battleMusic;
-//        songs[3] = bossBattleMusic;
-//        songs[4] = gameOverMusic;
-//        if (music != null) music.stop();
-//        music = new AudioPlayer("/audio/menu.wav");
-        music = menuMusic;
+        music = new AudioPlayer(menuMusic);
         music.play();
         setState(0);
     }

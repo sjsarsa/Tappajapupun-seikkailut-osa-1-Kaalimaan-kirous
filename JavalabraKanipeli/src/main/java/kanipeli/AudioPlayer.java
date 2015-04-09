@@ -6,23 +6,18 @@
 package kanipeli;
 
 import java.io.IOException;
-import java.util.Random;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
-import kanipeli.ui.states.GameStateManager;
-import sun.org.mozilla.javascript.tools.jsc.Main;
 
 /**
- *
+ * Plays friggin' music!
  * @author Sami
  */
 public class AudioPlayer implements Runnable {
 
-    private Clip clip;
     private SourceDataLine sdl;
     private AudioInputStream in;
     private Thread t;
@@ -42,10 +37,6 @@ public class AudioPlayer implements Runnable {
             AudioFormat decodedFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, baseFormat.getSampleRate(),
                     16, 2, baseFormat.getChannels() * 2, baseFormat.getSampleRate(), false);
             AudioInputStream din = AudioSystem.getAudioInputStream(decodedFormat, in);
-//            DataLine.Info info = new DataLine.Info(Clip.class, baseFormat);
-//            clip = AudioSystem.getClip();
-//            clip = (Clip)AudioSystem.getLine(info);
-//            clip.open(din);
             DataLine.Info info = new DataLine.Info(SourceDataLine.class, baseFormat);
             sdl = (SourceDataLine) AudioSystem.getLine(info);
             sdl.open(decodedFormat);
@@ -57,25 +48,20 @@ public class AudioPlayer implements Runnable {
     /**
      *
      */
-    public void play() {
+    public synchronized void play() {
         if (t == null) {
             t = new Thread(this);
             t.setPriority(7);
             t.start();
         } else {
-            this.notify();
-            begin();
+            System.out.println("dafuq?");
         }
-//        if (clip == null) return;
-//        stop();
-//        clip.setFramePosition(0);
-//        clip.start();
     }
 
     /**
      *
      */
-    public void begin() {
+    public synchronized void begin() {
         try {
             if (sdl == null) {
                 return;
@@ -87,16 +73,14 @@ public class AudioPlayer implements Runnable {
 
             byte[] bytesBuffer = new byte[BUFFER_SIZE];
             int bytesRead = -1;
-
+            
             while ((bytesRead = in.read(bytesBuffer)) != -1) {
+                if (stop) break;
                 sdl.write(bytesBuffer, 0, bytesRead);
-//                concurrentQueue
-                if (stop) {
-                    break;
-                }
                 Thread.sleep(20);
             }
-            Thread.sleep(1000);
+//            wait();
+//            notify();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException ie) {
@@ -108,44 +92,22 @@ public class AudioPlayer implements Runnable {
      *
      */
     public void stop() {
-//        if(clip.isRunning()) clip.stop();
         stop = true;
         if (sdl.isRunning()) {
             sdl.flush();
-//            sdl.stop();
+            sdl.drain();
+            sdl.stop();
         }
-
-        System.out.println(t.isAlive());
-//        t.interrupt();
-
-//        try {
-//        t.wait();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            System.out.println(t.getThreadGroup());
-//            t.interrupt();
-//        }
     }
 
-//    public void close() {
-//        stop();
-//        clip.close();
-//
-//    }
     /**
      *
      */
     @Override
     public void run() {
-
         try {
             synchronized (this) {
-                Main.class.wait();
-
                 begin();
-
-                Thread.sleep(1000);
-                this.wait();
             }
         } catch (Exception e) {
             e.printStackTrace();

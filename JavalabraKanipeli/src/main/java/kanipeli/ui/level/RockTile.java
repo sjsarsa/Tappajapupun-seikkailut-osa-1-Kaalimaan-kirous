@@ -5,10 +5,10 @@
  */
 package kanipeli.ui.level;
 
-import kanipeli.ui.sprites.Sprites;
+import kanipeli.ui.sprites.SpriteSheet;
 
 /**
- *
+ *It's the tile of a rock
  * @author Sami
  */
 public class RockTile extends Tile {
@@ -20,7 +20,7 @@ public class RockTile extends Tile {
     public RockTile(int id) {
         super(id);
         super.impassable = true;
-        tile = Sprites.terrain[1][0];
+        tile = SpriteSheet.terrain[1][0];
     }
 
 }

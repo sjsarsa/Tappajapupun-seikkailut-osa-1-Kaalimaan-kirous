@@ -11,78 +11,49 @@ import kanipeli.ui.sprites.Sprite;
 
 
 /**
- *
+ * A superclass for tiles containing all actual tiles for use.
+ * Tiles contain a sprite
+ * @see Sprite
  * @author Sami
  */
 public class Tile {
 
-    /**
-     *
-     */
+ 
     public boolean impassable = false;
     int id;
 
-    /**
-     *
-     */
     public Sprite tile;
    
-    /**
-     *
-     */
+ 
     public static Tile[] tiles = new Tile[25000];
     
-//    field tiles
 
-    /**
-     *
-     */
-        public static Tile grass = new GrassTile(0);
+    public static Tile grass = new GrassTile(0);
 
-    /**
-     *
-     */
     public static Tile rock = new RockTile(1);
 
-    /**
-     *
-     */
     public static Tile player = new PlayerTile(2);
 
-    /**
-     *
-     */
+
     public static Tile boss  = new BossTile(3);
 
-    /**
-     *
-     */
+
     public static Tile BlackBunny = new BlackBunnyTile(8);
 //    battle tiles
 
-    /**
-     *
-     */
-        public static Tile MenuBlack = new BlackMenuTile(7);
 
-    /**
-     *
-     */
+    public static Tile MenuBlack = new BlackMenuTile(7);
+
+
     public static Tile playerBattle = new PlayerBattle(4);
 
-    /**
-     *
-     */
+
     public static Tile critterBattle = new CritterBattle(5);
 
-    /**
-     *
-     */
+
     public static Tile BattleEmpty = new BattleEmptyTile(6);
 
-    /**
-     *
-     */
+
     public static Tile BlackBunnyBattle = new BlackBunnyBattleTile(9);
     
     /**

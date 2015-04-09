@@ -7,7 +7,7 @@
 package kanipeli.domain;
 
 /**
- *
+ *Abstract class for items for the playableCreature.
  * @author Sami
  */
 public abstract class Item implements Comparable<Item>{
@@ -17,9 +17,9 @@ public abstract class Item implements Comparable<Item>{
     
     /**
      *
-     * @param name
-     * @param quantity
-     * @param quality
+     * @param name the name of item
+     * @param quantity the amount of item
+     * @param quality the power of item
      */
     public Item(String name, int quantity, int quality) {
         this.name = name;
@@ -59,16 +59,16 @@ public abstract class Item implements Comparable<Item>{
     }
     
     /**
-     *
-     * @param quantity
+     *Increases quantity by given amount.
+     * @param quantity amount
      */
     public void increaseQuantity(int quantity) {
         this.quantity += quantity;
     }
     
     /**
-     *
-     * @param quantity
+     *Decreases quantity by given amount.
+     * @param quantity amount
      */
     public void decreaseQuantity(int quantity) {
         this.quantity -= quantity;
@@ -83,8 +83,8 @@ public abstract class Item implements Comparable<Item>{
     }
 
     /**
-     *
-     * @param t
+     *Comparison according to quality.
+     * @param t comparable item
      * @return
      */
     @Override
@@ -93,12 +93,12 @@ public abstract class Item implements Comparable<Item>{
     }
 
     /**
-     *
-     * @param i
+     *Equality according to name and quality.
+     * @param t comparable item
      * @return
      */
-    public boolean equals(Item i) {
-        if (name.equals(i.getName()) && quality == i.getQuality()) {
+    public boolean equals(Item t) {
+        if (name.equals(t.getName()) && quality == t.getQuality()) {
             return true;
         }
         return false;

@@ -6,7 +6,7 @@
 package kanipeli.ui.sprites;
 
 /**
- *
+ *Sprite contains pixel colours for rendering.
  * @author Sami
  */
 public class Sprite {

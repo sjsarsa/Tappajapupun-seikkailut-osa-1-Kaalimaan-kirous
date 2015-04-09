@@ -8,7 +8,10 @@ package kanipeli.domain;
 import kanipeli.peli.Field;
 
 /**
- *
+ *An Extension to the class Creature.
+     * Has coordinates for appearing in the field and can also
+     * move on the field.
+ * 
  * @author Sami
  */
 public class CreatureOnField extends Creature {
@@ -24,16 +27,17 @@ public class CreatureOnField extends Creature {
     private int fieldTile;
 
     /**
-     *
-     * @param fieldTile
-     * @param battleTile
-     * @param impassables
-     * @param x
-     * @param y
-     * @param name
-     * @param maxHp
-     * @param damage
-     * @param exp
+     * 
+     * @param fieldTile Defines creature's appearance on the field.
+     * @param battleTile Defines creature's appearance when in a battle.
+     * @param impassables Defines coordinates on the field for locations on 
+     * which the creature cannot move.
+     * @param x x-coordinate on the field.
+     * @param y y-coordinate on the field.
+     * @param name creature's name.
+     * @param maxHp creature's maximum health.
+     * @param damage creatures damage factor.
+     * @param exp experience points gained when this creature is defeated.
      */
     public CreatureOnField(int fieldTile, int battleTile, boolean[][] impassables, int x, int y, String name, int maxHp, int damage, int exp) {
         super(battleTile, name, maxHp, damage, exp);
@@ -84,8 +88,8 @@ public class CreatureOnField extends Creature {
     }
 
     /**
-     *
-     * @param maxY
+     *Moves one tile downward on the field if possible.
+     * @param maxY The lower edge of the field.
      */
     public void moveDown(int maxY) {
         if (y < maxY && !impassables[x][y + 1]) {
@@ -95,7 +99,7 @@ public class CreatureOnField extends Creature {
     }
 
     /**
-     *
+     *Moves one tile to the left on the field if possible.
      */
     public void moveLeft() {
         if (x > 0 && !impassables[x - 1][y]) {
@@ -105,8 +109,8 @@ public class CreatureOnField extends Creature {
     }
 
     /**
-     *
-     * @param maxX
+     *Moves one tile to the right on the field if possible.
+     * @param maxX The edge of the field to the right.
      */
     public void moveRight(int maxX) {
         if (x < maxX && !impassables[x + 1][y]) {
@@ -116,7 +120,7 @@ public class CreatureOnField extends Creature {
     }
 
     /**
-     *
+     *Moves one tile upward on the field if possible.
      */
     public void moveUp() {
         if (y > 0 && !impassables[x][y - 1]) {

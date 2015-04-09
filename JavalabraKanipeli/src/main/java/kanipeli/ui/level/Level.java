@@ -9,10 +9,11 @@ import kanipeli.domain.CreatureOnField;
 import kanipeli.peli.Field;
 import kanipeli.ui.Screen;
 import kanipeli.ui.sprites.Sprite;
-import kanipeli.ui.sprites.Sprites;
+import kanipeli.ui.sprites.SpriteSheet;
 
 /**
- *
+ *Contains the fields layout and the methods to apply them to the game.
+ * @see FieldState
  * @author Sami
  */
 public class Level {

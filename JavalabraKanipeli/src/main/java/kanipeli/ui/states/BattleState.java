@@ -13,14 +13,18 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import kanipeli.AudioPlayer;
 import kanipeli.domain.Creature;
 import kanipeli.peli.Battle;
 import kanipeli.ui.Screen;
 import kanipeli.ui.level.Tile;
 
 /**
- *
+ *Renders the battle screen and draws its events on canvas.
+ * Calls for GameStateManager to change music and GameState.
+ * @see GameStateManager
+ * Calls for battle logic when needed (e.g. certain buttons are pressed).
+ * @see Battle
+ * 
  * @author Sami
  */
 public class BattleState implements GameState {
@@ -31,16 +35,12 @@ public class BattleState implements GameState {
     private Canvas canvas;
     private static int height, width, scale = 3;
     private BufferStrategy bs;
-    private static int HEIGHT = 256, WIDTH = 256, scaler = 3;
     private static BufferedImage image;
     private static int[] pixels;
     private Screen screen;
     private Battle battle;
     private Graphics g;
     private GameStateManager gsm;
-    private AudioPlayer battleMusic;
-    private AudioPlayer fieldMusic;
-    private AudioPlayer gameOverMusic = new AudioPlayer("/audio/gameOver.wav");
     private boolean actionSelected;
 
     private String[] options = new String[]{
@@ -62,8 +62,8 @@ public class BattleState implements GameState {
      */
     public BattleState(Canvas canvas, Screen screen, Battle battle, GameStateManager gsm, BufferedImage image) {
         this.canvas = canvas;
-        this.height = HEIGHT;
-        this.width = WIDTH;
+        this.height = screen.h;
+        this.width = screen.w;
         this.image = image;
         this.pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
         this.screen = screen;
@@ -72,19 +72,16 @@ public class BattleState implements GameState {
         this.bs = canvas.getBufferStrategy();
         this.gsm = gsm;
     }
-
-    /**
-     *
-     */
-    public void run() {
+    
+    private void checkIfBattleOver() {
         if (battle.getPlayer().getCurrentHp() == 0) return;
-        if (battle.escaped && !battle.lost) {
+        if (battle.getEscaped() && !battle.getLost()) {
             gsm.setState(1);
             gsm.setMusic(gsm.getFieldMusic());
         }
-        render();
-        drawOptions();
-        bs.show();
+    }
+    
+    private void fight() {
         if (actionSelected) {
             if (playerTurn()) {
                 battle.checkLevelUp();
@@ -101,10 +98,17 @@ public class BattleState implements GameState {
     }
 
     /**
-     *
-     * @return
+     *Does a whole lotta stuff.
      */
-    public boolean playerTurn() {
+    public void run() {
+        checkIfBattleOver();
+        render();
+        drawOptions();
+        bs.show();
+        fight();
+    }
+    
+    private boolean playerTurn() {
         selectAction();
         actionSelected = false;
         if (!battle.alive(battle.getFoe())) {
@@ -113,13 +117,8 @@ public class BattleState implements GameState {
         return false;
     }
 
-    /**
-     *
-     * @return
-     */
-    public boolean enemyTurn() {
+    private boolean enemyTurn() {
         int damage = battle.attack(battle.getFoe(), battle.getPlayer()); //enemy turn
-//        for (int i = 0; i < 30; i++) {
             try {
             drawDamage(damage, 2);
             drawDamage(damage, 2);
@@ -127,18 +126,13 @@ public class BattleState implements GameState {
             } catch (InterruptedException e) {
                 System.out.println("lol");
             }
-//        }
         if (!battle.alive(battle.getPlayer())) {
-            battle.lost = true;
             return true;
         }
         return false;
     }
 
-    /**
-     *
-     */
-    public void selectAction() {
+    private void selectAction() {
         if (currentChoice == 0) {
             int damage = battle.attack(battle.getPlayer(), battle.getFoe());
             try {
@@ -146,12 +140,12 @@ public class BattleState implements GameState {
                 drawDamage(damage, 0);
                 Thread.sleep(700);
             } catch (InterruptedException e) {
-                System.out.println("lol");
+                System.out.println("lollol");
             }
         }
         if (currentChoice == 1) ;
         if (currentChoice == 2) {
-            battle.escaped = true;
+            battle.setEscaped(true);
         }
     }
 
@@ -176,8 +170,8 @@ public class BattleState implements GameState {
             }
         }
          if (keyCode == KeyEvent.VK_ESCAPE) {
-            if (battle.lost) {
-                gsm.setMusic(gsm.getBattleMusic());
+            if (battle.getLost()) {
+                gsm.setMusic(gsm.getMenuMusic());
                 gsm.setState(0);
             }
             gsm.setState(0);

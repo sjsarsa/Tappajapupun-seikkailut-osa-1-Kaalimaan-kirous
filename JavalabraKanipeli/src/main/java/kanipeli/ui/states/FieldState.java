@@ -11,17 +11,24 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import kanipeli.AudioPlayer;
 import kanipeli.domain.Creature;
 import kanipeli.domain.CreatureOnField;
 import kanipeli.peli.Battle;
 import kanipeli.peli.Field;
 import kanipeli.peli.Game;
 import kanipeli.ui.Screen;
-import kanipeli.ui.level.Level;
 
 /**
- *
+ * Renders the field screen on canvas using Level.
+ * @see Level
+ * Calls for GameStateManager to change music and GameState.
+ * @see GameStateManager
+ * Creates battle states and battles.
+ * @see Battle
+ * @see BattleState
+ * Calls for field logic when needed (e.g. certain buttons are pressed).
+ * @see Field
+ * 
  * @author Sami
  */
 public class FieldState implements GameState {

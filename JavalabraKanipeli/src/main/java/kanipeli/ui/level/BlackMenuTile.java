@@ -5,10 +5,10 @@
  */
 package kanipeli.ui.level;
 
-import kanipeli.ui.sprites.Sprites;
+import kanipeli.ui.sprites.SpriteSheet;
 
 /**
- *
+ *Why do I do this?
  * @author Sami
  */
 public class BlackMenuTile extends Tile {
@@ -19,6 +19,6 @@ public class BlackMenuTile extends Tile {
      */
     public BlackMenuTile(int id) {
         super(id);
-        tile = Sprites.battle[4][0];
+        tile = SpriteSheet.battle[4][0];
     }
 }

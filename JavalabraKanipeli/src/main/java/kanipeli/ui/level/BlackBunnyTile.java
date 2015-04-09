@@ -5,10 +5,10 @@
  */
 package kanipeli.ui.level;
 
-import kanipeli.ui.sprites.Sprites;
+import kanipeli.ui.sprites.SpriteSheet;
 
 /**
- *
+ *Field tile of a black bunny.
  * @author Sami
  */
 public class BlackBunnyTile extends Tile{
@@ -19,6 +19,6 @@ public class BlackBunnyTile extends Tile{
      */
     public BlackBunnyTile(int id) {
         super(id);
-        tile = Sprites.terrain[4][0];
+        tile = SpriteSheet.terrain[4][0];
     }
 }

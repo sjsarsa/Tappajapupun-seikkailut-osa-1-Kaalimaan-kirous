@@ -5,10 +5,10 @@
  */
 package kanipeli.ui.level;
 
-import kanipeli.ui.sprites.Sprites;
+import kanipeli.ui.sprites.SpriteSheet;
 
 /**
- *
+ *Battle tile for random encounters.
  * @author Sami
  */
 public class CritterBattle extends Tile{
@@ -20,7 +20,7 @@ public class CritterBattle extends Tile{
     public CritterBattle(int id) {
         super(id);
         
-        tile = Sprites.battle[1][0];
+        tile = SpriteSheet.battle[1][0];
     }
     
 }

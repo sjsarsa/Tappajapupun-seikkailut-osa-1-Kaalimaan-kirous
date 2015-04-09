@@ -6,10 +6,11 @@
 package kanipeli.ui.sprites;
 
 /**
- *
+ *Contains sprite sheets which contain sprites.
+ * 
  * @author Sami
  */
-public class Sprites {
+public class SpriteSheet {
 
     /**
      *

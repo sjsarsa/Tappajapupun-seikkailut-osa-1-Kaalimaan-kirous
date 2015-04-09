@@ -5,10 +5,10 @@
  */
 package kanipeli.ui.level;
 
-import kanipeli.ui.sprites.Sprites;
+import kanipeli.ui.sprites.SpriteSheet;
 
 /**
- *
+ *Yay a bunny!
  * @author Sami
  */
 public class PlayerTile extends Tile{
@@ -19,7 +19,7 @@ public class PlayerTile extends Tile{
      */
     public PlayerTile(int id) {
         super(id);
-        tile = Sprites.terrain[2][0];
+        tile = SpriteSheet.terrain[2][0];
     }
     
 }

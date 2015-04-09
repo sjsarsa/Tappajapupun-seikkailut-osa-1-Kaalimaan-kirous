@@ -5,10 +5,10 @@
  */
 package kanipeli.ui.level;
 
-import kanipeli.ui.sprites.Sprites;
+import kanipeli.ui.sprites.SpriteSheet;
 
 /**
- *
+ *A blank white tile for battle
  * @author Sami
  */
 public class BattleEmptyTile extends Tile {
@@ -19,7 +19,7 @@ public class BattleEmptyTile extends Tile {
      */
     public BattleEmptyTile(int id) {
         super(id);
-        tile = Sprites.battle[2][0];
+        tile = SpriteSheet.battle[2][0];
     }
 
     

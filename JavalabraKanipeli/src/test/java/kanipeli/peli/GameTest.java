@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import kanipeli.domain.Creature;
 import kanipeli.domain.CreatureOnField;
 import kanipeli.domain.PlayableCreature;
-import kanipeli.ui.sprites.Sprites;
+import kanipeli.ui.sprites.SpriteSheet;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -60,7 +60,7 @@ public class GameTest {
         ArrayList<Creature> randomEncounters = new ArrayList();
         randomEncounters.add(boss);
         
-        f = new Field(game, Sprites.level[0][0], player, fieldDwellers,randomEncounters);
+        f = new Field(game, SpriteSheet.level[0][0], player, fieldDwellers,randomEncounters);
     }
     
     /**

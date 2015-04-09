@@ -10,7 +10,8 @@ import kanipeli.ui.sprites.Sprite;
 
 
 /**
- *
+ *Contains the pixels for rendering. 
+ * Sets the colours of pixels of a sprite to the screen in a specified place
  * @author Sami
  */
 public class Screen {
@@ -42,8 +43,8 @@ public class Screen {
 
     /**
      *
-     * @param xPos Don't do nothing yet
-     * @param yPos Same as above
+     * @param xPos float for width
+     * @param yPos float for height
      * @param sprite 
      */
     public void renderSprite(int xPos, int yPos, Sprite sprite) {

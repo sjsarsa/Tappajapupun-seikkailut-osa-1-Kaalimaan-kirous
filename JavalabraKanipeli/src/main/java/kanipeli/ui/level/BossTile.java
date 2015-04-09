@@ -5,10 +5,10 @@
  */
 package kanipeli.ui.level;
 
-import kanipeli.ui.sprites.Sprites;
+import kanipeli.ui.sprites.SpriteSheet;
 
 /**
- *
+ *Field tile for the main boss.
  * @author Sami
  */
 public class BossTile extends Tile{
@@ -19,7 +19,7 @@ public class BossTile extends Tile{
      */
     public BossTile(int id) {
         super(id);
-        tile = Sprites.terrain[3][0];
+        tile = SpriteSheet.terrain[3][0];
     }
     
 }

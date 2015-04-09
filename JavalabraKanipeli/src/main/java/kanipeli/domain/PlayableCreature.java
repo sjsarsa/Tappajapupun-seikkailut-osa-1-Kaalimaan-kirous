@@ -11,7 +11,12 @@ import java.util.Collections;
 import kanipeli.peli.Field;
 
 /**
- *
+ * An extension for the class CreatureOnField.
+     * A class for the main character of the game.
+     * A playable creature has a level factor that determines the power
+     * of the creature. It's experience differs from other creatures as it
+     * knows how much experience it has and can gain experience. The creature 
+     * can gain levels knows how much experience it needs to level up.
  * @author Sami
  */
 public class PlayableCreature extends CreatureOnField {
@@ -19,28 +24,30 @@ public class PlayableCreature extends CreatureOnField {
     private int lvl = 1;
     private int exp = 0;
     private int requiredExp = 5;
-    private int munny = 0;
     private ArrayList<Item> items = new ArrayList<Item>();
     
     /**
-     *
-     * @param fieldTile
-     * @param battleTile
-     * @param impassables
-     * @param x
-     * @param y
-     * @param Nimi
-     * @param maxHp
-     * @param damage
-     * @param exp
+     * 
+     * @param fieldTile Defines creature's appearance on the field.
+     * @param battleTile Defines creature's appearance when in a battle.
+     * @param impassables Defines coordinates on the field for locations on 
+     * which the creature cannot move.
+     * @param x x-coordinate on the field.
+     * @param y y-coordinate on the field.
+     * @param name creature's name.
+     * @param maxHp creature's maximum health.
+     * @param damage creatures damage factor.
+     * @param exp experience points gained when this creature is defeated.
      */
-    public PlayableCreature(int fieldTile, int battleTile, boolean[][] impassables, int x, int y, String Nimi, int maxHp, int damage, int exp) {
-        super(fieldTile, battleTile, impassables, x, y, Nimi, maxHp, damage, exp);
+    public PlayableCreature(int fieldTile, int battleTile, boolean[][] impassables, int x, int y, String name, int maxHp, int damage, int exp) {
+        super(fieldTile, battleTile, impassables, x, y, name, maxHp, damage, exp);
     }
 
     /**
-     *
-     * @param item
+     *Adds an item to the creatures item list if it is absent.
+     * Otherwise it increases the quantity of the item-to-be-added.
+     * Finally the item list is sorted.
+     * @param item An Item class object.
      */
     public void addItem(Item item) {
         if (!items.contains(item)) {
@@ -64,9 +71,12 @@ public class PlayableCreature extends CreatureOnField {
     }
 
     /**
-     *
-     * @param i
-     * @return
+     *Increases experience points by given amount.
+     * If experience points exceed the required amount for gaining a level
+     * the required points are reduced from the creatures experience points.
+     * The required points for the next level is increased by a factor of 1.75
+     * @param i The amount of experience about to be gained.
+     * @return Indicates whether a level is gained or not.
      */
     public boolean addExp(int i) {
         exp += i;
@@ -79,7 +89,9 @@ public class PlayableCreature extends CreatureOnField {
     }
     
     /**
-     *
+     *Increases creature's maximum health and damage.
+     * Gives the creature full health.
+     * Increases creature's level.
      */
     public void levelUp() {
         super.setMaxHp((int) (super.getMaxHp() * 1.2));
@@ -89,14 +101,14 @@ public class PlayableCreature extends CreatureOnField {
     }
 
     /**
-     *
+     *Increases creature's damage factor considering current level.
      */
     public void levelUpDamage() {        
         super.setDamage(super.getDamage() + (30 * lvl) / 3);        
     }
     
     /**
-     *
+     *Increases creature's maximum health considering current level.
      */
     public void levelUpHp() {        
         super.setMaxHp(super.getMaxHp() + (75 * lvl) / 3);
@@ -109,14 +121,7 @@ public class PlayableCreature extends CreatureOnField {
     public ArrayList<Item> getItems() {
         return items;
     }
-    
-    /**
-     *
-     * @return
-     */
-    public int getMunny() {
-        return munny;
-    }
+  
 
     /**
      *

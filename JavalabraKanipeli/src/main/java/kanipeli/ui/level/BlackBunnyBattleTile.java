@@ -5,10 +5,10 @@
  */
 package kanipeli.ui.level;
 
-import kanipeli.ui.sprites.Sprites;
+import kanipeli.ui.sprites.SpriteSheet;
 
 /**
- *
+ *A battle tile of a mean black bunny.
  * @author Sami
  */
 public class BlackBunnyBattleTile extends Tile{
@@ -19,6 +19,6 @@ public class BlackBunnyBattleTile extends Tile{
      */
     public BlackBunnyBattleTile(int id) {
         super(id);
-        tile = Sprites.battle[0][1];
+        tile = SpriteSheet.battle[0][1];
     }
 }

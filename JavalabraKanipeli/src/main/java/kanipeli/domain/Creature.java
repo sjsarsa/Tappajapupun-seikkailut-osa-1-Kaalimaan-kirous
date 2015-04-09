@@ -9,7 +9,8 @@ package kanipeli.domain;
 import java.util.Random;
 
 /**
- *
+
+ * Class for basic creatures appearing as random encounters in the game.
  * @author sjsarsa
  */
 public class Creature {
@@ -23,12 +24,12 @@ public class Creature {
     private int battleTile;
     
     /**
-     *
-     * @param battleTile
-     * @param name
-     * @param maxHp
-     * @param damage
-     * @param exp
+     * 
+     * @param battleTile Pixels for rendering the image of this creature object.
+     * @param name Quite self explanatory.
+     * @param maxHp Defines creature's maximum health or in this case it's initial health in battle
+     * @param damage A factor that defines how much health this creatures attack reduces.
+     * @param exp the amount of experience gained when this creature is defeated.
      */
     public Creature(int battleTile, String name, int maxHp, int damage, int exp) {
         this.name = name;
@@ -38,7 +39,6 @@ public class Creature {
         this.exp = exp;
         this.battleTile = battleTile;
     }
-
     /**
      *
      * @return
@@ -64,11 +64,11 @@ public class Creature {
     }
 
     /**
-     *
-     * @param vahinko
+     *Reduces creature's current health according to damage taken.
+     * @param damage the damage taken by this creature.
      */
-    public void takeDamage(int vahinko) {
-        this.currentHp -= vahinko;
+    public void takeDamage(int damage) {
+        this.currentHp -= damage;
         if (currentHp < 0) currentHp = 0;
     }
 
@@ -114,10 +114,10 @@ public class Creature {
 
     /**
      *
-     * @param vahinko
+     * @param damage
      */
-    public void setDamage(int vahinko) {
-        this.damage = vahinko;
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     /**
@@ -126,6 +126,5 @@ public class Creature {
      */
     public void setCurrentHp(int currentHp) {
         this.currentHp = Math.min(currentHp, maxHp);
-        
     }
 }

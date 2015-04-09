@@ -15,6 +15,7 @@ import kanipeli.ui.level.Level;
 import kanipeli.ui.sprites.Sprite;
 
 /**
+ * The logic of prancing around on the field.
  *
  * @author Sami
  */
@@ -145,41 +146,41 @@ public class Field {
     public boolean[][] getImpassables() {
         return impassables;
     }
-    
+
     /**
      *
      */
     public void checkEdge() {
         if (player.getX() == 0) {
             if (connectedFields[0] != null) {
-                game.setCurrentField(connectedFields[0]);
-                player.setX(connectedFields[0].exits[2][0]);
-                player.setY(connectedFields[0].exits[2][1]);
-            }    
-        }
-        else if (player.getY() == 0) {
+                changeField(0);
+            }
+        } else if (player.getY() == 0) {
             if (connectedFields[1] != null) {
-                game.setCurrentField(connectedFields[1]);
-                player.setX(connectedFields[1].exits[3][0]);
-                player.setY(connectedFields[1].exits[3][1]);
+                changeField(1);
             }
-        }
-        else if (player.getX() == width - 1) {
+        } else if (player.getX() == width - 1) {
             if (connectedFields[2] != null) {
-                game.setCurrentField(connectedFields[2]);
-                player.setX(connectedFields[2].exits[0][0]);
-                player.setY(connectedFields[2].exits[0][1]);
+                changeField(2);
             }
-        }
-        else if (player.getY() == height - 1) {
+        } else if (player.getY() == height - 1) {
             if (connectedFields[3] != null) {
-                game.setCurrentField(connectedFields[3]);
-                player.setX(connectedFields[3].exits[1][0]);
-                player.setY(connectedFields[3].exits[1][1]);
+                changeField(3);
             }
         }
     }
-    
+
+    private void changeField(int i) {
+        game.setCurrentField(connectedFields[i]);
+        if (i < 2) {
+            player.setX(connectedFields[i].exits[i + 2][0]);
+            player.setY(connectedFields[i].exits[i + 2][1]);
+        } else {
+            player.setX(connectedFields[i].exits[i - 2][0]);
+            player.setY(connectedFields[i].exits[i - 2][1]);
+        }
+    }
+
     /**
      *
      * @return
