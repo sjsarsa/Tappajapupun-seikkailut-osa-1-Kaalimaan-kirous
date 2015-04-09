@@ -38,12 +38,21 @@ public class MenuState implements GameState, Runnable {
     private int currentChoice = 0;
     private boolean actionSelected = false;
 
+    /**
+     *
+     * @param canvas
+     * @param screen
+     * @param gsm
+     */
     public MenuState(Canvas canvas, Screen screen, GameStateManager gsm) {
         this.canvas = canvas;
         this.screen = screen;
         this.gsm = gsm;
     }
 
+    /**
+     *
+     */
     @Override
     public void run() {
 
@@ -96,6 +105,10 @@ public class MenuState implements GameState, Runnable {
         }
     }
 
+    /**
+     *
+     * @param keyCode
+     */
     @Override
     public void keyPressed(int keyCode) {
         if (keyCode == KeyEvent.VK_ENTER) {
@@ -137,7 +150,6 @@ public class MenuState implements GameState, Runnable {
     private void newGame() {
         Game game = new Game();
         FieldState fs = new FieldState(canvas, screen, game, gsm, image);
-//        gsm.music.stop();
         gsm.addState(1, fs);
         gsm.setState(1);
     }

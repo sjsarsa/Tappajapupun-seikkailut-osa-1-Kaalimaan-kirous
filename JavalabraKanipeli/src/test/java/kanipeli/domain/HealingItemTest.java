@@ -19,31 +19,52 @@ import static org.junit.Assert.*;
  */
 public class HealingItemTest {
     
+    /**
+     *
+     */
     public HealingItemTest() {
     }
     
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
     
+    /**
+     *
+     */
     @Test
     public void toStringToimii() {
         Item potion = new HealingItem("potion", 1, 10);
         assertEquals(potion.toString(), "potion: 1");
     }
     
+    /**
+     *
+     */
     @Test
     public void getters() {
         Item potion = new HealingItem("potion", 1, 10);
@@ -51,7 +72,9 @@ public class HealingItemTest {
         assertEquals(potion.getQuantity(), 1);
     }
     
-    
+    /**
+     *
+     */
     @Test
     public void use() {
         Item potion = new HealingItem("potion", 1, 10);

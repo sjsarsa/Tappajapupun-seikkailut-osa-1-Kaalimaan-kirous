@@ -12,6 +12,11 @@ import kanipeli.ui.sprites.Sprites;
  * @author Sami
  */
 public class BlackBunnyTile extends Tile{
+
+    /**
+     *
+     * @param id
+     */
     public BlackBunnyTile(int id) {
         super(id);
         tile = Sprites.terrain[4][0];

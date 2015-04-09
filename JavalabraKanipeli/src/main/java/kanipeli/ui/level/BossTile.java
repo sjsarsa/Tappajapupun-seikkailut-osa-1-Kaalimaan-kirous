@@ -13,6 +13,10 @@ import kanipeli.ui.sprites.Sprites;
  */
 public class BossTile extends Tile{
 
+    /**
+     *
+     * @param id
+     */
     public BossTile(int id) {
         super(id);
         tile = Sprites.terrain[3][0];

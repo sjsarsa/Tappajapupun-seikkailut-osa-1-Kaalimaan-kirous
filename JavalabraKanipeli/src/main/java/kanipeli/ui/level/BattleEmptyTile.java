@@ -13,6 +13,10 @@ import kanipeli.ui.sprites.Sprites;
  */
 public class BattleEmptyTile extends Tile {
 
+    /**
+     *
+     * @param id
+     */
     public BattleEmptyTile(int id) {
         super(id);
         tile = Sprites.battle[2][0];

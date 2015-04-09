@@ -29,9 +29,25 @@ public class Field {
     private int[][] exits;
     private boolean[][] impassables;
     private Game game;
+
+    /**
+     *
+     */
     public Level level;
+
+    /**
+     *
+     */
     public Sprite sprite;
 
+    /**
+     *
+     * @param game
+     * @param sprite
+     * @param player
+     * @param creaturesOnField
+     * @param randomEncounters
+     */
     public Field(Game game, Sprite sprite, PlayableCreature player, List<CreatureOnField> creaturesOnField, List<Creature> randomEncounters) {
         this.width = sprite.w;
         this.height = sprite.h;
@@ -47,47 +63,92 @@ public class Field {
         this.impassables = level.getImpassables();
     }
 
+    /**
+     *
+     */
     public void initField() {
         player.setImpassables(impassables);
     }
 
+    /**
+     *
+     * @param edge
+     * @param x
+     * @param y
+     */
     public void addExit(int edge, int x, int y) {
         exits[edge][0] = x;
         exits[edge][1] = y;
     }
 
+    /**
+     *
+     * @param i
+     * @param field
+     */
     public void addConnectedField(int i, Field field) {
         connectedFields[i] = field;
     }
 
+    /**
+     *
+     * @return
+     */
     public int[][] getExits() {
         return exits;
     }
 
+    /**
+     *
+     * @return
+     */
     public Field[] getConnectedFields() {
         return connectedFields;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<CreatureOnField> getCreaturesOnField() {
         return creaturesOnField;
     }
 
+    /**
+     *
+     * @return
+     */
     public PlayableCreature getPlayer() {
         return player;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean[][] getImpassables() {
         return impassables;
     }
     
+    /**
+     *
+     */
     public void checkEdge() {
         if (player.getX() == 0) {
             if (connectedFields[0] != null) {
@@ -119,6 +180,10 @@ public class Field {
         }
     }
     
+    /**
+     *
+     * @return
+     */
     public CreatureOnField checkSpot() {
         for (CreatureOnField h : creaturesOnField) {
             if (player.getX() == h.getX() && player.getY() == h.getY()) {
@@ -131,6 +196,10 @@ public class Field {
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean randomEncounter() {
         if (checkSpot() != null) {
             return false;
@@ -143,6 +212,10 @@ public class Field {
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     public Creature createRandomEncounter() {
         Random rm = new Random();
         Creature re = randomEncounters.get(rm.nextInt(randomEncounters.size()));

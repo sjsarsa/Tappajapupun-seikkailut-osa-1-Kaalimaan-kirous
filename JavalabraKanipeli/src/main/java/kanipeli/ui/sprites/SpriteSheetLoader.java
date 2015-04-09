@@ -16,18 +16,44 @@ import kanipeli.ui.GamePanel;
  */
 public class SpriteSheetLoader {
 
+    /**
+     *
+     */
     public int[] sheetPixels;
+
+    /**
+     *
+     */
     public int[] pixels;
     int x, y, sheetWidth;
 
+    /**
+     *
+     */
     public SpriteSheetLoader() {
         
     }
     
+    /**
+     *
+     * @param fileName
+     * @param w
+     * @param h
+     * @return
+     */
     public static Sprite[][] cutFiles(String fileName, int w, int h) {
         return cutFiles(fileName, w, h, 0, 0);
     }
     
+    /**
+     *
+     * @param fileName
+     * @param w
+     * @param h
+     * @param xOffs
+     * @param yOffs
+     * @return
+     */
     public static Sprite[][] cutFiles(String fileName, int w, int h, int xOffs, int yOffs) {
         try {
             BufferedImage image = ImageIO.read(GamePanel.class.getResource(fileName));

@@ -17,9 +17,22 @@ public class Battle {
 
     private PlayableCreature player;
     private Creature foe;
+
+    /**
+     *
+     */
     public boolean escaped;
+
+    /**
+     *
+     */
     public boolean lost;
 
+    /**
+     *
+     * @param player
+     * @param enemy
+     */
     public Battle(PlayableCreature player, Creature enemy) {
         this.player = player;
         this.foe = enemy;
@@ -27,6 +40,9 @@ public class Battle {
         this.lost = false;
     }
 
+    /**
+     *
+     */
     public void checkLevelUp() {
         if (!lost && !escaped && player.addExp(foe.getExp())) {
             levelUp();
@@ -36,12 +52,20 @@ public class Battle {
         }
     }
 
+    /**
+     *
+     */
     public void levelUp() {
         player.levelUpHp();
         player.levelUpDamage();
         player.levelUp();
     }
 
+    /**
+     *
+     * @param creature
+     * @return
+     */
     public boolean alive(Creature creature) {
         if (creature.getCurrentHp() <= 0) {
             return false;
@@ -49,6 +73,12 @@ public class Battle {
         return true;
     }
 
+    /**
+     *
+     * @param attacker
+     * @param victim
+     * @return
+     */
     public int attack(Creature attacker, Creature victim) {
         int damage = attacker.attack();
         victim.takeDamage(damage);
@@ -64,18 +94,35 @@ public class Battle {
 //                    i.use(foe);      
 //        }
 //    }
-    public boolean getEscaped() {
+
+    /**
+     *
+     * @return
+     */
+        public boolean getEscaped() {
         return escaped;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean getLost() {
         return lost;
     }
 
+    /**
+     *
+     * @return
+     */
     public PlayableCreature getPlayer() {
         return player;
     }
 
+    /**
+     *
+     * @return
+     */
     public Creature getFoe() {
         return foe;
     }

@@ -21,58 +21,94 @@ public class CreatureTest {
     
     private Creature critter;
     
+    /**
+     *
+     */
     public CreatureTest() {
         critter = new Creature(5, "Einari", 10, 1, 1);
     }
     
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
     @Before
     public void setUp() {
         
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
     
+    /**
+     *
+     */
     @Test
     public void getBattleTile() {
         assertEquals(critter.getBattleTile(), 5);
     }
     
+    /**
+     *
+     */
     @Test
     public void getName() {
         assertEquals(critter.getName(), "Einari");
     }
     
+    /**
+     *
+     */
     @Test
     public void getMaxHp() {
         assertEquals(critter.getMaxHp(), 10);
     }
     
+    /**
+     *
+     */
     @Test
     public void getDamage() {
         assertEquals(critter.getDamage(), 1);
     }
     
+    /**
+     *
+     */
     @Test
     public void getExp() {
         assertEquals(critter.getExp(), 1);
     }
     
+    /**
+     *
+     */
     @Test
     public void setDamage() {
         critter.setDamage(3);
         assertEquals(critter.getDamage(), 3);
     }
     
+    /**
+     *
+     */
     @Test
     public void setCurrentHp() {
         critter.setCurrentHp(4);
@@ -81,12 +117,18 @@ public class CreatureTest {
         assertEquals(critter.getCurrentHp(), 10);
     }
     
+    /**
+     *
+     */
     @Test
     public void setMaxHpToimii() {
         critter.setMaxHp(20);
         assertEquals(critter.getMaxHp(), 20);
     }
     
+    /**
+     *
+     */
     @Test
     public void takesDamage() {
         critter.setMaxHp(10);

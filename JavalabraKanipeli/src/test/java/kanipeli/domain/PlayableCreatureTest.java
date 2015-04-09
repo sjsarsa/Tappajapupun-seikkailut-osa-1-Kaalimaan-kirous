@@ -19,26 +19,45 @@ import static org.junit.Assert.*;
  */
 public class PlayableCreatureTest {
     private PlayableCreature vilperi;
+
+    /**
+     *
+     */
     public PlayableCreatureTest() {
     }
     
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
     @Before
     public void setUp() {
         vilperi = new PlayableCreature(2, 4, null, 0, 0, "vilperi", 100, 100, 0);
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
     
+    /**
+     *
+     */
     @Test
     public void addItem() {
         DamagingItem rottenCheese = new DamagingItem("Rotten cheese", 1, 999);
@@ -52,6 +71,9 @@ public class PlayableCreatureTest {
         assertEquals(vilperi.getItems().size(), 2);
     }
     
+    /**
+     *
+     */
     @Test
     public void addExp() {
         vilperi.addExp(5);
@@ -62,6 +84,9 @@ public class PlayableCreatureTest {
         assertEquals(vilperi.getRequiredExp(), 14);
     }
     
+    /**
+     *
+     */
     public void levelUp() {
         vilperi.levelUp();
         assertEquals(vilperi.getDamage(), 120);
@@ -74,6 +99,9 @@ public class PlayableCreatureTest {
         assertEquals(vilperi.getLvl(), 3);
     }
     
+    /**
+     *
+     */
     @Test
     public void levelUp2() {
         vilperi.levelUpDamage();

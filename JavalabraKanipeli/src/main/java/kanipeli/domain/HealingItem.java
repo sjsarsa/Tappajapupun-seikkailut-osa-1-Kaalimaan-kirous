@@ -11,10 +11,20 @@ package kanipeli.domain;
  */
 public class HealingItem extends Item implements Comparable<Item> {
 
+    /**
+     *
+     * @param name
+     * @param quantity
+     * @param quality
+     */
     public HealingItem(String name, int quantity, int quality) {
         super(name, quantity, quality);
     }
 
+    /**
+     *
+     * @param creature
+     */
     @Override
     public void use(Creature creature) {
         creature.setCurrentHp(creature.getCurrentHp() + super.getQuality());

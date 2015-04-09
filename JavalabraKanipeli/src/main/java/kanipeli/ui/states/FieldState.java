@@ -36,6 +36,14 @@ public class FieldState implements GameState {
     private int xScroll = 0, yScroll = 0;
     private GameStateManager gsm;
 
+    /**
+     *
+     * @param canvas
+     * @param screen
+     * @param game
+     * @param gsm
+     * @param image
+     */
     public FieldState(Canvas canvas, Screen screen, Game game, GameStateManager gsm, BufferedImage image) {
         this.canvas = canvas;
         this.screen = screen;
@@ -44,15 +52,20 @@ public class FieldState implements GameState {
         this.image = image;
         this.pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
         this.field = game.getCurrentField();
-        gsm.music.stop();
-        gsm.music = new AudioPlayer("/audio/field.wav");
-        gsm.music.play();
+        gsm.setMusic(gsm.getFieldMusic());
     }
 
+    /**
+     *
+     * @param game
+     */
     public void setGame(Game game) {
         this.game = game;
     }
 
+    /**
+     *
+     */
     public void run() {
         render();
         if (field.getPlayer().moved) {
@@ -82,6 +95,10 @@ public class FieldState implements GameState {
         bs.show();
     }
 
+    /**
+     *
+     * @param keyCode
+     */
     public void keyPressed(int keyCode) {
         if (keyCode == KeyEvent.VK_W) {
             field.getPlayer().moveUp();
@@ -116,9 +133,7 @@ public class FieldState implements GameState {
     private void checkSpot() {
         CreatureOnField cof = field.checkSpot();
         if (cof != null) {
-            gsm.music.stop();
-            gsm.music = new AudioPlayer("/audio/bossBattle.wav");
-            gsm.music.play();
+            gsm.setMusic(gsm.getBossBattleMusic());
             fight(cof);
         }
         field.checkEdge();
@@ -127,9 +142,7 @@ public class FieldState implements GameState {
     private void checkRandomEncounter() {
         if (field.randomEncounter()) {
             Creature foe = field.createRandomEncounter();
-            gsm.music.stop();
-            gsm.music = new AudioPlayer("/audio/battle.wav");
-            gsm.music.play();
+            gsm.setMusic(gsm.getBattleMusic());
             fight(foe);
         }
     }

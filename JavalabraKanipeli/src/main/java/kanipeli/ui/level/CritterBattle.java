@@ -13,6 +13,10 @@ import kanipeli.ui.sprites.Sprites;
  */
 public class CritterBattle extends Tile{
 
+    /**
+     *
+     * @param id
+     */
     public CritterBattle(int id) {
         super(id);
         

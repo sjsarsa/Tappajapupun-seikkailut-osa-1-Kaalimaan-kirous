@@ -13,6 +13,10 @@ import kanipeli.ui.sprites.Sprites;
  */
 public class BlackMenuTile extends Tile {
     
+    /**
+     *
+     * @param id
+     */
     public BlackMenuTile(int id) {
         super(id);
         tile = Sprites.battle[4][0];

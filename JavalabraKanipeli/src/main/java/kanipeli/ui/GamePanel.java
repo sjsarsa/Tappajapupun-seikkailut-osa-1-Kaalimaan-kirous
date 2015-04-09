@@ -21,8 +21,20 @@ import javax.swing.JFrame;
 public class GamePanel  implements KeyListener{
     
     private GameStateManager gsm;
+
+    /**
+     *Creates a frame for the game and also works as a keyListener.
+     */
     public JFrame frame;
     
+    /**
+     *
+     * @param width
+     * @param height
+     * @param scale
+     * @param canvas
+     * @param gsm
+     */
     public GamePanel(int width, int height, int scale, Canvas canvas, GameStateManager gsm) {     
         this.gsm = gsm;
         canvas.setPreferredSize(new Dimension(width * scale, height * scale));
@@ -38,15 +50,27 @@ public class GamePanel  implements KeyListener{
         canvas.addKeyListener(this);
     }
 
+    /**
+     * : P
+     * @param ke
+     */
     @Override
     public void keyTyped(KeyEvent ke) {
     }
 
+    /**
+     *Sends keyCode of pressed key to gsm.
+     * @param ke
+     */
     @Override
     public void keyPressed(KeyEvent ke) {
         gsm.keyPressed(ke.getKeyCode());
     }
 
+    /**
+     * Doesn't do a thing.
+     * @param ke
+     */
     @Override
     public void keyReleased(KeyEvent ke) {
     }

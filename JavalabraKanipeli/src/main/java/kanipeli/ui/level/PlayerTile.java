@@ -13,6 +13,10 @@ import kanipeli.ui.sprites.Sprites;
  */
 public class PlayerTile extends Tile{
 
+    /**
+     *
+     * @param id
+     */
     public PlayerTile(int id) {
         super(id);
         tile = Sprites.terrain[2][0];

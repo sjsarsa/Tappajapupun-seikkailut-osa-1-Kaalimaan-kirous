@@ -6,12 +6,15 @@
 package kanipeli;
 
 import java.io.IOException;
+import java.util.Random;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
+import kanipeli.ui.states.GameStateManager;
+import sun.org.mozilla.javascript.tools.jsc.Main;
 
 /**
  *
@@ -23,9 +26,14 @@ public class AudioPlayer implements Runnable {
     private SourceDataLine sdl;
     private AudioInputStream in;
     private Thread t;
+    private boolean stop = false;
 
+    /**
+     *
+     *
+     * @param s File name
+     */
     public AudioPlayer(String s) {
-
         try {
             in = AudioSystem.getAudioInputStream(getClass().getResourceAsStream(s));
 //            File file = new File("src/main/resources" + s);
@@ -46,26 +54,34 @@ public class AudioPlayer implements Runnable {
         }
     }
 
+    /**
+     *
+     */
     public void play() {
         if (t == null) {
             t = new Thread(this);
-            t.setPriority(2);
+            t.setPriority(7);
             t.start();
         } else {
-            start();
+            this.notify();
+            begin();
         }
 //        if (clip == null) return;
 //        stop();
 //        clip.setFramePosition(0);
 //        clip.start();
     }
-    
-    public void start() {
+
+    /**
+     *
+     */
+    public void begin() {
         try {
             if (sdl == null) {
                 return;
             }
-            stop();
+//            stop();
+            stop = false;
             sdl.start();
             int BUFFER_SIZE = 4096;
 
@@ -74,6 +90,10 @@ public class AudioPlayer implements Runnable {
 
             while ((bytesRead = in.read(bytesBuffer)) != -1) {
                 sdl.write(bytesBuffer, 0, bytesRead);
+//                concurrentQueue
+                if (stop) {
+                    break;
+                }
                 Thread.sleep(20);
             }
             Thread.sleep(1000);
@@ -84,14 +104,27 @@ public class AudioPlayer implements Runnable {
         }
     }
 
+    /**
+     *
+     */
     public void stop() {
 //        if(clip.isRunning()) clip.stop();
+        stop = true;
         if (sdl.isRunning()) {
             sdl.flush();
-            sdl.drain();
-            sdl.stop();
-            sdl.close();
+//            sdl.stop();
         }
+
+        System.out.println(t.isAlive());
+//        t.interrupt();
+
+//        try {
+//        t.wait();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            System.out.println(t.getThreadGroup());
+//            t.interrupt();
+//        }
     }
 
 //    public void close() {
@@ -99,9 +132,23 @@ public class AudioPlayer implements Runnable {
 //        clip.close();
 //
 //    }
-
+    /**
+     *
+     */
     @Override
     public void run() {
-        start();
+
+        try {
+            synchronized (this) {
+                Main.class.wait();
+
+                begin();
+
+                Thread.sleep(1000);
+                this.wait();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -16,15 +16,36 @@ import kanipeli.ui.sprites.Sprite;
 public class Screen {
 
 
-    public int w, h;
+    public int w,
+
+    /**
+     *
+     */
+    h;
     int xOffSet = 0, yOffSet = 0;
+
+    /**
+     *
+     */
     public int pixels[];
 
+    /**
+     *
+     * @param w
+     * @param h
+     */
     public Screen(int w, int h) {
         this.w = w;
         this.h = h;
         pixels = new int[w * h];
     }
+
+    /**
+     *
+     * @param xPos Don't do nothing yet
+     * @param yPos Same as above
+     * @param sprite 
+     */
     public void renderSprite(int xPos, int yPos, Sprite sprite) {
 //        loader.grabTile(tile, width, height);
         int height = sprite.h;
@@ -47,9 +68,14 @@ public class Screen {
         }
     }
 
-    public void setOffSets(int xOffSet, int yOffSet) {
-        this.xOffSet = xOffSet;
-        this.yOffSet = yOffSet;
-    }
+    /**
+     *
+     * @param xOffSet
+     * @param yOffSet
+     */
+//    public void setOffSets(int xOffSet, int yOffSet) {
+//        this.xOffSet = xOffSet;
+//        this.yOffSet = yOffSet;
+//    }
     
 }

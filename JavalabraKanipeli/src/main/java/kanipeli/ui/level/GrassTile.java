@@ -15,6 +15,10 @@ import kanipeli.ui.sprites.Sprites;
  */
 public class GrassTile extends Tile {
 
+    /**
+     *
+     * @param id
+     */
     public GrassTile(int id) {
         super(id);
         tile = Sprites.terrain[0][0];

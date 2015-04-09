@@ -26,17 +26,29 @@ public class GameTest {
     private Game game = new Game();
     private Field f;
     
+    /**
+     *
+     */
     public GameTest() {
     }
     
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
     @Before
     public void setUp() {
         PlayableCreature player = new PlayableCreature(2, 4, null, 1, 1, "Hilipati", 200, 30, 0);
@@ -51,10 +63,16 @@ public class GameTest {
         f = new Field(game, Sprites.level[0][0], player, fieldDwellers,randomEncounters);
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
     
+    /**
+     *
+     */
     @Test
     public void gettersAndSetters() {
         assertNotNull(game.getCurrentField());

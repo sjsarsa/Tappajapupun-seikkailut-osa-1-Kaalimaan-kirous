@@ -18,6 +18,10 @@ import kanipeli.ui.Screen;
  */
 public class main {
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {      
         int width = 256, height = 256, scale = 3;
         

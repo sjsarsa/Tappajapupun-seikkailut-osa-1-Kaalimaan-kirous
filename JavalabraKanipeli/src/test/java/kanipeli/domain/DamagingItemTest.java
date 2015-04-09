@@ -19,31 +19,52 @@ import static org.junit.Assert.*;
  */
 public class DamagingItemTest {
     
+    /**
+     *
+     */
     public DamagingItemTest() {
     }
     
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
     
+    /**
+     *
+     */
     @Test
     public void toStringToimii() {
         Item nuke = new DamagingItem("nuke", 1, 10000);
         assertEquals(nuke.toString(), "nuke: 1");
     }
     
+    /**
+     *
+     */
     @Test
     public void getters() {
         Item nuke = new DamagingItem("nuke", 1, 10000);
@@ -51,7 +72,9 @@ public class DamagingItemTest {
         assertEquals(nuke.getQuantity(), 1);
     }
     
-    
+    /**
+     *
+     */
     @Test
     public void use() {
         Item nuke = new DamagingItem("nuke", 1, 10000);

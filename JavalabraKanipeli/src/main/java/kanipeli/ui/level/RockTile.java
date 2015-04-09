@@ -13,6 +13,10 @@ import kanipeli.ui.sprites.Sprites;
  */
 public class RockTile extends Tile {
 
+    /**
+     *
+     * @param id
+     */
     public RockTile(int id) {
         super(id);
         super.impassable = true;

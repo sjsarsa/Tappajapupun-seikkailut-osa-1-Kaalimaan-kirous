@@ -20,6 +20,10 @@ public class Game {
     
     // 0 = left, 1 = up, 2 = right, 3 = down
 
+    /**
+     *
+     */
+    
     public Game() {
         PlayableCreature player = new PlayableCreature(2, 4, null, 1, 1, "Tappajapupu", 200, 30, 0);
         
@@ -60,10 +64,18 @@ public class Game {
         currentField.initField();
     }
 
+    /**
+     *
+     * @return
+     */
     public Field getCurrentField() {
         return currentField;
     }
 
+    /**
+     *
+     * @param currentField
+     */
     public void setCurrentField(Field currentField) {
         currentField.initField();
         this.currentField = currentField;

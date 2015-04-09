@@ -22,28 +22,46 @@ public class CreatureOnFieldTest {
     private CreatureOnField joppe;
     boolean[][] impassables;
 
+    /**
+     *
+     */
     public CreatureOnFieldTest() {
 
     }
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
         impassables = new boolean[16][16];
         joppe = new CreatureOnField(3, 5, impassables, 1, 1, "Joppe", 30, 10, 0);
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
 
+    /**
+     *
+     */
     @Test
     public void gettersSetters() {
         assertEquals(joppe.getFieldTile(), 3);
@@ -55,6 +73,9 @@ public class CreatureOnFieldTest {
         assertEquals(joppe.getY(), 6);
     }
 
+    /**
+     *
+     */
     @Test
     public void moveDown() {
         joppe.moveDown(0);
@@ -71,6 +92,9 @@ public class CreatureOnFieldTest {
         assertEquals(joppe.getY(), 2);
     }
 
+    /**
+     *
+     */
     @Test
     public void moveUp() {
         impassables[1][0] = true;
@@ -87,6 +111,9 @@ public class CreatureOnFieldTest {
         
     }
 
+    /**
+     *
+     */
     @Test
     public void moveLeft() {
         impassables[0][1] = true;
@@ -102,6 +129,9 @@ public class CreatureOnFieldTest {
         assertEquals(joppe.getX(), 0);
     }
 
+    /**
+     *
+     */
     @Test
     public void moveRight() {
         impassables[3][1] = true;

@@ -34,17 +34,29 @@ public class FieldTest {
     private Game game;
     boolean[][] impassables;
     
+    /**
+     *
+     */
     public FieldTest() {
     }
     
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
     @Before
     public void setUp() {
         foe = new Creature(5, "jeba", 0, 0, 0);
@@ -63,10 +75,16 @@ public class FieldTest {
         field.getPlayer().setImpassables(impassables);
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
     
+    /**
+     *
+     */
     @Test
     public void getters() {
         assertEquals(field.getCreaturesOnField(), creaturesOnField);
@@ -76,6 +94,9 @@ public class FieldTest {
         assertEquals(field.getPlayer(), player);
     }
     
+    /**
+     *
+     */
     @Test
     public void checkSpot() {
         assertEquals(field.checkSpot(), boss);
@@ -93,6 +114,9 @@ public class FieldTest {
         assertEquals(field.checkSpot(), null);
     }
     
+    /**
+     *
+     */
     @Test
     public void createRandomEncounter() {
         Creature re = field.createRandomEncounter();
@@ -101,12 +125,18 @@ public class FieldTest {
         assertEquals(re.getMaxHp(), foe.getMaxHp());
     }
     
+    /**
+     *
+     */
     @Test
     public void addConnectedField() {
         field.addConnectedField(0, game.getCurrentField());
         assertEquals(field.getConnectedFields()[0], game.getCurrentField());
     }
     
+    /**
+     *
+     */
     @Test
     public void checkLeftEdge() {
         field = game.getCurrentField();
@@ -124,6 +154,9 @@ public class FieldTest {
         assertEquals(player.getX(), 0);
     }
     
+    /**
+     *
+     */
     @Test
     public void checkRightEdge() {
         field = game.getCurrentField();
@@ -139,6 +172,9 @@ public class FieldTest {
         assertEquals(player.getX(), 15);
     }
     
+    /**
+     *
+     */
     @Test
     public void checkUpperEdge() {
         field = game.getCurrentField();
@@ -154,6 +190,9 @@ public class FieldTest {
         assertEquals(player.getY(), 0);
     }
     
+    /**
+     *
+     */
     @Test
     public void checkLowerEdge() {
         field = game.getCurrentField();

@@ -23,9 +23,17 @@ public class Level {
     int blackRock =  -16777216; // rgb (0, 0, 0)
     int rock = -8355840; // rgb (128, 128, 128) ColourGrabber value
     int grass = -11731200; // rgb(76, 255, 0)
+
+    /**
+     *
+     */
     public int[] tiles;
     private Field field;
 
+    /**
+     *
+     * @param field
+     */
     public Level(Field field) {                
         this.field = field;
         this.w = field.getWidth();
@@ -33,6 +41,12 @@ public class Level {
         this.tiles = new int[w * h];
     }
 
+    /**
+     *
+     * @param xScroll
+     * @param yScroll
+     * @param screen
+     */
     public void renderField(int xScroll, int yScroll, Screen screen) {
         loadMap(0, 0, 0, 0);
         int xo = xScroll >> 4;
@@ -50,6 +64,10 @@ public class Level {
 //        screen.setOffSets(0, 0);
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean[][] getImpassables() {
         boolean[][] impassables = new boolean[w][h];
         for (int y = 0; y < h; y++) {
@@ -60,6 +78,12 @@ public class Level {
         return impassables;
     }
    
+    /**
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     public Tile getTile(int x, int y) {
         if (x < 0 || y < 0 || x >= w || y >= h) {
             return Tile.rock;
@@ -67,6 +91,13 @@ public class Level {
         return Tile.tiles[tiles[x + y * h]];
     }
     
+    /**
+     *
+     * @param x0
+     * @param y0
+     * @param x1
+     * @param y1
+     */
     public void loadMap(int x0, int y0, int x1, int y1) {
         Sprite sprite = field.sprite;
         for (int y = 0; y < sprite.h; y++) {

@@ -11,15 +11,33 @@ package kanipeli.ui.sprites;
  */
 public class Sprite {
 
-    public int w, h;
+    public int w,
+
+    /**
+     *
+     */
+    h;
+
+    /**
+     *
+     */
     public int[] pixels;
 
+    /**
+     *
+     * @param w
+     * @param h
+     */
     public Sprite(int w, int h) {
         this.w = w;
         this.h = h;
         this.pixels = new int[w * h];
     }
 
+    /**
+     *
+     * @param colour
+     */
     public void clear(int colour) {
         for (int i = 0;  i < pixels.length; i++) {
             pixels[i] = colour;

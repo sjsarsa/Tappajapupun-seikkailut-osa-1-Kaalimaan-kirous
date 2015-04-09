@@ -25,18 +25,30 @@ public class BattleTest {
     private Creature foe;
     private Battle battle;
     
+    /**
+     *
+     */
     public BattleTest() {
         
     }
     
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
     @Before
     public void setUp() {
        
@@ -45,10 +57,16 @@ public class BattleTest {
        battle = new Battle(player, foe);
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
     
+    /**
+     *
+     */
     @Test
     public void getters() {
         assertEquals(battle.getEscaped(), false);
@@ -56,6 +74,10 @@ public class BattleTest {
         assertEquals(battle.getLost(), false);
         assertEquals(battle.getPlayer(), player);
     }
+
+    /**
+     *
+     */
     @Test
     public void attack() {
        int damage = battle.attack(player, foe);
@@ -65,6 +87,9 @@ public class BattleTest {
        assertEquals(player.getCurrentHp(), 10 - damage);
     }
     
+    /**
+     *
+     */
     @Test
     public void alive() {
         assertEquals(battle.alive(foe), true);
@@ -72,6 +97,9 @@ public class BattleTest {
         assertEquals(battle.alive(foe), false);
     }
     
+    /**
+     *
+     */
     @Test
     public void checkLevelUp() {
         battle.checkLevelUp();
