@@ -43,9 +43,9 @@ public class GameStateManager {
     public void setMusic(String song) {
         music.stop();
         try {
-            Thread.sleep(100);        
+            Thread.sleep(200);        
         music = new AudioPlayer(song);
-        Thread.sleep(50);
+        Thread.sleep(100);
         music.play();
         } catch (InterruptedException ex) {
             Logger.getLogger(GameStateManager.class.getName()).log(Level.SEVERE, null, ex);

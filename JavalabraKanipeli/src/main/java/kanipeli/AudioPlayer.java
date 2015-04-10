@@ -67,7 +67,7 @@ public class AudioPlayer implements Runnable {
                 return;
             }
 //            stop();
-            stop = false;
+//            stop = false;
             sdl.start();
             int BUFFER_SIZE = 4096;
 
@@ -79,6 +79,7 @@ public class AudioPlayer implements Runnable {
                 sdl.write(bytesBuffer, 0, bytesRead);
                 Thread.sleep(20);
             }
+            
 //            wait();
 //            notify();
         } catch (IOException e) {
@@ -97,6 +98,7 @@ public class AudioPlayer implements Runnable {
             sdl.flush();
             sdl.drain();
             sdl.stop();
+            sdl.close();
         }
     }
 
