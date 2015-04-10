@@ -14,7 +14,6 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import kanipeli.peli.Game;
-import kanipeli.ui.GamePanel;
 import kanipeli.ui.Screen;
 import kanipeli.ui.level.Tile;
 

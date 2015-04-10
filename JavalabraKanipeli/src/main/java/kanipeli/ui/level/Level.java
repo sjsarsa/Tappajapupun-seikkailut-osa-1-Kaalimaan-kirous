@@ -12,7 +12,7 @@ import kanipeli.ui.sprites.Sprite;
 import kanipeli.ui.sprites.SpriteSheet;
 
 /**
- *Contains the fields layout and the methods to apply them to the game.
+ *Creates the fields layout.
  * @see FieldState
  * @author Sami
  */
