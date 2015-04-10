@@ -73,8 +73,7 @@ public class BattleState implements GameState {
         this.gsm = gsm;
     }
     
-    private void checkIfBattleOver() {
-        if (battle.getPlayer().getCurrentHp() == 0) return;
+    private void checkEscaped() {
         if (battle.getEscaped() && !battle.getLost()) {
             gsm.setState(1);
             gsm.setMusic(gsm.getFieldMusic());
@@ -101,7 +100,8 @@ public class BattleState implements GameState {
      *Does a whole lotta stuff.
      */
     public void run() {
-        checkIfBattleOver();
+        if (battle.getPlayer().getCurrentHp() == 0) return;
+        checkEscaped();
         render();
         drawOptions();
         bs.show();
