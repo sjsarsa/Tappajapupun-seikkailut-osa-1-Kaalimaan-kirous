@@ -14,6 +14,7 @@ import javax.sound.sampled.SourceDataLine;
 
 /**
  * Plays friggin' music!
+ *
  * @author Sami
  */
 public class AudioPlayer implements Runnable {
@@ -73,13 +74,22 @@ public class AudioPlayer implements Runnable {
 
             byte[] bytesBuffer = new byte[BUFFER_SIZE];
             int bytesRead = -1;
-            
+
             while ((bytesRead = in.read(bytesBuffer)) != -1) {
-                if (stop) break;
+                if (stop) {
+                    break;
+                }
                 sdl.write(bytesBuffer, 0, bytesRead);
                 Thread.sleep(20);
             }
-            
+
+            if (sdl.isRunning()) {
+                sdl.flush();
+                sdl.drain();
+                sdl.stop();
+                sdl.close();
+            }
+
 //            wait();
 //            notify();
         } catch (IOException e) {
@@ -94,12 +104,6 @@ public class AudioPlayer implements Runnable {
      */
     public void stop() {
         stop = true;
-        if (sdl.isRunning()) {
-            sdl.flush();
-            sdl.drain();
-            sdl.stop();
-            sdl.close();
-        }
     }
 
     /**

@@ -74,7 +74,7 @@ public class PlayableCreature extends CreatureOnField {
      *Increases experience points by given amount.
      * If experience points exceed the required amount for gaining a level
      * the required points are reduced from the creatures experience points.
-     * The required points for the next level is increased by a factor of 1.75
+     * The required points for the next level is increased by a factor of 1.5
      * @param i The amount of experience about to be gained.
      * @return Indicates whether a level is gained or not.
      */
@@ -82,7 +82,7 @@ public class PlayableCreature extends CreatureOnField {
         exp += i;
         if (exp >= requiredExp) {   
             exp -= requiredExp;
-            requiredExp = (int) (requiredExp * 1.75);         
+            requiredExp = (int) (requiredExp * 1.5);         
             return true;
         }
         return false;

@@ -12,6 +12,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -60,7 +62,8 @@ public class GamePanel  implements KeyListener{
     }
 
     /**
-     *Sends keyCode of pressed key to gsm.
+     *Sends keyCode of pressed key to GameStateManager
+     * @see GameStateManager
      * @param ke
      */
     @Override

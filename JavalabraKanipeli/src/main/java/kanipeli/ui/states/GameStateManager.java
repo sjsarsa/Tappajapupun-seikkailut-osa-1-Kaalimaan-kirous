@@ -43,9 +43,8 @@ public class GameStateManager {
     public void setMusic(String song) {
         music.stop();
         try {
-            Thread.sleep(200);        
+            Thread.sleep(100);        
         music = new AudioPlayer(song);
-        Thread.sleep(100);
         music.play();
         } catch (InterruptedException ex) {
             Logger.getLogger(GameStateManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,14 +79,8 @@ public class GameStateManager {
         previousState = currentState;
         currentState = index;
 
-        try {
-            for (int i = 0; i < 40; i++) {
-                gameStates[currentState].run();
-                Thread.sleep(2);
-
-            }
-        } catch (InterruptedException e) {
-            System.out.println("ui interrupted");
+        for (int i = 0; i < 25; i++) {
+              gameStates[currentState].run();
         }
     }
 
@@ -106,7 +99,7 @@ public class GameStateManager {
      */
     public void keyPressed(int k) {
         gameStates[currentState].keyPressed(k);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 4; i++) {
             gameStates[currentState].run();
         }
     }
