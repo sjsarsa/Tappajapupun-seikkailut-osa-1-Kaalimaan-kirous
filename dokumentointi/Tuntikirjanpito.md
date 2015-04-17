@@ -14,3 +14,6 @@ Tuli vähäsen aherrettua useampia tunteja päivässä lomailun jälkeen.
 
 ## 9.4.
 Muutama tunti javadocciin ja luokkakaavion pävittämiseen sekä saamaan musiikit pelittämään kunnolla.
+
+## 17.4.
+Pari tuntia sekvenssikaavioihin javadocciin ja pieneen menumuokkaukseen.
