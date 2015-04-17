@@ -45,11 +45,10 @@ public class FieldState implements GameState {
 
     /**
      *The constructor
-     * Sets field music 
-     * @param canvas The canvas upon which the pixels are rendered.
-     * @param screen Knows the pixels for the graphics.
-     * @param game Has information of all the creatures and fields.
-     * @param gsm It manages the game states.
+     * @param canvas the canvas upon which the pixels are rendered.
+     * @param screen knows the pixels for the graphics.
+     * @param game has information of all the creatures and fields.
+     * @param gsm it manages the game states.
      * @param image a Buffered image used to draw the graphics.
      */
     public FieldState(Canvas canvas, Screen screen, Game game, GameStateManager gsm, BufferedImage image) {
@@ -108,8 +107,8 @@ public class FieldState implements GameState {
     }
 
     /**
-     *
-     * @param keyCode
+     *Moves the player on the field according to correct button presses.
+     * @param keyCode the code of a key that was pressed
      */
     public void keyPressed(int keyCode) {
         if (keyCode == KeyEvent.VK_W) {

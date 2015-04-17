@@ -19,10 +19,13 @@ import kanipeli.ui.sprites.SpriteSheet;
 public class Game {
     private Field currentField;
     
-    // 0 = left, 1 = up, 2 = right, 3 = down
+    // 0 = left, 1 = up, 2 = right, 3 = down (for connecting fields)
 
     /**
-     *
+     *Creates all the basic objects for the game i.e. fields and creatures.
+     * Assigns the appropriate creatures for the right fields and connects
+     * fields together.
+     * Initialises a starting field.
      */
     
     public Game() {

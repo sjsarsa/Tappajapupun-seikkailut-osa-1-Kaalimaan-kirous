@@ -11,8 +11,9 @@ import java.util.logging.Logger;
 import kanipeli.AudioPlayer;
 
 /**
- *Contains and manages game states and music to be played.
- * Sends info of keys being pressed to game states.
+ * Manages game states and music to be played. Sends info of keys
+ * being pressed to game states.
+ *
  * @author sjsarsa
  */
 public class GameStateManager {
@@ -32,9 +33,10 @@ public class GameStateManager {
 //    public static final int BATTLESTATE = 2;
 
     /**
-     *
-     * @param index
-     * @param state
+     *Adds a game state or replaces one in the specified index of an array 
+     * containing the games states
+     * @param index slot of the array
+     * @param state state to be put in th slot
      */
     public void addState(int index, GameState state) {
         gameStates[index] = state;
@@ -43,9 +45,9 @@ public class GameStateManager {
     public void setMusic(String song) {
         music.stop();
         try {
-            Thread.sleep(100);        
-        music = new AudioPlayer(song);
-        music.play();
+            Thread.sleep(100);
+            music = new AudioPlayer(song);
+            music.play();
         } catch (InterruptedException ex) {
             Logger.getLogger(GameStateManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -72,20 +74,22 @@ public class GameStateManager {
     }
 
     /**
-     *
-     * @param index
+     *Sets previous state to be the current state and then changes the current
+     * state into a new one. Finally runs the new current state.
+     * @param index integer value that tells which state is the new state.
+     * (0 = menu, 1 = field, 2 = battle)
      */
     public void setState(int index) {
         previousState = currentState;
         currentState = index;
-
         for (int i = 0; i < 25; i++) {
-              gameStates[currentState].run();
+            gameStates[currentState].run();
         }
     }
 
     /**
-     *
+     *Initialises the game state manager.
+     * Plays menu music and sets the initial state as menu state.
      */
     public void init() {
         music = new AudioPlayer(menuMusic);
@@ -94,8 +98,9 @@ public class GameStateManager {
     }
 
     /**
-     *
-     * @param k
+     *Sends keyCode of a key pressed to the current game state and runs the
+     * state.
+     * @param k keyCode
      */
     public void keyPressed(int k) {
         gameStates[currentState].keyPressed(k);
@@ -104,18 +109,10 @@ public class GameStateManager {
         }
     }
 
-    /**
-     *
-     * @return
-     */
     public int getState() {
         return currentState;
     }
 
-    /**
-     *
-     * @return
-     */
     public int getPreviousState() {
         return previousState;
     }

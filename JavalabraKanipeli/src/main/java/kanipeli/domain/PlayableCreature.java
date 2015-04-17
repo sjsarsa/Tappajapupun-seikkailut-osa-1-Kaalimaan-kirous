@@ -113,21 +113,20 @@ public class PlayableCreature extends CreatureOnField {
     public void levelUpHp() {        
         super.setMaxHp(super.getMaxHp() + (75 * lvl) / 3);
     }
-    
-    /**
-     *
-     * @return
-     */
+
     public ArrayList<Item> getItems() {
         return items;
     }
   
 
-    /**
-     *
-     * @return
-     */
     public int getRequiredExp() {
         return requiredExp;
     }
+
+    @Override
+    public int getExp() {
+        return exp;
+    }
+    
+    
 }

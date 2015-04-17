@@ -29,9 +29,6 @@ import kanipeli.ui.level.Tile;
  */
 public class BattleState implements GameState {
 
-    /**
-     *
-     */
     private Canvas canvas;
     private static int height, width, scale = 3;
     private BufferStrategy bs;
@@ -53,12 +50,12 @@ public class BattleState implements GameState {
     private int currentItem = 0;
 
     /**
-     *
-     * @param canvas
-     * @param screen
-     * @param battle
-     * @param gsm
-     * @param image
+     *The constructor
+     * @param canvas the canvas upon which the pixels are rendered.
+     * @param screen knows the pixels for the graphics.
+     * @param battle battle operations and creatures and such.
+     * @param gsm it manages the game states.
+     * @param image a Buffered image used to draw the graphics.
      */
     public BattleState(Canvas canvas, Screen screen, Battle battle, GameStateManager gsm, BufferedImage image) {
         this.canvas = canvas;
@@ -74,7 +71,7 @@ public class BattleState implements GameState {
     }
     
     private void checkEscaped() {
-        if (battle.getEscaped() && !battle.getLost()) {
+        if (battle.getEscaped()) {
             gsm.setState(1);
             gsm.setMusic(gsm.getFieldMusic());
         }
@@ -92,8 +89,8 @@ public class BattleState implements GameState {
     private boolean enemyTurn() {
         int damage = battle.attack(battle.getFoe(), battle.getPlayer()); //enemy turn
             try {
-            drawDamage(damage, 2);
-            drawDamage(damage, 2);
+            renderDamage(damage, 2);
+            renderDamage(damage, 2);
             Thread.sleep(700);
             } catch (InterruptedException e) {
                 System.out.println("lol");
@@ -114,7 +111,7 @@ public class BattleState implements GameState {
             else if (enemyTurn()) {
                 gsm.setMusic(gsm.getGameOverMusic());
                 for (int i = 0; i < 2; i++) {
-                    battleLost();
+                    renderGameOver();
                 }
             }
         }
@@ -133,17 +130,16 @@ public class BattleState implements GameState {
         if (battle.getPlayer().getCurrentHp() == 0) return;
         checkEscaped();
         render();
-        drawOptions();
         bs.show();
         fight();
     }
-
+    
     private void selectAction() {
         if (currentChoice == 0) {
             int damage = battle.attack(battle.getPlayer(), battle.getFoe());
             try {
-                drawDamage(damage, 0);
-                drawDamage(damage, 0);
+                renderDamage(damage, 0);
+                renderDamage(damage, 0);
                 Thread.sleep(700);
             } catch (InterruptedException e) {
                 System.out.println("lollol");
@@ -202,6 +198,7 @@ public class BattleState implements GameState {
 
         showCreatureStatus(15 * scale, g, battle.getPlayer());
         showCreatureStatus(160 * scale, g, battle.getFoe());
+        drawOptions();
     }
 
     private void drawOptions() {
@@ -215,7 +212,7 @@ public class BattleState implements GameState {
         }
     }
 
-    private void drawDamage(int amount, int color) {
+    private void renderDamage(int amount, int color) {
         render();
         g.setFont(new Font("Arial", Font.BOLD, 65));
         if (color == 0) {
@@ -251,7 +248,7 @@ public class BattleState implements GameState {
 
     }
 
-    private void battleLost() {
+    private void renderGameOver() {
         render();
         g.drawImage(image, 0, 0, canvas.getWidth(), canvas.getHeight(), null);
         g.setColor(Color.RED);

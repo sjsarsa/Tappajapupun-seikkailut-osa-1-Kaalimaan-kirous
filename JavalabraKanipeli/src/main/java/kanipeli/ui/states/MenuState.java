@@ -13,12 +13,15 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import kanipeli.domain.PlayableCreature;
 import kanipeli.peli.Game;
 import kanipeli.ui.Screen;
 import kanipeli.ui.level.Tile;
 
 /**
- *
+ *Renders the menu, can create a new game, exit the game or continue from
+ * previous state. No you cannot save the game, but you can continue a
+ * game after you pause it by setting the state to this menu state.
  * @author Sami
  */
 public class MenuState implements GameState, Runnable {
@@ -34,6 +37,7 @@ public class MenuState implements GameState, Runnable {
         "Continue",
         "Exit"
     };
+    private Game game;
     private int currentChoice = 0;
     private boolean actionSelected = false;
 
@@ -77,7 +81,7 @@ public class MenuState implements GameState, Runnable {
                 Tile.MenuBlack.render(x, y, screen); //empty battle tile (white)
             }
         }
-        Tile.playerBattle.render(1, 2, screen);
+        Tile.playerBattle.render(1, 1, screen);
         for (int y = 0; y < screen.h; y++) {
             for (int x = 0; x < screen.w; x++) {
                 pixels[x + y * width] = screen.pixels[x + y * screen.w];
@@ -87,6 +91,7 @@ public class MenuState implements GameState, Runnable {
         g.drawImage(image, 0, 0, canvas.getWidth(), canvas.getHeight(), null);
         g.setColor(Color.BLACK);
 //        g.fillRect(0, 0, height * scale * 2, width * scale * 2);
+        if (game != null) drawStatus(g);
         drawOptions(g);
         g.dispose();
         bs.show();
@@ -100,8 +105,20 @@ public class MenuState implements GameState, Runnable {
             } else {
                 g.setColor(Color.RED);
             }
-            g.drawString(options[i], 45 * scale, 50 * scale + i * 40);
+            g.drawString(options[i], 25 * scale, 50 * scale + i * 40);
         }
+    }
+    
+     private void drawStatus(Graphics g) {
+        g.setFont(new Font("Century Gothic", Font.BOLD, 28));
+        g.setColor(Color.WHITE);
+        PlayableCreature pc = game.getCurrentField().getPlayer();
+        int w = 180;
+        g.drawString(pc.getName(), w / 2 * scale, 50 * scale + 1 * 60);
+        g.drawString("Hp: " + pc.getCurrentHp() + "/" + pc.getMaxHp(), w * scale, 50 * scale + 2 * 60);
+        g.drawString("Damage: " + pc.getDamage(), w * scale, 50 * scale + 3 * 60);
+        g.drawString("Level: " + pc.getLvl(), w * scale, 50 * scale + 4 * 60);
+        g.drawString("Exp:" + pc.getExp() + "/" + pc.getRequiredExp(), w * scale, 50 * scale + 5 * 60);       
     }
 
     /**
@@ -147,10 +164,11 @@ public class MenuState implements GameState, Runnable {
     }
 
     private void newGame() {
-        Game game = new Game();
+        game = new Game();
         FieldState fs = new FieldState(canvas, screen, game, gsm, image);
         gsm.addState(1, fs);
-        gsm.setState(1);
         gsm.setMusic(gsm.getFieldMusic());
+        gsm.setState(1);
+        
     }
 }
