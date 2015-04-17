@@ -6,8 +6,9 @@
  */
 package kanipeli.peli;
 
-import java.util.Scanner;
-import kanipeli.domain.*;
+import kanipeli.domain.Creature;
+import kanipeli.domain.PlayableCreature;
+
 
 /**
  *Contains the logic for battles

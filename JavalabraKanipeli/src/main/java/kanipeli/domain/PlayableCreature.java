@@ -7,8 +7,7 @@
 package kanipeli.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import kanipeli.peli.Field;
+import java.util.Collections;   
 
 /**
  * An extension for the class CreatureOnField.

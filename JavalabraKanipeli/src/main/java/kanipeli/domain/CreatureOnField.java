@@ -5,7 +5,6 @@
  */
 package kanipeli.domain;
 
-import kanipeli.peli.Field;
 
 /**
  *An Extension to the class Creature.
