@@ -44,12 +44,13 @@ public class FieldState implements GameState {
     private GameStateManager gsm;
 
     /**
-     *
-     * @param canvas
-     * @param screen
-     * @param game
-     * @param gsm
-     * @param image
+     *The constructor
+     * Sets field music 
+     * @param canvas The canvas upon which the pixels are rendered.
+     * @param screen Knows the pixels for the graphics.
+     * @param game Has information of all the creatures and fields.
+     * @param gsm It manages the game states.
+     * @param image a Buffered image used to draw the graphics.
      */
     public FieldState(Canvas canvas, Screen screen, Game game, GameStateManager gsm, BufferedImage image) {
         this.canvas = canvas;
@@ -59,7 +60,6 @@ public class FieldState implements GameState {
         this.image = image;
         this.pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
         this.field = game.getCurrentField();
-        gsm.setMusic(gsm.getFieldMusic());
     }
 
     /**
@@ -71,14 +71,19 @@ public class FieldState implements GameState {
     }
 
     /**
-     *
+     *Renders the field on the canvas.
+     * Checks for movement of the player.
+     * If the player has moved, changes the game's current field as this field
+     * and checks whether a random encounter has occurred. 
+     * In such a case starts a fight with the encountered fiend.
+     * Checks if the player has stumbled upon a creature on a field i.e. a boss.
      */
     public void run() {
         render();
         if (field.getPlayer().moved) {
+            this.field = game.getCurrentField();
             checkRandomEncounter();
             checkSpot();
-            this.field = game.getCurrentField();
             field.getPlayer().moved = false;
         }
     }

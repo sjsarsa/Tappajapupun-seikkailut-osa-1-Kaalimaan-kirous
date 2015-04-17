@@ -36,24 +36,24 @@ public class SpriteSheetLoader {
     }
     
     /**
-     *
-     * @param fileName
-     * @param w
-     * @param h
-     * @return
+     *Cuts an image file into sprites without offsets.
+     * @param fileName tells which file to cut.
+     * @param w the width of the cut piece from the file.
+     * @param h the height of the cut piece from the file.
+     * @return an array of sprites of the cut files 
      */
     public static Sprite[][] cutFiles(String fileName, int w, int h) {
         return cutFiles(fileName, w, h, 0, 0);
     }
     
     /**
-     *
-     * @param fileName
-     * @param w
-     * @param h
-     * @param xOffs
-     * @param yOffs
-     * @return
+     *Cuts an image file into sprites
+     * @param fileName tells which file to cut.
+     * @param w the width of the cut piece from the file.
+     * @param h the height of the cut piece from the file.
+     * @param xOffs offset for width
+     * @param yOffs offset for height
+     * @return an array of sprites of the cut files
      */
     public static Sprite[][] cutFiles(String fileName, int w, int h, int xOffs, int yOffs) {
         try {

@@ -47,7 +47,7 @@ public class Battle {
     }
 
     /**
-     *Going to change, hopefully to better.
+     *Going to change, hopefully to the better.
      */
     public void levelUp() {
         player.levelUpHp();

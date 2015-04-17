@@ -67,8 +67,6 @@ public class AudioPlayer implements Runnable {
             if (sdl == null) {
                 return;
             }
-//            stop();
-//            stop = false;
             sdl.start();
             int BUFFER_SIZE = 4096;
 
@@ -89,9 +87,6 @@ public class AudioPlayer implements Runnable {
                 sdl.stop();
                 sdl.close();
             }
-
-//            wait();
-//            notify();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException ie) {

@@ -15,8 +15,11 @@ import kanipeli.ui.level.Level;
 import kanipeli.ui.sprites.Sprite;
 
 /**
- * The logic of prancing around on the field.
- *
+ * The logic for prancing around on the field.
+ * A field has 1 to three exits and knows to which fields it is connected.
+ *The player moved on the field where he currently is and can meet random
+ * encounters of creatures on the field. He can also exit the field to another 
+ * field.
  * @author Sami
  */
 public class Field {
@@ -42,12 +45,15 @@ public class Field {
     public Sprite sprite;
 
     /**
-     *
-     * @param game
-     * @param sprite
-     * @param player
-     * @param creaturesOnField
-     * @param randomEncounters
+     *The constructor of the Field class. Constructs all of its private
+     * variables.
+     * @param game needed to change the current field of the game.
+     * @param sprite a sprite that tells the dimensions and details of the field.
+     * @see Sprite
+     * @param player the player which moves on the field.
+     * @param creaturesOnField Creatures appearing on the map.
+     * @param randomEncounters List of creatures that appear randomly while
+     * traversing the field.
      */
     public Field(Game game, Sprite sprite, PlayableCreature player, List<CreatureOnField> creaturesOnField, List<Creature> randomEncounters) {
         this.width = sprite.w;
@@ -65,17 +71,17 @@ public class Field {
     }
 
     /**
-     *
+     *Sets the player's impassable tiles as the ones on this field.
      */
     public void initField() {
         player.setImpassables(impassables);
     }
 
     /**
-     *
-     * @param edge
-     * @param x
-     * @param y
+     *Adds a new exit to the field.
+     * @param edge The edge of the field.
+     * @param x the x-coordinate for the exit
+     * @param y the y-coordinate for the exit
      */
     public void addExit(int edge, int x, int y) {
         exits[edge][0] = x;
@@ -83,9 +89,10 @@ public class Field {
     }
 
     /**
-     *
-     * @param i
-     * @param field
+     *Adds a connection to another field for this field.
+     * @param i the direction of the connection (0 = left, 1 = up, 2 = right,
+     * 3 = down)
+     * @param field the field to be connected
      */
     public void addConnectedField(int i, Field field) {
         connectedFields[i] = field;
@@ -148,7 +155,9 @@ public class Field {
     }
 
     /**
-     *
+     *Checks if the player is on an edge meaning he is exiting the current
+     * field. In such a case changes the field to according to which edge the
+     * player has moved on.
      */
     public void checkEdge() {
         if (player.getX() == 0) {
@@ -182,8 +191,10 @@ public class Field {
     }
 
     /**
-     *
-     * @return
+     *Goes through creatures on the field and checks if their coordinates
+     * match with those of the player's and the creature is still alive.
+     * Sets the health of that creature to it's maximum health if it's not dead.
+     * @return the creature on which the player has moved.
      */
     public CreatureOnField checkSpot() {
         for (CreatureOnField h : creaturesOnField) {
@@ -198,8 +209,10 @@ public class Field {
     }
 
     /**
-     *
-     * @return
+     *If the player hasn't moved on an enemy on the field has 1 in 15 chance of
+     * providing a random encounter battle.
+     * @return false if moved on an enemy tile or if good luck happened.
+     * else true, which indicates that a random encounter attle should happen.
      */
     public boolean randomEncounter() {
         if (checkSpot() != null) {
@@ -214,8 +227,9 @@ public class Field {
     }
 
     /**
-     *
-     * @return
+     *selects a new creature randomly from random encounters list and creates
+     * a new creature with the selected creatures statistics.
+     * @return freshly created creature for a battle.
      */
     public Creature createRandomEncounter() {
         Random rm = new Random();

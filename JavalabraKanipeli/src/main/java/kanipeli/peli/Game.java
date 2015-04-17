@@ -12,7 +12,8 @@ import kanipeli.domain.PlayableCreature;
 import kanipeli.ui.sprites.SpriteSheet;
 
 /**
- *Creates the fields and creatures of the game.
+ *Creates the fields and the creatures for the game.
+ * Knows which is the current field the player is on.
  * @author Sami
  */
 public class Game {
@@ -73,7 +74,7 @@ public class Game {
     }
 
     /**
-     *
+     *Initialises a new field which is then set as the new current field.
      * @param currentField
      */
     public void setCurrentField(Field currentField) {

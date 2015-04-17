@@ -80,34 +80,6 @@ public class BattleState implements GameState {
         }
     }
     
-    private void fight() {
-        if (actionSelected) {
-            if (playerTurn()) {
-                battle.checkLevelUp();
-                gsm.setMusic(gsm.getFieldMusic());
-                gsm.setState(1);
-            }
-            else if (enemyTurn()) {
-                gsm.setMusic(gsm.getGameOverMusic());
-                for (int i = 0; i < 2; i++) {
-                    battleLost();
-                }
-            }
-        }
-    }
-
-    /**
-     *Does a whole lotta stuff.
-     */
-    public void run() {
-        if (battle.getPlayer().getCurrentHp() == 0) return;
-        checkEscaped();
-        render();
-        drawOptions();
-        bs.show();
-        fight();
-    }
-    
     private boolean playerTurn() {
         selectAction();
         actionSelected = false;
@@ -130,6 +102,40 @@ public class BattleState implements GameState {
             return true;
         }
         return false;
+    }
+    
+    private void fight() {
+        if (actionSelected) {
+            if (playerTurn()) {
+                battle.checkLevelUp();
+                gsm.setMusic(gsm.getFieldMusic());
+                gsm.setState(1);
+            }
+            else if (enemyTurn()) {
+                gsm.setMusic(gsm.getGameOverMusic());
+                for (int i = 0; i < 2; i++) {
+                    battleLost();
+                }
+            }
+        }
+    }
+
+    /**
+     *Does a whole lotta stuff (divided in private methods ofc).
+     * Checks if player is dead and if that is the case it doesn't do squat.
+     * Checks if the player escaped from the battle.
+     * Renders the battle screen on the canvas.
+     * Receives input from keyboard and calls for battle logic accordingly.
+     * Changes the music and game state when battle is over.
+     */
+    
+    public void run() {
+        if (battle.getPlayer().getCurrentHp() == 0) return;
+        checkEscaped();
+        render();
+        drawOptions();
+        bs.show();
+        fight();
     }
 
     private void selectAction() {

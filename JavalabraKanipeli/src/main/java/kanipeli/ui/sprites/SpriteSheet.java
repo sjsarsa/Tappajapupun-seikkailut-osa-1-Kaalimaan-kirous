@@ -6,7 +6,7 @@
 package kanipeli.ui.sprites;
 
 /**
- *Contains sprite sheets which contain sprites.
+ *Contains sprite sheets that contain sprites.
  * 
  * @author Sami
  */

@@ -77,11 +77,11 @@ public class PlayableCreatureTest {
     @Test
     public void addExp() {
         vilperi.addExp(5);
-        assertEquals(vilperi.getRequiredExp(), 8);
+        assertEquals(vilperi.getRequiredExp(), 7);
         vilperi.addExp(3);
-        assertEquals(vilperi.getRequiredExp(), 8);
+        assertEquals(vilperi.getRequiredExp(), 7);
         vilperi.addExp(30);
-        assertEquals(vilperi.getRequiredExp(), 14);
+        assertEquals(vilperi.getRequiredExp(), 10);
     }
     
     /**

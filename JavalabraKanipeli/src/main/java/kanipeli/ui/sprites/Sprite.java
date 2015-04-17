@@ -6,7 +6,8 @@
 package kanipeli.ui.sprites;
 
 /**
- *Sprite contains pixel colours for rendering.
+ *Sprite contains the pixels for rendering or telling the level design for
+ * a field.
  * @author Sami
  */
 public class Sprite {
@@ -24,9 +25,9 @@ public class Sprite {
     public int[] pixels;
 
     /**
-     *
-     * @param w
-     * @param h
+     *Constructor of the Sprite class. Sets the sprite's dimensions.
+     * @param w sprite's width
+     * @param h sprite's height
      */
     public Sprite(int w, int h) {
         this.w = w;
@@ -35,8 +36,8 @@ public class Sprite {
     }
 
     /**
-     *
-     * @param colour
+     *Sets all of the pixels' colours.
+     * @param colour The new colour of the pixels.
      */
     public void clear(int colour) {
         for (int i = 0;  i < pixels.length; i++) {
