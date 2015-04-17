@@ -23,13 +23,14 @@ public class AudioPlayer implements Runnable {
     private AudioInputStream in;
     private Thread t;
     private boolean stop = false;
+    private String s;
 
     /**
-     *
-     *
+     *Initialises source data line for streaming music.
      * @param s File name
      */
     public AudioPlayer(String s) {
+        this.s = s;
         try {
             in = AudioSystem.getAudioInputStream(getClass().getResourceAsStream(s));
 //            File file = new File("src/main/resources" + s);
@@ -47,7 +48,7 @@ public class AudioPlayer implements Runnable {
     }
 
     /**
-     *
+     *Creates a new thread for playing music.
      */
     public synchronized void play() {
         if (t == null) {
@@ -60,9 +61,17 @@ public class AudioPlayer implements Runnable {
     }
 
     /**
-     *
+     *Stops the audio player from buffering more music.
      */
-    public synchronized void begin() {
+    public void stop() {
+        stop = true;
+    }
+
+    /**
+     *Buffers the music.
+     */
+    @Override
+    public synchronized void run() {
         try {
             if (sdl == null) {
                 return;
@@ -72,7 +81,7 @@ public class AudioPlayer implements Runnable {
 
             byte[] bytesBuffer = new byte[BUFFER_SIZE];
             int bytesRead = -1;
-
+            
             while ((bytesRead = in.read(bytesBuffer)) != -1) {
                 if (stop) {
                     break;
@@ -80,38 +89,22 @@ public class AudioPlayer implements Runnable {
                 sdl.write(bytesBuffer, 0, bytesRead);
                 Thread.sleep(20);
             }
-
+            
             if (sdl.isRunning()) {
                 sdl.flush();
                 sdl.drain();
                 sdl.stop();
                 sdl.close();
             }
+            
+            if (!stop) {
+                AudioPlayer ap = new AudioPlayer(s);
+                ap.play();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException ie) {
             System.out.println("audio interrupted");
-        }
-    }
-
-    /**
-     *
-     */
-    public void stop() {
-        stop = true;
-    }
-
-    /**
-     *
-     */
-    @Override
-    public void run() {
-        try {
-            synchronized (this) {
-                begin();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

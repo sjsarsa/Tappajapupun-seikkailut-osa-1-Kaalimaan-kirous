@@ -90,7 +90,6 @@ public class MenuState implements GameState, Runnable {
         Graphics g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, canvas.getWidth(), canvas.getHeight(), null);
         g.setColor(Color.BLACK);
-//        g.fillRect(0, 0, height * scale * 2, width * scale * 2);
         if (game != null) drawStatus(g);
         drawOptions(g);
         g.dispose();

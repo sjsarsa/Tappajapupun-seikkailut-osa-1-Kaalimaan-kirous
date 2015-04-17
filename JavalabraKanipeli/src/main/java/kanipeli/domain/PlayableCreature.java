@@ -62,10 +62,6 @@ public class PlayableCreature extends CreatureOnField {
         Collections.sort(items);
     }
 
-    /**
-     *
-     * @return
-     */
     public int getLvl() {
         return lvl;
     }
@@ -118,7 +114,6 @@ public class PlayableCreature extends CreatureOnField {
         return items;
     }
   
-
     public int getRequiredExp() {
         return requiredExp;
     }
@@ -126,7 +121,5 @@ public class PlayableCreature extends CreatureOnField {
     @Override
     public int getExp() {
         return exp;
-    }
-    
-    
+    }   
 }

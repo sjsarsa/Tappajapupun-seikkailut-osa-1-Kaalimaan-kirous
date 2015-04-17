@@ -79,10 +79,10 @@ public class FieldState implements GameState {
      */
     public void run() {
         render();
-        if (field.getPlayer().moved) {
-            this.field = game.getCurrentField();
+        if (field.getPlayer().moved) { 
             checkRandomEncounter();
             checkSpot();
+            this.field = game.getCurrentField();
             field.getPlayer().moved = false;
         }
     }
