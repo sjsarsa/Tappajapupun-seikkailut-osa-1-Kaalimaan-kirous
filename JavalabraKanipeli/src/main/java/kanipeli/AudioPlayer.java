@@ -68,7 +68,9 @@ public class AudioPlayer implements Runnable {
     }
 
     /**
-     *Buffers the music.
+     *Buffers music.
+     * If nothing to buffer creates a new AudioPlayer thus creating an infinite 
+     * loop of music unless stopped from the main thread.
      */
     @Override
     public synchronized void run() {

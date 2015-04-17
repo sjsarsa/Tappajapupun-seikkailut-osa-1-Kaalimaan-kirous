@@ -13,14 +13,16 @@ import kanipeli.ui.states.MenuState;
 import kanipeli.ui.Screen;
 
 /**
- *
+ *Main class.
+ * Creates the GamePanel Screen, GameStateManager and such.
+ * Initialises the manager so the game can start.
  * @author Sami
  */
 public class main {
 
     /**
-     *
-     * @param args
+     *Read class description.
+     * @param args argh arguments blah.
      */
     public static void main(String[] args) {      
         int width = 256, height = 256, scale = 3;
