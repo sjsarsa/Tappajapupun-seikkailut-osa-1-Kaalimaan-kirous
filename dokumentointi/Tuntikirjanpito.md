@@ -17,3 +17,6 @@ Muutama tunti javadocciin ja luokkakaavion pävittämiseen sekä saamaan musiiki
 
 ## 17.4.
 Pari tuntia sekvenssikaavioihin javadocciin ja pieneen menumuokkaukseen.
+
+## 22.4.
+Pari tuntia koodaamista ja testejä tavaroiden käyttöä varten.
