@@ -6,8 +6,10 @@
  */
 package kanipeli.peli;
 
-import java.util.Scanner;
 import kanipeli.domain.Creature;
+import kanipeli.domain.DamagingItem;
+import kanipeli.domain.HealingItem;
+import kanipeli.domain.Item;
 import kanipeli.domain.PlayableCreature;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -52,8 +54,8 @@ public class BattleTest {
     @Before
     public void setUp() {
        
-       player = new PlayableCreature(2, 4, null, 0, 0, "Seppo", 10, 3, 0);
-       foe = new Creature(5, "Vintiö", 10, 3, 2);
+       player = new PlayableCreature(2, 4, null, 0, 0, "Seppo", 10, 3, 0, null);
+       foe = new Creature(5, "Vintiö", 10, 3, 2, new DamagingItem("pommi", 1, 1, 0));
        battle = new Battle(player, foe);
     }
     
@@ -68,11 +70,14 @@ public class BattleTest {
      *
      */
     @Test
-    public void getters() {
+    public void gettersSetters() {
         assertEquals(battle.getEscaped(), false);
+        battle.setEscaped(true);
+        assertEquals(battle.getEscaped(), true );
         assertEquals(battle.getFoe(), foe);
         assertEquals(battle.getLost(), false);
         assertEquals(battle.getPlayer(), player);
+        //getUsedItem tested in test usedItem()
     }
 
     /**
@@ -85,6 +90,11 @@ public class BattleTest {
        assertEquals(player.getCurrentHp(), 10);
        damage = battle.attack(foe, player);
        assertEquals(player.getCurrentHp(), 10 - damage);
+       assertEquals(battle.getLost(), false);
+       for(int i = 0; i < 5; i++) {
+           damage = battle.attack(foe, player);
+       }
+       assertEquals(battle.getLost(), true);
     }
     
     /**
@@ -102,15 +112,68 @@ public class BattleTest {
      */
     @Test
     public void checkLevelUp() {
-        battle.checkLevelUp();
+        battle.victory();
         assertEquals(player.getLvl(), 1);
-        battle.checkLevelUp();
-        battle.checkLevelUp();
+        battle.victory();
+        battle.victory();
         assertEquals(player.getLvl(), 2);
-        battle = new Battle(player, new Creature(5, "Napero", 0, 0, 30));
-        battle.checkLevelUp();
+        battle = new Battle(player, new Creature(5, "Napero", 0, 0, 30, new DamagingItem("pommi", 1, 1, 0)));
+        battle.victory();
         assertEquals(player.getLvl(), 4);
     }  
+    
+    @Test
+    public void dropItem() {
+        assertEquals(player.getItems().size(), 0);
+        Item item = new DamagingItem("pommi", 1, 1, 0);
+        battle = new Battle(player, new Creature(5, "Napero", 0, 0, 30, item));
+        assertEquals(player.getItems().size(), 0);
+        assertEquals(battle.victory(), item);
+        assertEquals(battle.getPlayer().getItems().size(), 1);
+
+        
+        item = new DamagingItem("turska", 1, 1, 2);
+        battle = new Battle(player, new Creature(5, "Napero", 0, 0, 30, item));
+        Item testItem;
+        Item item2 = null; 
+        boolean itemAdded = false;
+        for (int i = 0; i < 10000; i++) {
+            testItem = battle.victory();
+            if (testItem != null) item2 = testItem;
+        }
+        if (player.getItems().size() > 1) itemAdded = true;
+        assertEquals(item2, item);
+        assertEquals(itemAdded, true);
+        
+        boolean itemReturned = true;
+        for (int i = 0; i < 10000; i++) {
+            if (battle.victory() == null) itemReturned = false;
+        }
+        assertEquals(itemReturned, false);
+    }
+    @Test
+    public void useItem() {
+        DamagingItem di = new DamagingItem("pum", 1, 100, 0);
+        player.addItem(di);
+        int damage = battle.useItem(0);
+        assertEquals(player.getItems().size(), 0);
+        assertEquals(battle.getUsedItem(), di);
+        assertEquals(damage, 100);
+        assertEquals(battle.getFoe().getCurrentHp(), 0);
+        
+        HealingItem kaali = new HealingItem("kaali", 2, 1200, 0);
+        player.addItem(di);
+        player.addItem(kaali);
+        player.takeDamage(100);
+        damage = battle.useItem(1);
+        assertEquals(player.getItems().size(), 2);
+        assertEquals(battle.getUsedItem(), kaali);
+        assertEquals(damage, -1200);
+        assertEquals(player.getCurrentHp(), 10);
+        
+        damage = battle.useItem(10);
+        assertEquals(damage, 0);
+    }
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //

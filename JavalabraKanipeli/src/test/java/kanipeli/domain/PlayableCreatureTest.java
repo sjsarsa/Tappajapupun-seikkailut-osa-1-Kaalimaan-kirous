@@ -45,7 +45,7 @@ public class PlayableCreatureTest {
      */
     @Before
     public void setUp() {
-        vilperi = new PlayableCreature(2, 4, null, 0, 0, "vilperi", 100, 100, 0);
+        vilperi = new PlayableCreature(2, 4, null, 0, 0, "vilperi", 100, 100, 0, null);
     }
     
     /**
@@ -60,13 +60,13 @@ public class PlayableCreatureTest {
      */
     @Test
     public void addItem() {
-        DamagingItem rottenCheese = new DamagingItem("Rotten cheese", 1, 999);
+        DamagingItem rottenCheese = new DamagingItem("Rotten cheese", 1, 999, 0);
         vilperi.addItem(rottenCheese);
         assertEquals(vilperi.getItems().size(), 1);
         vilperi.addItem(rottenCheese);
         assertEquals(vilperi.getItems().size(), 1);
         assertEquals(vilperi.getItems().get(0).getQuantity(), 2);
-        HealingItem noodles = new HealingItem("Noodles", 6, 2000);
+        HealingItem noodles = new HealingItem("Noodles", 6, 2000, 0);
         vilperi.addItem(noodles);
         assertEquals(vilperi.getItems().size(), 2);
     }
@@ -76,11 +76,13 @@ public class PlayableCreatureTest {
      */
     @Test
     public void addExp() {
-        vilperi.addExp(5);
+        assertEquals(vilperi.addExp(5), true);
+        assertEquals(vilperi.getExp(), 0);
         assertEquals(vilperi.getRequiredExp(), 7);
-        vilperi.addExp(3);
+        assertEquals(vilperi.addExp(3), false);
+        assertEquals(vilperi.getExp(), 3);
         assertEquals(vilperi.getRequiredExp(), 7);
-        vilperi.addExp(30);
+        assertEquals(vilperi.addExp(30), true);
         assertEquals(vilperi.getRequiredExp(), 10);
     }
     

@@ -58,7 +58,7 @@ public class DamagingItemTest {
      */
     @Test
     public void toStringToimii() {
-        Item nuke = new DamagingItem("nuke", 1, 10000);
+        Item nuke = new DamagingItem("nuke", 1, 10000, 0);
         assertEquals(nuke.toString(), "nuke: 1");
     }
     
@@ -67,9 +67,11 @@ public class DamagingItemTest {
      */
     @Test
     public void getters() {
-        Item nuke = new DamagingItem("nuke", 1, 10000);
+        Item nuke = new DamagingItem("nuke", 1, 10000, 0);
         assertEquals(nuke.getName(), "nuke");
         assertEquals(nuke.getQuantity(), 1);
+        assertEquals(nuke.getDropRate(), 0);
+        assertEquals(nuke.getQuality(), 10000);
     }
     
     /**
@@ -77,8 +79,8 @@ public class DamagingItemTest {
      */
     @Test
     public void use() {
-        Item nuke = new DamagingItem("nuke", 1, 10000);
-        Creature heikki = new Creature(5, "Heikki", 30, 1, 1);
+        Item nuke = new DamagingItem("nuke", 1, 10000, 0);
+        Creature heikki = new Creature(5, "Heikki", 30, 1, 1, null);
         nuke.use(heikki);
         assertEquals(heikki.getCurrentHp(), 0);
         assertEquals(nuke.getQuantity(), 0);

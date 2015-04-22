@@ -58,7 +58,7 @@ public class HealingItemTest {
      */
     @Test
     public void toStringToimii() {
-        Item potion = new HealingItem("potion", 1, 10);
+        Item potion = new HealingItem("potion", 1, 10, 0);
         assertEquals(potion.toString(), "potion: 1");
     }
     
@@ -67,9 +67,11 @@ public class HealingItemTest {
      */
     @Test
     public void getters() {
-        Item potion = new HealingItem("potion", 1, 10);
+        Item potion = new HealingItem("potion", 1, 10, 1);
         assertEquals(potion.getName(), "potion");
         assertEquals(potion.getQuantity(), 1);
+        assertEquals(potion.getDropRate(), 1);
+        assertEquals(potion.getQuality(), 10);
     }
     
     /**
@@ -77,8 +79,8 @@ public class HealingItemTest {
      */
     @Test
     public void use() {
-        Item potion = new HealingItem("potion", 1, 10);
-        Creature heikki = new Creature(5, "Heikki", 30, 1, 1);
+        Item potion = new HealingItem("potion", 1, 10, 0);
+        Creature heikki = new Creature(5, "Heikki", 30, 1, 1, null);
         heikki.takeDamage(13);
         potion.use(heikki);
         assertEquals(heikki.getCurrentHp(), 27);

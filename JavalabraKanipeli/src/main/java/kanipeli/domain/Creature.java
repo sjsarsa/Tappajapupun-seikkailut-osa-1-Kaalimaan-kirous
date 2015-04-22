@@ -22,7 +22,7 @@ public class Creature {
     private int exp;
     private Random rm = new Random();
     private int battleTile;
-    
+    private Item item;
     /**
      * 
      * @param battleTile Pixels for rendering the image of this creature object.
@@ -30,33 +30,28 @@ public class Creature {
      * @param maxHp Defines creature's maximum health or in this case it's initial health in battle
      * @param damage A factor that defines how much health this creatures attack reduces.
      * @param exp the amount of experience gained when this creature is defeated.
+     * @param item an item to drop.
      */
-    public Creature(int battleTile, String name, int maxHp, int damage, int exp) {
+    public Creature(int battleTile, String name, int maxHp, int damage, int exp, Item item) {
         this.name = name;
         this.maxHp = maxHp;
         this.currentHp = maxHp;
         this.damage = damage;
         this.exp = exp;
         this.battleTile = battleTile;
+        this.item = item;
     }
-    /**
-     *
-     * @return
-     */
+
     public int getBattleTile() {
         return battleTile;
     }
    
-    /**
-     *
-     * @return
-     */
     public int getExp() {
         return exp;
     }
 
     /**
-     *
+     *returns a sum of creatures damage plus random amount of 0-damage
      * @return
      */
     public int attack() {
@@ -72,59 +67,37 @@ public class Creature {
         if (currentHp < 0) currentHp = 0;
     }
 
-    /**
-     *
-     * @return
-     */
     public int getCurrentHp() {
         return currentHp;
     }
 
-    /**
-     *
-     * @return
-     */
     public int getDamage() {
         return damage;
     }
 
-    /**
-     *
-     * @return
-     */
     public int getMaxHp() {
         return maxHp;
     }
 
-    /**
-     *
-     * @return
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     *
-     * @param maxHp
-     */
     public void setMaxHp(int maxHp) {
         this.maxHp = maxHp;
     }
 
-    /**
-     *
-     * @param damage
-     */
     public void setDamage(int damage) {
         this.damage = damage;
     }
 
-    /**
-     *
-     * @param currentHp
-     */
     public void setCurrentHp(int currentHp) {
         this.currentHp = Math.min(currentHp, maxHp);
     }
+
+    public Item getItem() {
+        return item;
+    }
+    
+    
 }

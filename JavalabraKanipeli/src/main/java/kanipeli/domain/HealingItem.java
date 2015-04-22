@@ -17,8 +17,8 @@ public class HealingItem extends Item implements Comparable<Item> {
      * @param quantity amount of items.
      * @param quality item power.
      */
-    public HealingItem(String name, int quantity, int quality) {
-        super(name, quantity, quality);
+    public HealingItem(String name, int quantity, int quality, int dropRate) {
+        super(name, quantity, quality, dropRate);
     }
 
     /**

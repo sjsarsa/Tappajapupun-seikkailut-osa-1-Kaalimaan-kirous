@@ -17,6 +17,7 @@ import kanipeli.peli.Battle;
 import kanipeli.peli.Field;
 import kanipeli.peli.Game;
 import kanipeli.ui.Screen;
+import kanipeli.ui.level.Level;
 
 /**
  * Renders the field screen on canvas using Level.

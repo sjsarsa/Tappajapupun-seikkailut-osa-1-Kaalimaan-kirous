@@ -20,12 +20,13 @@ import static org.junit.Assert.*;
 public class CreatureTest {
     
     private Creature critter;
-    
+    private Item item = new HealingItem("kaali", 1, 100, 0);
     /**
      *
      */
     public CreatureTest() {
-        critter = new Creature(5, "Einari", 10, 1, 1);
+        
+        critter = new Creature(5, "Einari", 10, 1, 1, item);
     }
     
     /**
@@ -61,42 +62,16 @@ public class CreatureTest {
      *
      */
     @Test
-    public void getBattleTile() {
+    public void getters() {
         assertEquals(critter.getBattleTile(), 5);
-    }
-    
-    /**
-     *
-     */
-    @Test
-    public void getName() {
         assertEquals(critter.getName(), "Einari");
-    }
-    
-    /**
-     *
-     */
-    @Test
-    public void getMaxHp() {
-        assertEquals(critter.getMaxHp(), 10);
-    }
-    
-    /**
-     *
-     */
-    @Test
-    public void getDamage() {
+        assertEquals(critter.getMaxHp(), 10); 
         assertEquals(critter.getDamage(), 1);
+        assertEquals(critter.getExp(), 1); 
+        assertEquals(critter.getBattleTile(), 5);
+        assertEquals(critter.getItem(), item);
     }
-    
-    /**
-     *
-     */
-    @Test
-    public void getExp() {
-        assertEquals(critter.getExp(), 1);
-    }
-    
+
     /**
      *
      */
@@ -136,6 +111,16 @@ public class CreatureTest {
         assertEquals(critter.getCurrentHp(), 7);
         critter.takeDamage(100);
         assertEquals(critter.getCurrentHp(), 0);
+    }
+    
+    @Test
+    public void attack() {
+        boolean fail = false;
+        for (int i = 0; i < 1000; i++) {
+            if (critter.attack() < critter.getDamage()) fail = true;
+            if (critter.attack() > critter.getDamage() * 2 - 1) fail = true;
+        }
+        assertEquals(fail, false);
     }
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:

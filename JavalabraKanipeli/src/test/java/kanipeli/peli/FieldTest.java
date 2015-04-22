@@ -59,9 +59,9 @@ public class FieldTest {
      */
     @Before
     public void setUp() {
-        foe = new Creature(5, "jeba", 0, 0, 0);
-        player = new PlayableCreature(2, 4, impassables, 1, 1, "Seppo", 10, 3, 0);
-        boss = new CreatureOnField(3, 5, impassables, 1, 1, "Vintiö", 10, 3, 2);
+        foe = new Creature(5, "jeba", 0, 0, 0, null);
+        player = new PlayableCreature(2, 4, impassables, 1, 1, "Seppo", 10, 3, 0, null);
+        boss = new CreatureOnField(3, 5, impassables, 1, 1, "Vintiö", 10, 3, 2, null);
         this.creaturesOnField = new ArrayList<>();
         creaturesOnField.add(boss);
         this.randomEncounters = new ArrayList<>();
@@ -112,6 +112,27 @@ public class FieldTest {
         
         boss.takeDamage(1337);
         assertEquals(field.checkSpot(), null);
+    }
+    
+    @Test
+    public void randomEncounter() {
+        player.setX(0);
+        player.setY(0);
+        boss.setX(0);
+        boss.setY(0);
+        assertEquals(field.randomEncounter(), false);
+        
+        boolean re = false;
+        player.setX(4);
+        for (int i = 0; i < 10000; i++) {
+            if (field.randomEncounter()) re = true;
+        }
+        assertEquals(re, true);
+
+        for (int i = 0; i < 10000; i++) {
+            if (!field.randomEncounter()) re = false;
+        }
+        assertEquals(re, false);
     }
     
     /**

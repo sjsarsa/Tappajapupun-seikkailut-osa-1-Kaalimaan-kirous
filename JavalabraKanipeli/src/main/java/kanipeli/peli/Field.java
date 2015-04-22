@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 import kanipeli.domain.Creature;
 import kanipeli.domain.CreatureOnField;
+import kanipeli.domain.Item;
 import kanipeli.domain.PlayableCreature;
 import kanipeli.ui.level.Level;
 import kanipeli.ui.sprites.Sprite;
@@ -33,7 +34,6 @@ public class Field {
     private int[][] exits;
     private boolean[][] impassables;
     private Game game;
-
     /**
      *
      */
@@ -212,7 +212,7 @@ public class Field {
      *If the player hasn't moved on an enemy on the field has 1 in 15 chance of
      * providing a random encounter battle.
      * @return false if moved on an enemy tile or if good luck happened.
-     * else true, which indicates that a random encounter attle should happen.
+     * else true, which indicates that a random encounter battle should happen.
      */
     public boolean randomEncounter() {
         if (checkSpot() != null) {
@@ -234,6 +234,6 @@ public class Field {
     public Creature createRandomEncounter() {
         Random rm = new Random();
         Creature re = randomEncounters.get(rm.nextInt(randomEncounters.size()));
-        return new Creature(re.getBattleTile(), re.getName(), re.getMaxHp(), re.getDamage(), re.getExp());
+        return new Creature(re.getBattleTile(), re.getName(), re.getMaxHp(), re.getDamage(), re.getExp(), re.getItem());
     }
 }

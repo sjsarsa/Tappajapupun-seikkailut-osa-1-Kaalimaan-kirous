@@ -20,7 +20,7 @@ public class CreatureOnField extends Creature {
     private boolean[][] impassables;
 
     /**
-     *
+     *Tells if the creature has been moved.
      */
     public boolean moved = false;
     private int fieldTile;
@@ -37,9 +37,10 @@ public class CreatureOnField extends Creature {
      * @param maxHp creature's maximum health.
      * @param damage creatures damage factor.
      * @param exp experience points gained when this creature is defeated.
+     * @param item item to drop
      */
-    public CreatureOnField(int fieldTile, int battleTile, boolean[][] impassables, int x, int y, String name, int maxHp, int damage, int exp) {
-        super(battleTile, name, maxHp, damage, exp);
+    public CreatureOnField(int fieldTile, int battleTile, boolean[][] impassables, int x, int y, String name, int maxHp, int damage, int exp, Item item) {
+        super(battleTile, name, maxHp, damage, exp, item);
         this.x = x;
         this.y = y;
         this.impassables = impassables;

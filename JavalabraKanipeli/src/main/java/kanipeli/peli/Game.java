@@ -8,6 +8,8 @@ package kanipeli.peli;
 import java.util.ArrayList;
 import kanipeli.domain.Creature;
 import kanipeli.domain.CreatureOnField;
+import kanipeli.domain.DamagingItem;
+import kanipeli.domain.HealingItem;
 import kanipeli.domain.PlayableCreature;
 import kanipeli.ui.sprites.SpriteSheet;
 
@@ -29,35 +31,48 @@ public class Game {
      */
     
     public Game() {
-        PlayableCreature player = new PlayableCreature(2, 4, null, 1, 1, "Tappajapupu", 200, 30, 0);
+        PlayableCreature player = new PlayableCreature(2, 4, null, 1, 1, "Tappajapupu", 200, 30, 0, null);
+        HealingItem kerakaali = new HealingItem("pieni keräkaali", 2, 50, 3);
+        player.addItem(kerakaali);
         
         ArrayList<CreatureOnField> fieldDwellers = new ArrayList();
-        CreatureOnField boss = new CreatureOnField(3, 5, null, 6, 6, "Kenkku", 10000, 500, 100000);
+        DamagingItem ydinrajahde = new DamagingItem("ydinräjähde", 3, 1000, 0);
+        HealingItem mataKaali = new HealingItem("mätä kaali", 2, -100, 0);
+        HealingItem isoKaali = new HealingItem("iso kaali", 2, 500, 0);
+        CreatureOnField boss = new CreatureOnField(3, 5, null, 6, 6, "Kenkku", 10000, 500, 100000, ydinrajahde);
+        CreatureOnField miniBoss1 = new CreatureOnField(3, 5, null, 5, 12, "Haisuli", 1000, 200, 200, mataKaali);
+        CreatureOnField miniBoss2 = new CreatureOnField(3, 5, null, 12, 5, "Haisuli", 1000, 200, 200, isoKaali);
         fieldDwellers.add(boss);
+        fieldDwellers.add(miniBoss1);
+        fieldDwellers.add(miniBoss2);
         
-        ArrayList<CreatureOnField> fieldDwellers2 = new ArrayList();
-        CreatureOnField blackBunny = new CreatureOnField(8, 9, null, 6, 6, "Höpö", 3000, 300, 300);
-        fieldDwellers2.add(blackBunny);
+        ArrayList<CreatureOnField> fieldDwellersUpOne = new ArrayList();
+        HealingItem mKaali = new HealingItem("majesteettinen kaali", 1, 3000, 0);
+        CreatureOnField blackBunny = new CreatureOnField(8, 9, null, 6, 6, "Höpö", 3000, 300, 300, mKaali);
+        fieldDwellersUpOne.add(blackBunny);
         
         ArrayList<Creature> randomEncounters = new ArrayList();
-        Creature re = new Creature(5, "Pikkuhirviö", 75, 20, 2);
-        Creature re2 = new Creature(5, "Pikkuhirviö", 100, 15, 3);
+        HealingItem kerakaali2 = new HealingItem("keräkaali", 1, 100, 4);
+        Creature re = new Creature(5, "Pikkuhirviö", 100, 20, 2, kerakaali);
+        Creature re2 = new Creature(5, "Pikkuhirviö", 150, 15, 3, kerakaali2);
         randomEncounters.add(re);
         randomEncounters.add(re2);
-        
+         
         ArrayList<Creature> randomEncounters2 = new ArrayList();
-        Creature re21 = new Creature(5, "Isompi hirviö", 450, 75, 12);
-        Creature re22 = new Creature(5, "Isompi hirviö", 300, 150, 15);
+        DamagingItem kranaatti = new DamagingItem("kranaatti", 1, 300, 3);
+        HealingItem kiinankaali = new HealingItem("kiinankaali", 1, 200, 4);
+        Creature re21 = new Creature(5, "Isompi hirviö", 800, 75, 12, kiinankaali);
+        Creature re22 = new Creature(5, "Isompi hirviö", 600, 125, 15, kranaatti);
         randomEncounters2.add(re21);
         randomEncounters2.add(re22);
         
         int w = 16;
         int h = 16;
         Field startingField = new Field(this, SpriteSheet.level[0][0], player, fieldDwellers, randomEncounters);
-        Field fieldUpOne = new Field(this, SpriteSheet.levelUpOne[0][0], player, fieldDwellers2, randomEncounters2);
-        Field fieldDownOne = new Field(this, SpriteSheet.levelDownOne[0][0], player, fieldDwellers2, randomEncounters2);
-        Field fieldRightOne = new Field(this, SpriteSheet.levelRightOne[0][0], player, fieldDwellers2, randomEncounters2);
-        Field fieldLeftOne = new Field(this, SpriteSheet.levelLeftOne[0][0], player, fieldDwellers2, randomEncounters2);
+        Field fieldUpOne = new Field(this, SpriteSheet.levelUpOne[0][0], player, fieldDwellersUpOne, randomEncounters2);
+        Field fieldDownOne = new Field(this, SpriteSheet.levelDownOne[0][0], player, fieldDwellersUpOne, randomEncounters2);
+        Field fieldRightOne = new Field(this, SpriteSheet.levelRightOne[0][0], player, fieldDwellersUpOne, randomEncounters2);
+        Field fieldLeftOne = new Field(this, SpriteSheet.levelLeftOne[0][0], player, fieldDwellersUpOne, randomEncounters2);
         
         connectFieldDown(startingField, fieldDownOne);
         connectFieldUp(startingField, fieldUpOne);

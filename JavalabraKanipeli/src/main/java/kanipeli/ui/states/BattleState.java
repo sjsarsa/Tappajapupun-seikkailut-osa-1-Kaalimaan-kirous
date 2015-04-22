@@ -14,17 +14,19 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import kanipeli.domain.Creature;
+import kanipeli.domain.Item;
 import kanipeli.peli.Battle;
 import kanipeli.ui.Screen;
 import kanipeli.ui.level.Tile;
 
 /**
- *Renders the battle screen and draws its events on canvas.
- * Calls for GameStateManager to change music and GameState.
- * @see GameStateManager
- * Calls for battle logic when needed (e.g. certain buttons are pressed).
+ * Renders the battle screen and draws its events on canvas. Calls for
+ * GameStateManager to change music and GameState.
+ *
+ * @see GameStateManager Calls for battle logic when needed (e.g. certain
+ * buttons are pressed).
  * @see Battle
- * 
+ *
  * @author Sami
  */
 public class BattleState implements GameState {
@@ -38,19 +40,21 @@ public class BattleState implements GameState {
     private Battle battle;
     private Graphics g;
     private GameStateManager gsm;
+    
     private boolean actionSelected;
+    private boolean itemMenu;
 
     private String[] options = new String[]{
         "Attack",
         "Use item",
         "Flee"
     };
-    private String[] items;
     private int currentChoice = 0;
     private int currentItem = 0;
-
+    private int items = 0;
     /**
-     *The constructor
+     * The constructor
+     *
      * @param canvas the canvas upon which the pixels are rendered.
      * @param screen knows the pixels for the graphics.
      * @param battle battle operations and creatures and such.
@@ -65,9 +69,28 @@ public class BattleState implements GameState {
         this.pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
         this.screen = screen;
         this.battle = battle;
-        this.items = items;
         this.bs = canvas.getBufferStrategy();
         this.gsm = gsm;
+    }
+    
+    /**
+     *Checks if player is dead and if that is the case doesn't do squat. Checks if the
+     * player escaped from the battle. Renders the battle screen on the canvas.
+     * Receives input from keyboard and calls for battle logic accordingly.
+     * Changes the music and game state when battle is over.
+     */
+    public void run() {
+        if (battle.getPlayer().getCurrentHp() == 0) {
+            return;
+        }
+        checkEscaped();       
+        if (itemMenu) {
+            items = battle.getPlayer().getItems().size();
+            drawItems();
+        }
+        else drawOptions();
+        bs.show();
+        fight();
     }
     
     private void checkEscaped() {
@@ -76,10 +99,8 @@ public class BattleState implements GameState {
             gsm.setMusic(gsm.getFieldMusic());
         }
     }
-    
+
     private boolean playerTurn() {
-        selectAction();
-        actionSelected = false;
         if (!battle.alive(battle.getFoe())) {
             return true;
         }
@@ -88,67 +109,80 @@ public class BattleState implements GameState {
 
     private boolean enemyTurn() {
         int damage = battle.attack(battle.getFoe(), battle.getPlayer()); //enemy turn
-            try {
-            renderDamage(damage, 2);
-            renderDamage(damage, 2);
+        try {
+            drawDamage(damage, 2);
+            drawDamage(damage, 2);
             Thread.sleep(700);
-            } catch (InterruptedException e) {
-                System.out.println("lol");
-            }
+        } catch (InterruptedException e) {
+            System.out.println("lol");
+        }
         if (!battle.alive(battle.getPlayer())) {
             return true;
         }
         return false;
     }
-    
+
     private void fight() {
-        if (actionSelected) {
+        if (actionSelected && selectAction()) {
             if (playerTurn()) {
-                battle.checkLevelUp();
+                drawDroppedItem(battle.victory());
+                try {
+                    Thread.sleep(1500);
+                } catch (Exception e) {
+                }   
                 gsm.setMusic(gsm.getFieldMusic());
                 gsm.setState(1);
-            }
-            else if (enemyTurn()) {
+            } else if (enemyTurn()) {
                 gsm.setMusic(gsm.getGameOverMusic());
                 for (int i = 0; i < 2; i++) {
-                    renderGameOver();
+                    drawGameOver();
                 }
             }
         }
     }
 
-    /**
-     *Does a whole lotta stuff (divided in private methods ofc).
-     * Checks if player is dead and if that is the case it doesn't do squat.
-     * Checks if the player escaped from the battle.
-     * Renders the battle screen on the canvas.
-     * Receives input from keyboard and calls for battle logic accordingly.
-     * Changes the music and game state when battle is over.
-     */
-    
-    public void run() {
-        if (battle.getPlayer().getCurrentHp() == 0) return;
-        checkEscaped();
-        render();
-        bs.show();
-        fight();
-    }
-    
-    private void selectAction() {
+    private boolean selectAction() {
+        actionSelected = false;
+        if (itemMenu) {
+            itemMenu = false;
+            if (currentItem < items) {
+                int dam = battle.useItem(currentItem);
+                int col = 0;
+                if (dam < 0) {
+                    dam = Math.abs(dam);
+                    col = 1;
+                }
+                drawDamage(dam, col);
+                drawDamage(dam, col);
+                try {
+                    Thread.sleep(700);
+                } catch (Exception e) {
+                }
+            } else {
+                return false;
+            }
+            return true;
+        }
         if (currentChoice == 0) {
             int damage = battle.attack(battle.getPlayer(), battle.getFoe());
             try {
-                renderDamage(damage, 0);
-                renderDamage(damage, 0);
+                drawDamage(damage, 0);
+                drawDamage(damage, 0);
                 Thread.sleep(700);
             } catch (InterruptedException e) {
                 System.out.println("lollol");
             }
         }
-        if (currentChoice == 1) ;
+        if (currentChoice == 1) {
+            actionSelected = false;
+            currentItem = 0;
+            itemMenu = true;
+            return false;
+        }
         if (currentChoice == 2) {
             battle.setEscaped(true);
         }
+        return true;
     }
 
     /**
@@ -160,18 +194,32 @@ public class BattleState implements GameState {
             actionSelected = true;
         }
         if (keyCode == KeyEvent.VK_UP) {
+            if (itemMenu) {
+                currentItem--;
+                if (currentItem == -1) {
+                    currentItem = 0;
+                }
+                return;
+            }
             currentChoice--;
             if (currentChoice == -1) {
                 currentChoice = options.length - 1;
             }
         }
         if (keyCode == KeyEvent.VK_DOWN) {
+            if (itemMenu) {
+                currentItem++;
+                if (currentItem == items + 1) {
+                    currentItem = items;
+                }
+                return;
+            }
             currentChoice++;
             if (currentChoice == options.length) {
                 currentChoice = 0;
             }
         }
-         if (keyCode == KeyEvent.VK_ESCAPE) {
+        if (keyCode == KeyEvent.VK_ESCAPE) {
             if (battle.getLost()) {
                 gsm.setMusic(gsm.getMenuMusic());
                 gsm.setState(0);
@@ -180,14 +228,14 @@ public class BattleState implements GameState {
         }
     }
 
-    private void render() {
+    private void drawScreen() {
 
         if (bs == null) {
             canvas.createBufferStrategy(3);
             canvas.requestFocus();
             return;
         }
-        renderBattle(screen);
+        renderBattleScreen(screen);
         for (int y = 0; y < screen.h; y++) {
             for (int x = 0; x < screen.w; x++) {
                 pixels[x + y * width] = screen.pixels[x + y * screen.w];
@@ -196,12 +244,12 @@ public class BattleState implements GameState {
         g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, canvas.getWidth(), canvas.getHeight(), null);
 
-        showCreatureStatus(15 * scale, g, battle.getPlayer());
-        showCreatureStatus(160 * scale, g, battle.getFoe());
-        drawOptions();
+        drawCreatureStatus(15 * scale, g, battle.getPlayer());
+        drawCreatureStatus(160 * scale, g, battle.getFoe());
     }
 
     private void drawOptions() {
+        drawScreen();
         for (int i = 0; i < options.length; i++) {
             if (i == currentChoice) {
                 g.setColor(Color.BLUE);
@@ -212,8 +260,8 @@ public class BattleState implements GameState {
         }
     }
 
-    private void renderDamage(int amount, int color) {
-        render();
+    private void drawDamage(int amount, int color) {
+        drawScreen();
         g.setFont(new Font("Arial", Font.BOLD, 65));
         if (color == 0) {
             g.setColor(Color.YELLOW);
@@ -225,15 +273,50 @@ public class BattleState implements GameState {
         g.drawString(amount + "!", 110 * scale, 80 * scale);
         bs.show();
     }
+    
+    private void drawDroppedItem(Item item) {
+        drawScreen();
+        g.setFont(new Font("Century Gothic", Font.BOLD, 50));
+        g.setColor(Color.orange);
+        g.drawString("Voitit!", 90 * scale, 130 * scale);
+        g.drawString("Sait " + battle.getFoe().getExp() + " exp, jee!", 90 * scale, 150 * scale);
 
-    private void showCreatureStatus(int width, Graphics g, Creature cr) {
+        if (item != null) {
+            g.drawString("Vihulainen tiputti jotakin: ", 50 * scale, 200 * scale);
+            g.drawString(item.getName() + " x " + item.getQuantity(), 50 * scale, 220 * scale);
+        }
+        bs.show();
+    }
+
+    private void drawItems() {
+        drawScreen();
+        g.setFont(new Font("Arial", Font.BOLD, 25));
+        g.setColor(Color.blue);
+
+        int i = 1;
+        if (currentItem < items) {
+            Item item = battle.getPlayer().getItems().get(currentItem);
+            g.drawString(item.getName() + ": " + item.getQuantity(), 90 * scale, 50 + 30 * i * scale);
+            i++;
+            g.setColor(Color.black);
+        } 
+        if (currentItem + 1 < items) {
+            Item item = battle.getPlayer().getItems().get(currentItem + 1);
+            g.drawString(item.getName() + ": " + item.getQuantity(), 90 * scale, 50 + 30 * i * scale);
+            i++;
+        }
+        g.drawString("cancel", 90 * scale, 50 + 30 * i * scale);
+        bs.show();
+    }
+
+    private void drawCreatureStatus(int width, Graphics g, Creature cr) {
         g.setFont(new Font("Century Gothic", Font.BOLD, 28));
         g.drawString(cr.getName(), width, 25 * scale);
         String status = "Hp: " + cr.getCurrentHp() + " / " + cr.getMaxHp();
         g.drawString(status, width, 35 * scale);
     }
 
-    private void renderBattle(Screen screen) {
+    private void renderBattleScreen(Screen screen) {
 
         int w = (screen.w * 15) >> 4;
         int h = (screen.h * 15) >> 4;
@@ -248,8 +331,8 @@ public class BattleState implements GameState {
 
     }
 
-    private void renderGameOver() {
-        render();
+    private void drawGameOver() {
+        drawScreen();
         g.drawImage(image, 0, 0, canvas.getWidth(), canvas.getHeight(), null);
         g.setColor(Color.RED);
         g.setFont(new Font("Century Gothic", Font.BOLD, 140));
@@ -259,5 +342,4 @@ public class BattleState implements GameState {
         g.drawLine(0 * scale, 80 * scale, 80 * scale, 160 * scale);
         bs.show();
     }
-
 }

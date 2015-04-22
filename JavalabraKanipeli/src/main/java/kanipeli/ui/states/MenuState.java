@@ -54,11 +54,13 @@ public class MenuState implements GameState, Runnable {
     }
 
     /**
-     *
+     *Renders the menu screen showing options and the player status if a game
+     * has been started.
+     * Depending on buttons being pressed creates a new game, goes back to
+     * previous game state or exits the game.
      */
     @Override
     public void run() {
-
         render();
         if (actionSelected) {
             actionSelected();
@@ -117,12 +119,13 @@ public class MenuState implements GameState, Runnable {
         g.drawString("Hp: " + pc.getCurrentHp() + "/" + pc.getMaxHp(), w * scale, 50 * scale + 2 * 60);
         g.drawString("Damage: " + pc.getDamage(), w * scale, 50 * scale + 3 * 60);
         g.drawString("Level: " + pc.getLvl(), w * scale, 50 * scale + 4 * 60);
-        g.drawString("Exp:" + pc.getExp() + "/" + pc.getRequiredExp(), w * scale, 50 * scale + 5 * 60);       
+        g.drawString("Exp: " + pc.getExp() + "/" + pc.getRequiredExp(), w * scale, 50 * scale + 5 * 60);   
     }
-
+    
     /**
-     *
-     * @param keyCode
+     *Changes the current selected option or selects that option which is
+     * the current selected option.
+     * @param keyCode the code of a key that has been pressed
      */
     @Override
     public void keyPressed(int keyCode) {

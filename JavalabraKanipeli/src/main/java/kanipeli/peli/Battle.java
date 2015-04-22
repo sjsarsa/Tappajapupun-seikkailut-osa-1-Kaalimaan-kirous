@@ -6,7 +6,9 @@
  */
 package kanipeli.peli;
 
+import java.util.Random;
 import kanipeli.domain.Creature;
+import kanipeli.domain.Item;
 import kanipeli.domain.PlayableCreature;
 
 
@@ -20,7 +22,7 @@ public class Battle {
     private Creature foe;
     private boolean escaped;
     private boolean lost;
-
+    private Item usedItem;
     /**
      *
      * @param player 
@@ -37,14 +39,28 @@ public class Battle {
      *Checks first if player hasn't lost or escaped and then adds experience to
      * player according to the defeated enemy. If enough experience points are
      * added calls for level up as long as experience points suffice.
+     * Checks whether the a creature drops an item.
+     * @return the dropped item
      */
-    public void checkLevelUp() {
+    public Item victory() {
+        //check level up
         if (!lost && !escaped && player.addExp(foe.getExp())) {
             levelUp();
             while (player.addExp(0)) {
                 levelUp();
-            }
+            }    
         }
+        //check dropped item
+        Random rm = new Random();
+        Item i = foe.getItem();
+        if (i.getDropRate() == 0) {
+            player.addItem(i);
+            return i;
+        } else if (rm.nextInt(i.getDropRate()) == 0) {
+            player.addItem(i);
+            return i;
+        }
+        return null;
     }
 
     /**
@@ -82,15 +98,26 @@ public class Battle {
         return damage;
     }
 
-//    public void useItem() {    
-//        for (Item i : player.getItems()) {
-//               // mikä
-//           //kehen
-//            //peruuta
-//                    i.use(player);
-//                    i.use(foe);      
-//        }
-//    }
+    public int useItem(int i) {    
+//        Random rm = new Random();
+        if (i >= player.getItems().size()) {
+            System.out.println("This shouldn't happen");
+            return 0;
+        }
+        usedItem = player.getItems().get(i);
+        if (usedItem.getQuantity() == 1) player.getItems().remove(i);
+        if (usedItem.getName().contains("kaali")) {
+                usedItem.use(player);
+                return -usedItem.getQuality();
+            } else {
+               usedItem.use(foe);
+               return usedItem.getQuality();
+            }
+    }
+
+    public Item getUsedItem() {
+        return usedItem;
+    }
 
 
     public boolean getEscaped() {

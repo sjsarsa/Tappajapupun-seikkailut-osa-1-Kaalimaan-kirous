@@ -13,8 +13,8 @@ public class DamagingItem extends Item implements  Comparable<Item> {
      * @param quantity amount of item
      * @param quality item power
      */
-    public DamagingItem(String name, int quantity, int quality) {
-        super(name, quantity, quality);
+    public DamagingItem(String name, int quantity, int quality, int dropRate) {
+        super(name, quantity, quality, dropRate);
     }
     
     /**

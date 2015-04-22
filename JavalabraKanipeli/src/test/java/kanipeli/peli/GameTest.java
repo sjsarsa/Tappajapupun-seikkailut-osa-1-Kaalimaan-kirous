@@ -51,10 +51,10 @@ public class GameTest {
      */
     @Before
     public void setUp() {
-        PlayableCreature player = new PlayableCreature(2, 4, null, 1, 1, "Hilipati", 200, 30, 0);
+        PlayableCreature player = new PlayableCreature(2, 4, null, 1, 1, "Hilipati", 200, 30, 0, null);
         
         ArrayList<CreatureOnField> fieldDwellers = new ArrayList();
-        CreatureOnField boss = new CreatureOnField(3, 5, null, 6, 6, "Kenkku", 10000, 500, 100000);
+        CreatureOnField boss = new CreatureOnField(3, 5, null, 6, 6, "Kenkku", 10000, 500, 100000, null);
         fieldDwellers.add(boss);
         
         ArrayList<Creature> randomEncounters = new ArrayList();

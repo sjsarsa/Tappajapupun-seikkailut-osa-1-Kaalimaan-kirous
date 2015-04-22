@@ -14,17 +14,19 @@ public abstract class Item implements Comparable<Item>{
     private String name;
     private int quantity;
     private int quality;
-    
+    private int dropRate;
     /**
      *
      * @param name the name of item
      * @param quantity the amount of item
      * @param quality the power of item
+     * @param dropRate the rate at which the item drops
      */
-    public Item(String name, int quantity, int quality) {
+    public Item(String name, int quantity, int quality, int dropRate) {
         this.name = name;
         this.quantity = quantity;
         this.quality = quality;
+        this.dropRate = dropRate;
     }
     
     /**
@@ -49,6 +51,12 @@ public abstract class Item implements Comparable<Item>{
     public String getName() {
         return name;
     }
+
+    public int getDropRate() {
+        return dropRate;
+    }
+    
+    
     
     /**
      *
