@@ -20,3 +20,6 @@ Pari tuntia sekvenssikaavioihin javadocciin ja pieneen menumuokkaukseen.
 
 ## 22.4.
 Pari tuntia koodaamista ja testejä tavaroiden käyttöä varten.
+
+## 24.4
+Puolisen tuntia säätämiseen ja uuteen sekvenssikaavioon.
