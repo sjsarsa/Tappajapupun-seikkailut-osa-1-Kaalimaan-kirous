@@ -36,7 +36,7 @@ public class Game {
         player.addItem(kerakaali);
         
         ArrayList<CreatureOnField> fieldDwellers = new ArrayList();
-        DamagingItem ydinrajahde = new DamagingItem("ydinräjähde", 3, 1000, 0);
+        DamagingItem ydinrajahde = new DamagingItem("ydinräjähde", 3, 99999, 0);
         HealingItem mataKaali = new HealingItem("mätä kaali", 2, -100, 0);
         HealingItem isoKaali = new HealingItem("iso kaali", 2, 500, 0);
         CreatureOnField boss = new CreatureOnField(3, 5, null, 6, 6, "Kenkku", 10000, 500, 100000, ydinrajahde);

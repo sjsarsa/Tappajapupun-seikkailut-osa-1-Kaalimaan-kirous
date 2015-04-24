@@ -45,7 +45,7 @@ public class GameStateManager {
     public void setMusic(String song) {
         music.stop();
         try {
-            Thread.sleep(200);
+            Thread.sleep(400);
             music = new AudioPlayer(song);
             music.play();
         } catch (InterruptedException ex) {

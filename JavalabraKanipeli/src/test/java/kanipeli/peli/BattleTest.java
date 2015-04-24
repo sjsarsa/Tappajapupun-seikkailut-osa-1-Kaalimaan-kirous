@@ -131,7 +131,6 @@ public class BattleTest {
         assertEquals(battle.victory(), item);
         assertEquals(battle.getPlayer().getItems().size(), 1);
 
-        
         item = new DamagingItem("turska", 1, 1, 2);
         battle = new Battle(player, new Creature(5, "Napero", 0, 0, 30, item));
         Item testItem;

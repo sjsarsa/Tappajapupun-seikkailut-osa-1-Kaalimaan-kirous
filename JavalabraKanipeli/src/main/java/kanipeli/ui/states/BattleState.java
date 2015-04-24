@@ -126,6 +126,7 @@ public class BattleState implements GameState {
         if (actionSelected && selectAction()) {
             if (playerTurn()) {
                 drawDroppedItem(battle.victory());
+                drawDroppedItem(battle.victory());
                 try {
                     Thread.sleep(1500);
                 } catch (Exception e) {
