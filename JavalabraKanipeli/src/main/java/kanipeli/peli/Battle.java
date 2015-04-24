@@ -11,9 +11,9 @@ import kanipeli.domain.Creature;
 import kanipeli.domain.Item;
 import kanipeli.domain.PlayableCreature;
 
-
 /**
- *Contains the logic for battles
+ * Contains the logic for battles
+ *
  * @author Sami
  */
 public class Battle {
@@ -23,9 +23,10 @@ public class Battle {
     private boolean escaped;
     private boolean lost;
     private Item usedItem;
+
     /**
      *
-     * @param player 
+     * @param player
      * @param enemy
      */
     public Battle(PlayableCreature player, Creature enemy) {
@@ -36,10 +37,11 @@ public class Battle {
     }
 
     /**
-     *Checks first if player hasn't lost or escaped and then adds experience to
+     * Checks first if player hasn't lost or escaped and then adds experience to
      * player according to the defeated enemy. If enough experience points are
-     * added calls for level up as long as experience points suffice.
-     * Checks whether the a creature drops an item.
+     * added calls for level up as long as experience points suffice. Checks
+     * whether the a creature drops an item.
+     *
      * @return the dropped item
      */
     public Item victory() {
@@ -48,7 +50,7 @@ public class Battle {
             levelUp();
             while (player.addExp(0)) {
                 levelUp();
-            }    
+            }
         }
         //check dropped item
         Random rm = new Random();
@@ -64,7 +66,7 @@ public class Battle {
     }
 
     /**
-     *Going to change, hopefully to the better.
+     * Going to change, hopefully to the better.
      */
     public void levelUp() {
         player.levelUpHp();
@@ -73,7 +75,8 @@ public class Battle {
     }
 
     /**
-     *Checks whether a creature has any health left.
+     * Checks whether a creature has any health left.
+     *
      * @param creature yes, it's a creature
      * @return true if still alive, else false
      */
@@ -85,8 +88,9 @@ public class Battle {
     }
 
     /**
-     *Inflicts damage upon the victim according to the damage factor of the
+     * Inflicts damage upon the victim according to the damage factor of the
      * attacker.
+
      * @param attacker damage dealer
      * @param victim damage receiver
      * @return the amount of damage inflicted
@@ -94,31 +98,37 @@ public class Battle {
     public int attack(Creature attacker, Creature victim) {
         int damage = attacker.attack();
         victim.takeDamage(damage);
-        if (!alive(player)) lost = true;
+        if (!alive(player)) {
+            lost = true;
+        }
         return damage;
     }
 
-    public int useItem(int i) {    
-//        Random rm = new Random();
-        if (i >= player.getItems().size()) {
-            System.out.println("This shouldn't happen");
-            return 0;
-        }
+    /**
+     * If there is only one of the selected item in player's list, the item is
+     * removed from the list. If the item is a healing item, uses the item on
+     * player and a damaging item is used on the enemy
+     * @param i index for the player's item list.
+     * @return items effect
+     */
+    public int useItem(int i) {
         usedItem = player.getItems().get(i);
-        if (usedItem.getQuantity() == 1) player.getItems().remove(i);
+        if (usedItem.getQuantity() == 1) {
+            player.getItems().remove(i);
+        }
+        //check item type
         if (usedItem.getName().contains("kaali")) {
-                usedItem.use(player);
-                return -usedItem.getQuality();
-            } else {
-               usedItem.use(foe);
-               return usedItem.getQuality();
-            }
+            usedItem.use(player);
+            return -usedItem.getQuality();
+        } else {
+            usedItem.use(foe);
+            return usedItem.getQuality();
+        }
     }
 
     public Item getUsedItem() {
         return usedItem;
     }
-
 
     public boolean getEscaped() {
         return escaped;

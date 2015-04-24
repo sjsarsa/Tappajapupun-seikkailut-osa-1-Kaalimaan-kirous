@@ -169,9 +169,6 @@ public class BattleTest {
         assertEquals(battle.getUsedItem(), kaali);
         assertEquals(damage, -1200);
         assertEquals(player.getCurrentHp(), 10);
-        
-        damage = battle.useItem(10);
-        assertEquals(damage, 0);
     }
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
