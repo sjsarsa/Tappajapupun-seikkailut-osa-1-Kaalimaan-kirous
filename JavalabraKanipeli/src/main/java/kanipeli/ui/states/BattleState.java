@@ -286,13 +286,13 @@ public class BattleState implements GameState {
 
     private void drawVictory(Item item) {
         drawScreen();
-        g.setFont(new Font("Century Gothic", Font.BOLD, 50));
+        g.setFont(new Font("Century Gothic", Font.BOLD, 30));
         g.setColor(Color.orange);
         g.drawString("Voitit!", 90 * scale, 130 * scale);
         g.drawString("Sait " + battle.getFoe().getExp() + " exp, jee!", 90 * scale, 150 * scale);
 
         if (item != null) {
-            g.drawString("Vihulainen tiputti jotakin: ", 50 * scale, 200 * scale);
+            g.drawString("Vihulainen tiputti jotain: ", 50 * scale, 200 * scale);
             g.drawString(item.getName() + " x " + item.getQuantity(), 50 * scale, 220 * scale);
         }
         bs.show();

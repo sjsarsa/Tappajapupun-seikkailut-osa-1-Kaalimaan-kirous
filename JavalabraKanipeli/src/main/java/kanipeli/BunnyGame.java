@@ -14,14 +14,15 @@ import kanipeli.ui.Screen;
 
 /**
  *Main class.
- * Creates the GamePanel Screen, GameStateManager and such.
+ * Creates the game frame and GameStateManager.
  * Initialises the manager so the game can start.
  * @author Sami
  */
-public class main {
+public class BunnyGame {
 
     /**
-     *Read class description.
+     *Creates the GamePanel Screen, GameStateManager.
+     *Initialises the manager so the game can start.
      * @param args argh arguments blah.
      */
     public static void main(String[] args) {      
