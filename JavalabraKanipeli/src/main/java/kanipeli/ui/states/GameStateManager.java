@@ -82,9 +82,7 @@ public class GameStateManager {
     public void setState(int index) {
         previousState = currentState;
         currentState = index;
-        for (int i = 0; i < 25; i++) {
-            gameStates[currentState].run();
-        }
+        gameStates[currentState].run();
     }
 
     /**
@@ -104,9 +102,7 @@ public class GameStateManager {
      */
     public void keyPressed(int k) {
         gameStates[currentState].keyPressed(k);
-        for (int i = 0; i < 4; i++) {
-            gameStates[currentState].run();
-        }
+        gameStates[currentState].run();
     }
 
     public int getState() {

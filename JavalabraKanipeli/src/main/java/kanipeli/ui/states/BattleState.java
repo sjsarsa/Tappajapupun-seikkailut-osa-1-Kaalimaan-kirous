@@ -81,22 +81,20 @@ public class BattleState implements GameState {
      * accordingly. Changes the music and game state when battle is over.
      */
     public void run() {
-        if (battle.getPlayer().getCurrentHp() == 0) {
-            return;
-        }
-        checkEscaped();
+        if (battle.getPlayer().getCurrentHp() == 0) return;
+        fight();
+        checkEscaped(); 
+        if (gsm.getState() == 1 || battle.getLost()) return;
         if (itemMenu) {
             items = battle.getPlayer().getItems().size();
             drawItems();
         } else {
             drawOptions();
         }
-        bs.show();
-        fight();
     }
 
     private void checkEscaped() {
-        if (battle.getEscaped()) {
+        if (battle.getEscaped() && !battle.getLost()) {
             gsm.setState(1);
             gsm.setMusic(gsm.getFieldMusic());
         }
@@ -113,14 +111,13 @@ public class BattleState implements GameState {
         int damage = battle.attack(battle.getFoe(), battle.getPlayer()); //enemy turn
         try {
             drawDamage(damage, 2);
-            drawDamage(damage, 2);
             Thread.sleep(700);
         } catch (InterruptedException e) {
             System.out.println("lol");
         }
         if (!battle.alive(battle.getPlayer())) {
             return true;
-        }
+        } else drawOptions();
         return false;
     }
 
@@ -128,7 +125,6 @@ public class BattleState implements GameState {
         if (actionSelected && selectAction()) {
             if (playerTurn()) {
                 int i = battle.victory();
-                drawVictory(battle.getDroppedItem(), i);
                 drawVictory(battle.getDroppedItem(), i);
                 try {
                     Thread.sleep(1500);
@@ -138,27 +134,14 @@ public class BattleState implements GameState {
                 gsm.setState(1);
             } else if (enemyTurn()) {
                 gsm.setMusic(gsm.getGameOverMusic());
-                for (int i = 0; i < 2; i++) {
+//                for (int i = 0; i < 2; i++) {
                     drawGameOver();
-                }
+//                }
             }
         }
     }
 
-    private void drawItemUse() {
-        int dam = battle.useItem(currentItem);
-        int col = 0;
-        if (dam < 0) {
-            dam = Math.abs(dam);
-            col = 1;
-        }
-        drawDamage(dam, col);
-        drawDamage(dam, col);
-        try {
-            Thread.sleep(700);
-        } catch (Exception e) {
-        }
-    }
+  
 
     private boolean selectAction() {
         actionSelected = false;
@@ -174,7 +157,7 @@ public class BattleState implements GameState {
         if (currentChoice == 0) {
             int damage = battle.attack(battle.getPlayer(), battle.getFoe());
             try {
-                drawDamage(damage, 0);
+//                drawDamage(damage, 0);
                 drawDamage(damage, 0);
                 Thread.sleep(700);
             } catch (InterruptedException e) {
@@ -238,14 +221,15 @@ public class BattleState implements GameState {
         }
     }
 
-    private void drawScreen() {
+    private void render() {
 
+        BufferStrategy bs = canvas.getBufferStrategy();
         if (bs == null) {
             canvas.createBufferStrategy(3);
             canvas.requestFocus();
-            return;
+            bs = canvas.getBufferStrategy();
         }
-        renderBattleScreen(screen);
+        renderTiles(screen);
         for (int y = 0; y < screen.h; y++) {
             for (int x = 0; x < screen.w; x++) {
                 pixels[x + y * width] = screen.pixels[x + y * screen.w];
@@ -257,9 +241,23 @@ public class BattleState implements GameState {
         drawCreatureStatus(15 * scale, g, battle.getPlayer());
         drawCreatureStatus(160 * scale, g, battle.getFoe());
     }
+    
+      private void drawItemUse() {
+        int dam = battle.useItem(currentItem);
+        int col = 0;
+        if (dam < 0) {
+            dam = Math.abs(dam);
+            col = 1;
+        }
+        drawDamage(dam, col);
+        try {
+            Thread.sleep(700);
+        } catch (Exception e) {
+        }
+    }
 
     private void drawOptions() {
-        drawScreen();
+        render();
         for (int i = 0; i < options.length; i++) {
             if (i == currentChoice) {
                 g.setColor(Color.BLUE);
@@ -268,10 +266,11 @@ public class BattleState implements GameState {
             }
             g.drawString(options[i], 45 * scale, 50 * scale + i * 25);
         }
+        bs.show();
     }
 
     private void drawDamage(int amount, int color) {
-        drawScreen();
+        render();
         g.setFont(new Font("Arial", Font.BOLD, 65));
         if (color == 0) {
             g.setColor(Color.YELLOW);
@@ -285,12 +284,12 @@ public class BattleState implements GameState {
     }
 
     private void drawVictory(Item item, int amount) {
-        drawScreen();
+        render();
         g.setFont(new Font("Century Gothic", Font.BOLD, 30));
         g.setColor(Color.orange);
         g.drawString("Voitit!", 90 * scale, 130 * scale);
         g.drawString("Sait " + battle.getFoe().getExp() + " exp, jee!", 90 * scale, 150 * scale);
-
+        
         if (amount != 0) {
             g.drawString("Vihulainen tiputti jotain: ", 50 * scale, 200 * scale);
             g.drawString(item.getName() + " x " + amount, 50 * scale, 220 * scale);
@@ -299,7 +298,7 @@ public class BattleState implements GameState {
     }
 
     private void drawItems() {
-        drawScreen();
+        render();
         g.setFont(new Font("Arial", Font.BOLD, 25));
         g.setColor(Color.blue);
 
@@ -327,7 +326,7 @@ public class BattleState implements GameState {
     }
     
     private void drawGameOver() {
-        drawScreen();
+        render();
         g.drawImage(image, 0, 0, canvas.getWidth(), canvas.getHeight(), null);
         g.setColor(Color.RED);
         g.setFont(new Font("Century Gothic", Font.BOLD, 140));
@@ -338,7 +337,7 @@ public class BattleState implements GameState {
         bs.show();
     }
 
-    private void renderBattleScreen(Screen screen) {
+    private void renderTiles(Screen screen) {
 
         int w = (screen.w * 15) >> 4;
         int h = (screen.h * 15) >> 4;

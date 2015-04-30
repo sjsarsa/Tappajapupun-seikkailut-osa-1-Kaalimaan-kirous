@@ -73,7 +73,7 @@ public class MenuState implements GameState, Runnable {
         if (bs == null) {
             canvas.createBufferStrategy(3);
             canvas.requestFocus();
-            return;
+            bs = canvas.getBufferStrategy();
         }
         int w = (screen.w * 15) >> 4;
         int h = (screen.h * 15) >> 4;

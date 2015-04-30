@@ -93,7 +93,7 @@ public class FieldState implements GameState {
         if (bs == null) {
             canvas.createBufferStrategy(3);
             canvas.requestFocus();
-            return;
+            bs = canvas.getBufferStrategy();
         }
         field.level.renderField(xScroll, yScroll, screen);
         for (int y = 0; y < screen.h; y++) {
