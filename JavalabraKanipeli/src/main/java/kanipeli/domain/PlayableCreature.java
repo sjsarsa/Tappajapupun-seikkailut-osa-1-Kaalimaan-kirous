@@ -50,15 +50,18 @@ public class PlayableCreature extends CreatureOnField {
      *
      * @param item An Item class object.
      */
-    public void addItem(Item item) {
+    public void addItem(Item item, int amount) {
         boolean added = false;
         for (Item i : items) {
             if (i.equals(item)) {
-                i.increaseQuantity(item.getQuantity());
+                i.increaseQuantity(amount);
                 added = true;
             }
         }
-        if (!added) items.add(item);
+        if (!added) {
+            items.add(item);
+            item.increaseQuantity(amount);
+        }
         Collections.sort(items);
     }
 

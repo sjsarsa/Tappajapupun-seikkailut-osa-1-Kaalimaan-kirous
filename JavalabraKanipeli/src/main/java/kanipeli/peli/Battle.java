@@ -23,6 +23,7 @@ public class Battle {
     private boolean escaped;
     private boolean lost;
     private Item usedItem;
+    private Item droppedItem;
 
     /**
      *
@@ -42,9 +43,9 @@ public class Battle {
      * added calls for level up as long as experience points suffice. Checks
      * whether the a creature drops an item.
      *
-     * @return the dropped item
+     * @return amount of items dropped
      */
-    public Item victory() {
+    public int victory() {
         //check level up
         if (!lost && !escaped && player.addExp(foe.getExp())) {
             levelUp();
@@ -54,15 +55,19 @@ public class Battle {
         }
         //check dropped item
         Random rm = new Random();
-        Item i = foe.getItem();
-        if (i.getDropRate() == 0) {
-            player.addItem(i);
-            return i;
-        } else if (rm.nextInt(i.getDropRate()) == 0) {
-            player.addItem(i);
-            return i;
+        droppedItem = foe.getItem();
+        
+        if (droppedItem.getDropRate() == 0) {
+            player.addItem(droppedItem, 0);
+            return droppedItem.getQuantity();
+        } else if (rm.nextInt(droppedItem.getDropRate()) == 0) {
+            player.addItem(droppedItem, 1);
+            return 1;
+        } else if (rm.nextInt(droppedItem.getDropRate()) == 1) {
+            player.addItem(droppedItem, 2);
+            return 2;
         }
-        return null;
+        return 0;
     }
 
     /**
@@ -124,6 +129,10 @@ public class Battle {
             usedItem.use(foe);
             return usedItem.getQuality();
         }
+    }
+
+    public Item getDroppedItem() {
+        return droppedItem;
     }
 
     public Item getUsedItem() {

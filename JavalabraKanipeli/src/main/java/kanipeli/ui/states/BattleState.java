@@ -127,9 +127,9 @@ public class BattleState implements GameState {
     private void fight() {
         if (actionSelected && selectAction()) {
             if (playerTurn()) {
-                Item i = battle.victory();
-                drawVictory(i);
-                drawVictory(i);
+                int i = battle.victory();
+                drawVictory(battle.getDroppedItem(), i);
+                drawVictory(battle.getDroppedItem(), i);
                 try {
                     Thread.sleep(1500);
                 } catch (Exception e) {
@@ -145,7 +145,7 @@ public class BattleState implements GameState {
         }
     }
 
-    private void item() {
+    private void drawItemUse() {
         int dam = battle.useItem(currentItem);
         int col = 0;
         if (dam < 0) {
@@ -165,7 +165,7 @@ public class BattleState implements GameState {
         if (itemMenu) {
             itemMenu = false;
             if (currentItem < items) {
-                item();
+                drawItemUse();
             } else {
                 return false;
             }
@@ -284,16 +284,16 @@ public class BattleState implements GameState {
         bs.show();
     }
 
-    private void drawVictory(Item item) {
+    private void drawVictory(Item item, int amount) {
         drawScreen();
         g.setFont(new Font("Century Gothic", Font.BOLD, 30));
         g.setColor(Color.orange);
         g.drawString("Voitit!", 90 * scale, 130 * scale);
         g.drawString("Sait " + battle.getFoe().getExp() + " exp, jee!", 90 * scale, 150 * scale);
 
-        if (item != null) {
+        if (amount != 0) {
             g.drawString("Vihulainen tiputti jotain: ", 50 * scale, 200 * scale);
-            g.drawString(item.getName() + " x " + item.getQuantity(), 50 * scale, 220 * scale);
+            g.drawString(item.getName() + " x " + amount, 50 * scale, 220 * scale);
         }
         bs.show();
     }

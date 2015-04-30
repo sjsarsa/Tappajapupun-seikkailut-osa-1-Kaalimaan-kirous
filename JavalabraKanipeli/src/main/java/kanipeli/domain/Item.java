@@ -15,6 +15,7 @@ public abstract class Item implements Comparable<Item>{
     private int quantity;
     private int quality;
     private int dropRate;
+    private int dropAmount;
     /**
      *
      * @param name the name of item

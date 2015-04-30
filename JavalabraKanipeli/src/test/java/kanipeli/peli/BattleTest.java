@@ -107,9 +107,7 @@ public class BattleTest {
         assertEquals(battle.alive(foe), false);
     }
     
-    /**
-     *
-     */
+
     @Test
     public void checkLevelUp() {
         battle.victory();
@@ -127,42 +125,41 @@ public class BattleTest {
         assertEquals(player.getItems().size(), 0);
         Item item = new DamagingItem("pommi", 1, 1, 0);
         battle = new Battle(player, new Creature(5, "Napero", 0, 0, 30, item));
+        assertEquals(battle.getDroppedItem(), null);
         assertEquals(player.getItems().size(), 0);
-        assertEquals(battle.victory(), item);
+        assertEquals(battle.victory(), 1);
         assertEquals(battle.getPlayer().getItems().size(), 1);
+        assertEquals(battle.getDroppedItem(), item);
 
         item = new DamagingItem("turska", 1, 1, 2);
-        battle = new Battle(player, new Creature(5, "Napero", 0, 0, 30, item));
-        Item testItem;
-        Item item2 = null; 
+        battle = new Battle(player, new Creature(5, "Napero", 0, 0, 30, item)); 
         boolean itemAdded = false;
         for (int i = 0; i < 10000; i++) {
-            testItem = battle.victory();
-            if (testItem != null) item2 = testItem;
+            battle.victory();
         }
         if (player.getItems().size() > 1) itemAdded = true;
-        assertEquals(item2, item);
+        assertEquals(battle.getDroppedItem(), item);
         assertEquals(itemAdded, true);
         
         boolean itemReturned = true;
         for (int i = 0; i < 10000; i++) {
-            if (battle.victory() == null) itemReturned = false;
+            if (battle.victory() == 0) itemReturned = false;
         }
         assertEquals(itemReturned, false);
     }
     @Test
     public void useItem() {
-        DamagingItem di = new DamagingItem("pum", 1, 100, 0);
-        player.addItem(di);
+        DamagingItem di = new DamagingItem("pum", 0, 100, 0);
+        player.addItem(di, 1);
         int damage = battle.useItem(0);
         assertEquals(player.getItems().size(), 0);
         assertEquals(battle.getUsedItem(), di);
         assertEquals(damage, 100);
         assertEquals(battle.getFoe().getCurrentHp(), 0);
         
-        HealingItem kaali = new HealingItem("kaali", 2, 1200, 0);
-        player.addItem(di);
-        player.addItem(kaali);
+        HealingItem kaali = new HealingItem("kaali", 0, 1200, 0);
+        player.addItem(di, 1);
+        player.addItem(kaali, 2);
         player.takeDamage(100);
         damage = battle.useItem(1);
         assertEquals(player.getItems().size(), 2);

@@ -32,13 +32,13 @@ public class Game {
     
     public Game() {
         PlayableCreature player = new PlayableCreature(2, 4, null, 1, 1, "Tappajapupu", 200, 30, 0, null);
-        HealingItem kerakaali = new HealingItem("pieni keräkaali", 2, 150, 3);
-        player.addItem(kerakaali);
+        HealingItem kerakaali = new HealingItem("keräkaali", 0, 150, 3);
+        player.addItem(kerakaali, 2);
         
         ArrayList<CreatureOnField> fieldDwellers = new ArrayList();
-        DamagingItem ydinrajahde = new DamagingItem("ydinräjähde", 3, 99999, 0);
-        HealingItem mataKaali = new HealingItem("mätä kaali", 2, -100, 0);
-        HealingItem isoKaali = new HealingItem("iso kaali", 2, 500, 0);
+        DamagingItem ydinrajahde = new DamagingItem("ydinräjähde", 1, 99999, 0);
+        HealingItem mataKaali = new HealingItem("mätä kaali", 3, -100, 0);
+        HealingItem isoKaali = new HealingItem("iso kaali", 3, 500, 0);
         CreatureOnField boss = new CreatureOnField(3, 5, null, 6, 6, "Kenkku", 10000, 500, 100000, ydinrajahde);
         CreatureOnField miniBoss1 = new CreatureOnField(3, 5, null, 5, 12, "Haisuli", 1000, 200, 200, mataKaali);
         CreatureOnField miniBoss2 = new CreatureOnField(3, 5, null, 12, 5, "Haisuli", 1000, 200, 200, isoKaali);
@@ -47,23 +47,23 @@ public class Game {
         fieldDwellers.add(miniBoss2);
         
         ArrayList<CreatureOnField> fieldDwellersUpOne = new ArrayList();
-        HealingItem mKaali = new HealingItem("majesteettinen kaali", 1, 3000, 0);
+        HealingItem mKaali = new HealingItem("majesteettinen kaali", 3, 3000, 0);
         CreatureOnField blackBunny = new CreatureOnField(8, 9, null, 6, 6, "Höpö", 3000, 300, 300, mKaali);
         fieldDwellersUpOne.add(blackBunny);
         
         ArrayList<Creature> randomEncounters = new ArrayList();
-        HealingItem kerakaali2 = new HealingItem("keräkaali", 1, 150, 4);
-        DamagingItem papatti = new DamagingItem("papatti", 1, 100, 2);
+        HealingItem kerakaali2 = new HealingItem("keräkaali", 0, 150, 4);
+        DamagingItem papatti = new DamagingItem("papatti", 0, 100, 2);
         Creature re = new Creature(5, "Pikkuhirviö", 100, 20, 2, kerakaali);
         Creature re2 = new Creature(5, "Pikkuhirviö", 150, 15, 3, kerakaali2);
         Creature re3 = new Creature(5, "Pikkuhirviö", 175, 10, 3, papatti);
         randomEncounters.add(re);
         randomEncounters.add(re2);
         randomEncounters.add(re3);
-         
+        
         ArrayList<Creature> randomEncounters2 = new ArrayList();
-        DamagingItem kranaatti = new DamagingItem("kranaatti", 1, 1000, 3);
-        HealingItem kiinankaali = new HealingItem("kiinankaali", 1, 500, 4);
+        DamagingItem kranaatti = new DamagingItem("kranaatti", 0, 750, 4);
+        HealingItem kiinankaali = new HealingItem("kiinankaali", 0, 500, 5);
         Creature re21 = new Creature(5, "Isompi hirviö", 800, 75, 12, kiinankaali);
         Creature re22 = new Creature(5, "Isompi hirviö", 600, 125, 15, kranaatti);
         randomEncounters2.add(re21);

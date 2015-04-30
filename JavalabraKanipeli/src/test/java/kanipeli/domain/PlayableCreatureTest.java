@@ -60,15 +60,18 @@ public class PlayableCreatureTest {
      */
     @Test
     public void addItem() {
-        DamagingItem rottenCheese = new DamagingItem("Rotten cheese", 1, 999, 0);
-        vilperi.addItem(rottenCheese);
+        DamagingItem rottenCheese = new DamagingItem("Rotten cheese", 0, 999, 0);
+        vilperi.addItem(rottenCheese, 1);
         assertEquals(vilperi.getItems().size(), 1);
-        vilperi.addItem(rottenCheese);
+        vilperi.addItem(rottenCheese, 1);
         assertEquals(vilperi.getItems().size(), 1);
         assertEquals(vilperi.getItems().get(0).getQuantity(), 2);
-        HealingItem noodles = new HealingItem("Noodles", 6, 2000, 0);
-        vilperi.addItem(noodles);
+        HealingItem noodles = new HealingItem("Noodles", 0, 2000, 0);
+        vilperi.addItem(noodles, 2);
         assertEquals(vilperi.getItems().size(), 2);
+        assertEquals(noodles.getQuantity(), 2);
+        vilperi.addItem(noodles, 3);
+        assertEquals(noodles.getQuantity(), 5);
     }
     
     /**
