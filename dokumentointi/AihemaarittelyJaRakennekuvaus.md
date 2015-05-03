@@ -32,7 +32,7 @@ Hahmoja on kolmenlaisia: Pelattava hahmo perii kartalla olevan hahmo, joka perii
 ##logic
 Täällä on logiikkaa sisältävät palaset: battle (taistelu) field (pelto) ja game (peli), jossa luodaan kaikki pelin olennaiset oliot.
 ##ui
-ui:ssa itsessään on GamePanel, joka vain luo käyttöliittymän ja luokka Screen jota pelitilat käyttävät kälin muokkaamiseen.
+ui:ssa itsessään on GamePanel, joka vain luo käyttöliittymän ja kuuntelee näppäimistöä ja luokka Screen jota pelitilat käyttävät kälin muokkaamiseen.
 Käyttöliittymässä on sen verran tavaraa, että se on jaettu pienempiin pakkauksiin: 
 ####ui.level,
 jossa on hahmojen ja peltojen spritet eli peliin tulevat kuvat hahmoille ja pellon osille.
