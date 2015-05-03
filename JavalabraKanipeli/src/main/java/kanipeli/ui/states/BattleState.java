@@ -219,7 +219,7 @@ public class BattleState implements GameState {
     }
 
     private void render() {
-        BufferStrategy bs = canvas.getBufferStrategy();
+        bs = canvas.getBufferStrategy();
         if (bs == null) {
             canvas.createBufferStrategy(3);
             canvas.requestFocus();
@@ -281,7 +281,6 @@ public class BattleState implements GameState {
 
     private void drawVictory(Item item, int amount) {
         render();
-        render();
         g.setFont(new Font("Century Gothic", Font.BOLD, 30));
         g.setColor(Color.orange);
         g.drawString("Voitit!", 90 * scale, 130 * scale);
@@ -295,7 +294,6 @@ public class BattleState implements GameState {
     }
 
     private void drawItems() {
-        render();
         render();
         g.setFont(new Font("Arial", Font.BOLD, 25));
         g.setColor(Color.blue);
