@@ -20,3 +20,15 @@ Taistelussa: hyökkää, käytä tavara, pakene, avaa valikko.
 
 Valikossa: uusi peli, jatka, lopeta peli.
 
+#Rakennekuvaus
+
+Ohjelma jakautuu neljään pakkaukseen: 
+pääpakkaus, jossa on main-luokka ja AudioPlayer musiikin soittamiseen, 
+domain, jossa on pelin yksinkertaiset palat kuten hahmot ja itemit(tavarat), 
+logic, jossa on logiikkaa sisältävät palaset, kuten battle (taistelu) ja field (pelto) 
+ja lopuksi ui, jossa on käyttöliittymä. Käyttöliittymässä on sen verran tavaraa, että se on jaettu omiin pakkauksiinsa: 
+ ui.level, jossa on hahmojen ja peltojen spritet eli peliin tulevat kuvat hahmoille ja pellon osille,
+ ui.sprite, jossa toteutetaan spritejen lataaminen kuvatiedostoista,
+ ui.states, jossa on game state manager ja erilaiset game statet eli pelitilat. Pelitilat muokkaavat käyttöliittymää ja   toteuttavat napinpainalluksia.
+ ui pakkauksessa itsessään on GamePanel, joka vain luo käyttöliittymän ja luokka Screen jota pelitilat käyttävät kälin   muokkaamiseen.
+
