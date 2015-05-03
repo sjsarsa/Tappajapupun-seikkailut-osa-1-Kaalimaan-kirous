@@ -74,8 +74,9 @@ public class Battle {
      * Going to change, hopefully to the better.
      */
     public void levelUp() {
-        player.levelUpHp();
-        player.levelUpDamage();
+        if (player.getState() == 1) player.levelUpDamage();
+        else if(player.getState() == 2) player.levelUpHp(); 
+        else player.levelUpNormal();     
         player.levelUp();
     }
 

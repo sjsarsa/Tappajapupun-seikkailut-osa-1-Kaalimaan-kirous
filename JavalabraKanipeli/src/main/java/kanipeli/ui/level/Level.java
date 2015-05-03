@@ -66,8 +66,10 @@ public class Level {
     }
     
     /**
-     *
-     * @return
+     * Creates a new two-dimensional boolean array.
+     *Goes through the levels tiles and marks impassable tiles (rock tiles)
+     * as true in the array.
+     * @return boolean array telling what coordinates are impassable
      */
     public boolean[][] getImpassables() {
         boolean[][] impassables = new boolean[w][h];
@@ -80,10 +82,11 @@ public class Level {
     }
    
     /**
-     *
-     * @param x
-     * @param y
-     * @return
+     *If tile is out of bounds,returns a rock tile, otherwise a tile on the
+     * field in the specified coordinates.
+     * @param x coordinate
+     * @param y coordinate
+     * @return tile
      */
     public Tile getTile(int x, int y) {
         if (x < 0 || y < 0 || x >= w || y >= h) {
@@ -93,7 +96,7 @@ public class Level {
     }
     
     /**
-     *
+     *Loads tiles for the field according to fields sprite.
      * @param x0
      * @param y0
      * @param x1
@@ -109,7 +112,7 @@ public class Level {
                     if (y == 0) field.addExit(1, x, y);
                     if (x == field.getWidth() - 1) field.addExit(2, x, y);       
                     if (y == field.getHeight() - 1) field.addExit(3, x, y);
-                    tiles[x + x1 + (y + y1) * h] = Tile.player.id;
+                    tiles[x + x1 + (y + y1) * h] = Tile.door.id;
                 }
                 if (sprite.pixels[x + y * sprite.h] == blackRock) {
                     tiles[x + x1 + (y + y1) * h] = Tile.rock.id;

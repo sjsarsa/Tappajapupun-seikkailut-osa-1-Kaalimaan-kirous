@@ -79,19 +79,19 @@ public class PlayableCreatureTest {
      */
     @Test
     public void addExp() {
-        assertEquals(vilperi.addExp(5), true);
+        assertEquals(vilperi.addExp(7), true);
         assertEquals(vilperi.getExp(), 0);
-        assertEquals(vilperi.getRequiredExp(), 7);
+        assertEquals(vilperi.getRequiredExp(), 10);
         assertEquals(vilperi.addExp(3), false);
         assertEquals(vilperi.getExp(), 3);
-        assertEquals(vilperi.getRequiredExp(), 7);
-        assertEquals(vilperi.addExp(30), true);
         assertEquals(vilperi.getRequiredExp(), 10);
+        assertEquals(vilperi.addExp(30), true);
+        assertEquals(vilperi.getRequiredExp(), 15);
     }
     
-    /**
-     *
-     */
+    
+    
+    @Test
     public void levelUp() {
         vilperi.levelUp();
         assertEquals(vilperi.getDamage(), 120);
@@ -104,15 +104,39 @@ public class PlayableCreatureTest {
         assertEquals(vilperi.getLvl(), 3);
     }
     
+    @Test
+    public void changeState() {
+        assertEquals(vilperi.getState(), 0);
+        assertEquals(vilperi.getDamage(), 100);
+        assertEquals(vilperi.getMaxHp(), 100);
+        vilperi.changeState();
+        assertEquals(vilperi.getState(), 1);
+        assertEquals(vilperi.getDamage(), 120);
+        assertEquals(vilperi.getMaxHp(), 100);
+        vilperi.changeState();
+        assertEquals(vilperi.getState(), 2);
+        assertEquals(vilperi.getDamage(), 90);
+        assertEquals(vilperi.getMaxHp(), 130);
+        vilperi.changeState();
+        assertEquals(vilperi.getState(), 0);
+        assertEquals(vilperi.getDamage(), 100);
+        assertEquals(vilperi.getMaxHp(), 100);
+    }
+    
     /**
      *
      */
     @Test
     public void levelUp2() {
+        vilperi.changeState(); 
         vilperi.levelUpDamage();
-        assertEquals(vilperi.getDamage(), 110);
+        assertEquals(vilperi.getDamage(), 113);
+        vilperi.changeState();
+        vilperi.changeState();
+        assertEquals(vilperi.getMaxHp(), 130);
         vilperi.levelUpHp();
-        assertEquals(vilperi.getMaxHp(), 125);
+        assertEquals(vilperi.getMaxHp(), 150);
+        vilperi.changeState();
     }
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:

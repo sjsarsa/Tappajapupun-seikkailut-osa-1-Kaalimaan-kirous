@@ -35,6 +35,7 @@ public class MenuState implements GameState, Runnable {
     private String[] options = new String[]{
         "New Game",
         "Continue",
+        "Change State",
         "Exit"
     };
     private Game game;
@@ -80,7 +81,7 @@ public class MenuState implements GameState, Runnable {
 
         for (int y = 0; y <= h; y++) {
             for (int x = 0; x <= w; x++) {
-                Tile.MenuBlack.render(x, y, screen); //empty battle tile (white)
+                Tile.menuBlack.render(x, y, screen); //empty battle tile (white)
             }
         }
         Tile.playerBattle.render(1, 1, screen);
@@ -106,7 +107,7 @@ public class MenuState implements GameState, Runnable {
             } else {
                 g.setColor(Color.RED);
             }
-            g.drawString(options[i], 25 * scale, 50 * scale + i * 40);
+            g.drawString(options[i], 15 * scale, 35 * scale + i * 40);
         }
     }
     
@@ -119,7 +120,13 @@ public class MenuState implements GameState, Runnable {
         g.drawString("Hp: " + pc.getCurrentHp() + "/" + pc.getMaxHp(), w * scale, 50 * scale + 2 * 60);
         g.drawString("Damage: " + pc.getDamage(), w * scale, 50 * scale + 3 * 60);
         g.drawString("Level: " + pc.getLvl(), w * scale, 50 * scale + 4 * 60);
-        g.drawString("Exp: " + pc.getExp() + "/" + pc.getRequiredExp(), w * scale, 50 * scale + 5 * 60);   
+        g.drawString("Exp: " + pc.getExp() + "/" + pc.getRequiredExp(), w * scale, 50 * scale + 5 * 60);  
+        int state = game.getCurrentField().getPlayer().getState();
+        String status = null;
+        if (state == 0) status = "Normal";
+        if (state == 1) status = "Frenzied";
+        if (state == 2) status = "Calm";
+        g.drawString("Status:" + status, w * scale, 50 * scale + 6 * 60);
     }
     
     /**
@@ -137,18 +144,19 @@ public class MenuState implements GameState, Runnable {
             if (currentChoice == -1) {
                 currentChoice = options.length - 1;
             }
-            render();
+            
         }
         if (keyCode == KeyEvent.VK_DOWN) {
             currentChoice++;
             if (currentChoice == options.length) {
                 currentChoice = 0;
             }
-            render();
+           
         }
         if (keyCode == KeyEvent.VK_ESCAPE) {
             gsm.setState(gsm.getPreviousState());
         }
+        render();
     }
 
     private void actionSelected() {
@@ -161,6 +169,10 @@ public class MenuState implements GameState, Runnable {
             }
         }
         if (currentChoice == 2) {
+            if (game != null ) game.getCurrentField().getPlayer().changeState();
+            render();
+        }
+        if (currentChoice == 3) {
             System.exit(0);
         }
     }

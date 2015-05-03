@@ -140,6 +140,7 @@ public class FieldState implements GameState {
         if (keyCode == KeyEvent.VK_ESCAPE) {
             gsm.setState(0);
         }
+        run();
     }
 
     private void checkSpot() {

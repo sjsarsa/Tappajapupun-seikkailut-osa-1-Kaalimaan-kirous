@@ -20,20 +20,20 @@ public class Screen {
     public int w,
 
     /**
-     *
+     *width and height of the screen.
      */
     h;
     int xOffSet = 0, yOffSet = 0;
 
     /**
-     *
+     *array for pixels
      */
     public int pixels[];
 
     /**
-     *
-     * @param w
-     * @param h
+     *Constructor
+     * @param w width
+     * @param h height
      */
     public Screen(int w, int h) {
         this.w = w;
@@ -42,7 +42,7 @@ public class Screen {
     }
 
     /**
-     *
+     *Sets the colours of pixels of a sprite to the screen in a specified place
      * @param xPos float for width
      * @param yPos float for height
      * @param sprite 
@@ -69,11 +69,6 @@ public class Screen {
         }
     }
 
-    /**
-     *
-     * @param xOffSet
-     * @param yOffSet
-     */
 //    public void setOffSets(int xOffSet, int yOffSet) {
 //        this.xOffSet = xOffSet;
 //        this.yOffSet = yOffSet;

@@ -8,6 +8,7 @@ package kanipeli.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 /**
  * An extension for the class CreatureOnField. A class for the main character of
@@ -22,8 +23,10 @@ public class PlayableCreature extends CreatureOnField {
 
     private int lvl = 1;
     private int exp = 0;
-    private int requiredExp = 5;
+    private int requiredExp = 7;
     private ArrayList<Item> items = new ArrayList<Item>();
+    private int state = 0; // 0 = normal, 1 = attack+, 2 = defense+
+    private int normalHp = 0;
 
     /**
      *
@@ -64,11 +67,32 @@ public class PlayableCreature extends CreatureOnField {
         }
         Collections.sort(items);
     }
-
+    
     public int getLvl() {
         return lvl;
     }
-
+    
+    @Override
+    public int attack() {
+        if (state == 1) return (int) (super.attack() * 1.2);
+        else if (state == 2) return (int) (super.attack() * 0.9);
+        else return super.attack();
+    }
+    
+    @Override
+    public int getDamage() {
+        if (state == 1) return (int) (1.2 * super.getDamage());
+        else if (state == 2) return (int) (0.9 * super.getDamage());
+        else return super.getDamage();
+    }
+    
+    @Override
+    public void takeDamage(int damage) {
+        if (state == 2) super.takeDamage((int) (damage * 0.85));
+        else if (state == 1) super.takeDamage((int) (damage * 1.2));
+        else super.takeDamage(damage);
+    }
+    
     /**
      * Increases experience points by given amount. If experience points exceed
      * the required amount for gaining a level the required points are reduced
@@ -87,30 +111,65 @@ public class PlayableCreature extends CreatureOnField {
         }
         return false;
     }
+    
+    /**
+     * Changes state by increasing the value of state variable.
+     * If the value is over 2 the value is changed back to zero as there is
+     * only three states.
+     * If the state changes to calm, health is added depending on current max
+     * health.
+     * If the state changes from calm, health is changed back to normal.
+     */
+    
+    public void changeState() {
+        state += 1;
+        if (state == 2) {
+            normalHp = super.getMaxHp();
+            super.setMaxHp((int) (super.getMaxHp() * 1.3));
+            if (super.getCurrentHp() > 0) super.setCurrentHp(super.getCurrentHp() + (super.getMaxHp() - normalHp));
+        }
+        if (state > 2) state = 0;
+        if (state == 0) {
+            super.setCurrentHp(super.getCurrentHp() - (super.getMaxHp() - normalHp));
+            super.setMaxHp(normalHp);
+        }
+    }
 
     /**
-     * Increases creature's maximum health and damage. Gives the creature full
+     * Gives the creature full
      * health. Increases creature's level.
      */
     public void levelUp() {
-        super.setMaxHp((int) (super.getMaxHp() * 1.2));
-        super.setDamage((int) (super.getDamage() * 1.2));
+        levelUpNormal();
         super.setCurrentHp(super.getMaxHp());
         lvl++;
+    }
+    
+    /**
+     * Increases creature's maximum health and damage.
+     */
+    
+    public void levelUpNormal() {
+        super.setMaxHp((int) (super.getMaxHp() * 1.2));
+        super.setDamage((int) (super.getDamage() * 1.2));
     }
 
     /**
      * Increases creature's damage factor considering current level.
      */
     public void levelUpDamage() {
-        super.setDamage(super.getDamage() + (30 * lvl) / 3);
+        changeState();
+        changeState();
+        super.setDamage(super.getDamage() + (40 * lvl) / 3);
     }
 
     /**
-     * Increases creature's maximum health considering current level.
+     * Increases creature's maximum health considering current level and sets
+     * the current health to maximum. 
      */
     public void levelUpHp() {
-        super.setMaxHp(super.getMaxHp() + (75 * lvl) / 3);
+        changeState();
+        super.setMaxHp(super.getMaxHp() + (150 * lvl) / 3);
     }
 
     public ArrayList<Item> getItems() {
@@ -120,6 +179,10 @@ public class PlayableCreature extends CreatureOnField {
     public int getRequiredExp() {
         return requiredExp;
     }
+
+    public int getState() {
+        return state;
+    }     
 
     @Override
     public int getExp() {

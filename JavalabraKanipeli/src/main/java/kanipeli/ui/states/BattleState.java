@@ -134,9 +134,7 @@ public class BattleState implements GameState {
                 gsm.setState(1);
             } else if (enemyTurn()) {
                 gsm.setMusic(gsm.getGameOverMusic());
-//                for (int i = 0; i < 2; i++) {
                     drawGameOver();
-//                }
             }
         }
     }
@@ -157,7 +155,6 @@ public class BattleState implements GameState {
         if (currentChoice == 0) {
             int damage = battle.attack(battle.getPlayer(), battle.getFoe());
             try {
-//                drawDamage(damage, 0);
                 drawDamage(damage, 0);
                 Thread.sleep(700);
             } catch (InterruptedException e) {
@@ -190,7 +187,7 @@ public class BattleState implements GameState {
             if (itemMenu) {
                 currentItem--;
                 if (currentItem == -1) {
-                    currentItem = 0;
+                    currentItem = items;
                 }
                 return;
             }
@@ -203,7 +200,7 @@ public class BattleState implements GameState {
             if (itemMenu) {
                 currentItem++;
                 if (currentItem == items + 1) {
-                    currentItem = items;
+                    currentItem = 0;
                 }
                 return;
             }
@@ -222,7 +219,6 @@ public class BattleState implements GameState {
     }
 
     private void render() {
-
         BufferStrategy bs = canvas.getBufferStrategy();
         if (bs == null) {
             canvas.createBufferStrategy(3);
@@ -242,7 +238,7 @@ public class BattleState implements GameState {
         drawCreatureStatus(160 * scale, g, battle.getFoe());
     }
     
-      private void drawItemUse() {
+    private void drawItemUse() {
         int dam = battle.useItem(currentItem);
         int col = 0;
         if (dam < 0) {
@@ -338,18 +334,16 @@ public class BattleState implements GameState {
     }
 
     private void renderTiles(Screen screen) {
-
         int w = (screen.w * 15) >> 4;
         int h = (screen.h * 15) >> 4;
 
         for (int y = 0; y <= h; y++) {
             for (int x = 0; x <= w; x++) {
-                Tile.tiles[6].render(x, y, screen); //empty battle tile (white)
+                Tile.battleEmpty.render(x, y, screen); //empty battle tile (white)
             }
         }
         Tile.tiles[battle.getPlayer().getBattleTile()].render(0, 1, screen); //playerBattle
         Tile.tiles[battle.getFoe().getBattleTile()].render(2, 1, screen); //critterBattle     
-
     }
 
     

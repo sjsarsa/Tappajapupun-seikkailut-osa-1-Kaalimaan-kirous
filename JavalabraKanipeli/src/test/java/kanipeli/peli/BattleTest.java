@@ -107,11 +107,50 @@ public class BattleTest {
         assertEquals(battle.alive(foe), false);
     }
     
+    @Test
+    public void takeDamage() {
+        player = new PlayableCreature(2, 4, null, 0, 0, "Seppo", 120, 100, 0, null);
+        battle = new Battle(player, foe);
+        player.changeState();
+        boolean wut = false;
+        for (int i = 0; i < 1000; i++) {
+            battle.attack(player, player);
+            if (player.getCurrentHp() > 0) wut = true;
+            player.setCurrentHp(120);
+        }
+        assertEquals(wut, false);
+    }
+    
+    @Test public void LevelUp() {
+        player = new PlayableCreature(2, 4, null, 0, 0, "Seppo", 100, 100, 0, null);
+        battle = new Battle(player, foe);
+        assertEquals(player.getMaxHp(), 100);
+        assertEquals(player.getDamage(), 100);
+        battle.levelUp();
+        assertEquals(player.getMaxHp(), 144);
+        assertEquals(player.getDamage(), 144);
+        
+        player = new PlayableCreature(2, 4, null, 0, 0, "Seppo", 100, 100, 0, null);
+        battle = new Battle(player, foe);
+        player.changeState();
+        battle.levelUp();
+        assertEquals(player.getMaxHp(), 120);
+        assertEquals(player.getDamage(), 135);
+        
+        player = new PlayableCreature(2, 4, null, 0, 0, "Seppo", 100, 100, 0, null);
+        battle = new Battle(player, foe);
+        player.changeState();
+        player.changeState();
+        battle.levelUp();
+        assertEquals(player.getMaxHp(), 180);
+        assertEquals(player.getDamage(), 120);
+    }
 
     @Test
-    public void checkLevelUp() {
+    public void checkLevelUp() { 
         battle.victory();
         assertEquals(player.getLvl(), 1);
+        battle.victory();
         battle.victory();
         battle.victory();
         assertEquals(player.getLvl(), 2);

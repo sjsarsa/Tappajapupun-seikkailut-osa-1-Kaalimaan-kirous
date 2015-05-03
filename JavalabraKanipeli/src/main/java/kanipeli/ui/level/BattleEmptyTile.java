@@ -8,19 +8,14 @@ package kanipeli.ui.level;
 import kanipeli.ui.sprites.SpriteSheet;
 
 /**
- *A blank white tile for battle
+ *
  * @author Sami
  */
 public class BattleEmptyTile extends Tile {
 
-    /**
-     *
-     * @param id
-     */
     public BattleEmptyTile(int id) {
         super(id);
         tile = SpriteSheet.battle[2][0];
     }
 
-    
 }
