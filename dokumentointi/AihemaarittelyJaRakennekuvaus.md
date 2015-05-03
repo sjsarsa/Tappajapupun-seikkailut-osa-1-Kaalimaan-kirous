@@ -34,11 +34,11 @@ Täällä on logiikkaa sisältävät palaset: battle (taistelu) field (pelto) ja
 ##ui
 ui:ssa itsessään on GamePanel, joka vain luo käyttöliittymän ja luokka Screen jota pelitilat käyttävät kälin muokkaamiseen.
 Käyttöliittymässä on sen verran tavaraa, että se on jaettu pienempiin pakkauksiin: 
-###ui.level,
+####ui.level,
 jossa on hahmojen ja peltojen spritet eli peliin tulevat kuvat hahmoille ja pellon osille.
-###ui.sprite,
+####ui.sprite,
 jossa toteutetaan spritejen lataaminen kuvatiedostoista.
-###ui.states,
+####ui.states,
 jossa on game state manager ja erilaiset game statet eli pelitilat. Pelitilat muokkaavat käyttöliittymää ja toteuttavat napinpainalluksia.
  
 
