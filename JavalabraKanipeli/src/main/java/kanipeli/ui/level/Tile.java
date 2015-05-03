@@ -6,8 +6,8 @@
 package kanipeli.ui.level;
 
 import kanipeli.ui.Screen;
-import kanipeli.ui.sprites.Sprite;
-import kanipeli.ui.sprites.SpriteSheet;
+import kanipeli.ui.sprite.Sprite;
+import kanipeli.ui.sprite.SpriteSheet;
 
 /**
  * A superclass for tiles containing all actual tiles for use. Tiles contain a

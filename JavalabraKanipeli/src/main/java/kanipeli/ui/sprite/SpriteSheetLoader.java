@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kanipeli.ui.sprites;
+package kanipeli.ui.sprite;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;

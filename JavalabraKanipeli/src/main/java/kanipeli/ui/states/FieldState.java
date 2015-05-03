@@ -13,9 +13,9 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import kanipeli.domain.Creature;
 import kanipeli.domain.CreatureOnField;
-import kanipeli.peli.Battle;
-import kanipeli.peli.Field;
-import kanipeli.peli.Game;
+import kanipeli.logic.Battle;
+import kanipeli.logic.Field;
+import kanipeli.logic.Game;
 import kanipeli.ui.Screen;
 import kanipeli.ui.level.Level;
 

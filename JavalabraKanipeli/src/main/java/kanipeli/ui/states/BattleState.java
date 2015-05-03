@@ -15,7 +15,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import kanipeli.domain.Creature;
 import kanipeli.domain.Item;
-import kanipeli.peli.Battle;
+import kanipeli.logic.Battle;
 import kanipeli.ui.Screen;
 import kanipeli.ui.level.Tile;
 
@@ -225,7 +225,7 @@ public class BattleState implements GameState {
             canvas.requestFocus();
             bs = canvas.getBufferStrategy();
         }
-        renderTiles(screen);
+        renderBattle(screen);
         for (int y = 0; y < screen.h; y++) {
             for (int x = 0; x < screen.w; x++) {
                 pixels[x + y * width] = screen.pixels[x + y * screen.w];
@@ -333,7 +333,7 @@ public class BattleState implements GameState {
         bs.show();
     }
 
-    private void renderTiles(Screen screen) {
+    private void renderBattle(Screen screen) {
         int w = (screen.w * 15) >> 4;
         int h = (screen.h * 15) >> 4;
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kanipeli.peli;
+package kanipeli.logic;
 
 import java.util.ArrayList;
 import kanipeli.domain.Creature;
@@ -11,7 +11,7 @@ import kanipeli.domain.CreatureOnField;
 import kanipeli.domain.DamagingItem;
 import kanipeli.domain.HealingItem;
 import kanipeli.domain.PlayableCreature;
-import kanipeli.ui.sprites.SpriteSheet;
+import kanipeli.ui.sprite.SpriteSheet;
 
 /**
  *Creates the fields and the creatures for the game.

@@ -4,7 +4,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kanipeli.peli;
+package kanipeli.logic;
 
 import java.util.List;
 import java.util.Random;
@@ -13,7 +13,7 @@ import kanipeli.domain.CreatureOnField;
 import kanipeli.domain.Item;
 import kanipeli.domain.PlayableCreature;
 import kanipeli.ui.level.Level;
-import kanipeli.ui.sprites.Sprite;
+import kanipeli.ui.sprite.Sprite;
 
 /**
  * The logic for prancing around on the field.

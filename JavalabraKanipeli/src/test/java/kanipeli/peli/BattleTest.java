@@ -6,6 +6,7 @@
  */
 package kanipeli.peli;
 
+import kanipeli.logic.Battle;
 import kanipeli.domain.Creature;
 import kanipeli.domain.DamagingItem;
 import kanipeli.domain.HealingItem;

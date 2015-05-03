@@ -5,7 +5,7 @@
  */
 package kanipeli.ui.level;
 
-import kanipeli.ui.sprites.SpriteSheet;
+import kanipeli.ui.sprite.SpriteSheet;
 
 /**
  *Field tile for the main boss.

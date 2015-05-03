@@ -67,7 +67,6 @@ public class GameStateManager {
             music = new AudioPlayer(song, this);
             music.play();
         } catch (InterruptedException ex) {
-            Logger.getLogger(GameStateManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

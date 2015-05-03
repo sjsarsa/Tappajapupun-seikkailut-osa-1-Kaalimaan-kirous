@@ -5,13 +5,15 @@
  */
 package kanipeli.peli;
 
+import kanipeli.logic.Field;
+import kanipeli.logic.Game;
 import java.util.ArrayList;
 import java.util.List;
 import kanipeli.domain.Creature;
 import kanipeli.domain.CreatureOnField;
 import kanipeli.domain.PlayableCreature;
 import kanipeli.ui.level.Level;
-import kanipeli.ui.sprites.SpriteSheet;
+import kanipeli.ui.sprite.SpriteSheet;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

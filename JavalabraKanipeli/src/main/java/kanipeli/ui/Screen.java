@@ -5,7 +5,7 @@
  */
 package kanipeli.ui;
 
-import kanipeli.ui.sprites.Sprite;
+import kanipeli.ui.sprite.Sprite;
 
 
 

@@ -45,7 +45,7 @@ public class AudioPlayer implements Runnable {
             sdl = (SourceDataLine) AudioSystem.getLine(info);
             sdl.open(decodedFormat);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("no such file or wrong format");
         }
     }
 
@@ -58,7 +58,7 @@ public class AudioPlayer implements Runnable {
             t.setPriority(7);
             t.start();
         } else {
-            System.out.println("dafuq?");
+            System.out.println("should not happen");
         }
     }
 
@@ -105,7 +105,6 @@ public class AudioPlayer implements Runnable {
                 gsm.setMusic(new AudioPlayer(s, gsm));      
             }
         } catch (IOException e) {
-            e.printStackTrace();
         } catch (InterruptedException ie) {
             System.out.println("audio interrupted");
         }

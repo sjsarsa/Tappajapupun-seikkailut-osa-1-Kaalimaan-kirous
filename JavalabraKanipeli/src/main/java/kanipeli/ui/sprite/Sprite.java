@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kanipeli.ui.sprites;
+package kanipeli.ui.sprite;
 
 /**
  *Sprite contains the pixels for rendering or telling the level design for
