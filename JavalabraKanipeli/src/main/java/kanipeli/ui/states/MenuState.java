@@ -95,7 +95,7 @@ public class MenuState implements GameState, Runnable {
         g.setColor(Color.BLACK);
         if (game != null) drawStatus(g);
         drawOptions(g);
-        g.dispose();
+        bs.show();
         bs.show();
     }
     

@@ -105,6 +105,7 @@ public class FieldState implements GameState {
         g.drawImage(image, 0, 0, canvas.getWidth(), canvas.getHeight(), null);
         g.dispose();
         bs.show();
+        bs.show();
     }
 
     /**

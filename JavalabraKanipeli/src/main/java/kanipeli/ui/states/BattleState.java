@@ -91,6 +91,7 @@ public class BattleState implements GameState {
         } else {
             drawOptions();
         }
+        bs.show();
     }
 
     private void checkEscaped() {
@@ -277,9 +278,11 @@ public class BattleState implements GameState {
         }
         g.drawString(amount + "!", 110 * scale, 80 * scale);
         bs.show();
+        bs.show();
     }
 
     private void drawVictory(Item item, int amount) {
+        render();
         render();
         g.setFont(new Font("Century Gothic", Font.BOLD, 30));
         g.setColor(Color.orange);
@@ -291,9 +294,11 @@ public class BattleState implements GameState {
             g.drawString(item.getName() + " x " + amount, 50 * scale, 220 * scale);
         }
         bs.show();
+        bs.show();
     }
 
     private void drawItems() {
+        render();
         render();
         g.setFont(new Font("Arial", Font.BOLD, 25));
         g.setColor(Color.blue);
@@ -311,6 +316,7 @@ public class BattleState implements GameState {
             i++;
         }
         g.drawString("cancel", 90 * scale, 50 + 30 * i * scale);
+        bs.show();
         bs.show();
     }
 
@@ -330,6 +336,7 @@ public class BattleState implements GameState {
         g.drawString("DIED", 80 * scale, 170 * scale);
         g.drawLine(80 * scale, 80 * scale, 0 * scale, 160 * scale);
         g.drawLine(0 * scale, 80 * scale, 80 * scale, 160 * scale);
+        bs.show();
         bs.show();
     }
 
