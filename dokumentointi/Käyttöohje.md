@@ -27,7 +27,7 @@ Sulkee ohjelman.
 ##Pelto
 Peli alkaa aloituspellolla vasemmasta ylälaidasta, siellä on valkoinen kani, jota voi liikuttaa vapaasti käyttäen 
 nuolinäppäimiä, paitsi kivien päälle ei pääse. Pellolla liikkuessa tulee vastaan
-satunnaisia vihollisia ja silloin tulee taistelu. Pellolla näkyy myös vihollisia, joiden kohdalle kun kävelee tulee myös
+satunnaisia vihollisia ja silloin tulee taistelu. Liikkumiseksi lasketaan myös kiviä kohti liikkuminen, vaikka pelaaja ei varsinaisesti liiku. Pellolla näkyy myös vihollisia, joiden kohdalle kun kävelee tulee myös
 taistelu. Kun pellolla olleen vihollisen voittaa, kyseinen vihollinen katoaa pelistä lopullisesti. Pelin tavoitteena on
 voittaa kaikki pelloilla olevat viholliset. Satunnaisia vihollisia tulee rajattomasti. Peltojen laidalla on ovia. Ovista
 siirtyy toiselle pellolle.
