@@ -130,7 +130,7 @@ public class PlayableCreature extends CreatureOnField {
         }
         if (state > 2) state = 0;
         if (state == 0) {
-            super.setCurrentHp(super.getCurrentHp() - (super.getMaxHp() - normalHp));
+            super.takeDamage(super.getMaxHp() - normalHp);
             super.setMaxHp(normalHp);
         }
     }

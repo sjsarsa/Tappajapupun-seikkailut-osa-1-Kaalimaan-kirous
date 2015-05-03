@@ -96,7 +96,6 @@ public class MenuState implements GameState, Runnable {
         if (game != null) drawStatus(g);
         drawOptions(g);
         bs.show();
-        bs.show();
     }
     
     private void drawOptions(Graphics g) {

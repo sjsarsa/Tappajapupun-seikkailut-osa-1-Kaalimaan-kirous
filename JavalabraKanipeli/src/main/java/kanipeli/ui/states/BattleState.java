@@ -91,7 +91,6 @@ public class BattleState implements GameState {
         } else {
             drawOptions();
         }
-        bs.show();
     }
 
     private void checkEscaped() {
@@ -278,7 +277,6 @@ public class BattleState implements GameState {
         }
         g.drawString(amount + "!", 110 * scale, 80 * scale);
         bs.show();
-        bs.show();
     }
 
     private void drawVictory(Item item, int amount) {
@@ -293,7 +291,6 @@ public class BattleState implements GameState {
             g.drawString("Vihulainen tiputti jotain: ", 50 * scale, 200 * scale);
             g.drawString(item.getName() + " x " + amount, 50 * scale, 220 * scale);
         }
-        bs.show();
         bs.show();
     }
 
@@ -317,7 +314,6 @@ public class BattleState implements GameState {
         }
         g.drawString("cancel", 90 * scale, 50 + 30 * i * scale);
         bs.show();
-        bs.show();
     }
 
     private void drawCreatureStatus(int width, Graphics g, Creature cr) {
@@ -336,7 +332,6 @@ public class BattleState implements GameState {
         g.drawString("DIED", 80 * scale, 170 * scale);
         g.drawLine(80 * scale, 80 * scale, 0 * scale, 160 * scale);
         g.drawLine(0 * scale, 80 * scale, 80 * scale, 160 * scale);
-        bs.show();
         bs.show();
     }
 
