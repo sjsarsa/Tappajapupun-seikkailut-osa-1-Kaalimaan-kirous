@@ -22,13 +22,23 @@ Valikossa: uusi peli, jatka, lopeta peli.
 
 #Rakennekuvaus
 
-Ohjelma jakautuu neljään pakkaukseen: 
-pääpakkaus, jossa on main-luokka ja AudioPlayer musiikin soittamiseen, 
-domain, jossa on pelin yksinkertaiset palat kuten hahmot ja itemit(tavarat), 
-logic, jossa on logiikkaa sisältävät palaset, kuten battle (taistelu) ja field (pelto) 
-ja lopuksi ui, jossa on käyttöliittymä. Käyttöliittymässä on sen verran tavaraa, että se on jaettu omiin pakkauksiinsa: 
- ui.level, jossa on hahmojen ja peltojen spritet eli peliin tulevat kuvat hahmoille ja pellon osille,
- ui.sprite, jossa toteutetaan spritejen lataaminen kuvatiedostoista,
- ui.states, jossa on game state manager ja erilaiset game statet eli pelitilat. Pelitilat muokkaavat käyttöliittymää ja   toteuttavat napinpainalluksia.
- ui pakkauksessa itsessään on GamePanel, joka vain luo käyttöliittymän ja luokka Screen jota pelitilat käyttävät kälin   muokkaamiseen.
+##Ohjelma jakautuu pääosin neljään pakkaukseen: 
+##kanipeli (pääpakkaus)
+sisältää main-luokan ja AudioPlayerin musiikin soittamiseen. 
+## kanipeli.domain
+Täällä on pelin yksinkertaiset palat eli hahmot ja itemit (tavarat).
+Itemejä on kahdenlaisia jotka toteuttavat rajapinnan item.
+Hahmoja on kolmenlaisia: Pelattava hahmo perii kartalla olevan hahmo, joka perii perushahmon.
+##logic
+Täällä on logiikkaa sisältävät palaset: battle (taistelu) field (pelto) ja game (peli), jossa luodaan kaikki pelin olennaiset oliot.
+##ui
+ui:ssa itsessään on GamePanel, joka vain luo käyttöliittymän ja luokka Screen jota pelitilat käyttävät kälin muokkaamiseen.
+Käyttöliittymässä on sen verran tavaraa, että se on jaettu pienempiin pakkauksiin: 
+###ui.level,
+jossa on hahmojen ja peltojen spritet eli peliin tulevat kuvat hahmoille ja pellon osille.
+###ui.sprite,
+jossa toteutetaan spritejen lataaminen kuvatiedostoista.
+###ui.states,
+jossa on game state manager ja erilaiset game statet eli pelitilat. Pelitilat muokkaavat käyttöliittymää ja toteuttavat napinpainalluksia.
+ 
 
