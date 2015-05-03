@@ -11,6 +11,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
+import kanipeli.ui.states.GameStateManager;
 
 /**
  * Plays friggin' music!
@@ -24,12 +25,13 @@ public class AudioPlayer implements Runnable {
     private Thread t;
     private boolean stop = false;
     private String s;
-
+    private GameStateManager gsm;
     /**
      *Initialises source data line for streaming music.
      * @param s File name
      */
-    public AudioPlayer(String s) {
+    public AudioPlayer(String s, GameStateManager gsm) {
+        this.gsm = gsm;
         this.s = s;
         try {
             in = AudioSystem.getAudioInputStream(getClass().getResourceAsStream(s));
@@ -100,8 +102,7 @@ public class AudioPlayer implements Runnable {
             }
             
             if (!stop) {
-                AudioPlayer ap = new AudioPlayer(s);
-                ap.play();
+                gsm.setMusic(new AudioPlayer(s, gsm));      
             }
         } catch (IOException e) {
             e.printStackTrace();

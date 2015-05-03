@@ -41,12 +41,30 @@ public class GameStateManager {
     public void addState(int index, GameState state) {
         gameStates[index] = state;
     }
+    
+    /**
+     *Changes current music to a new AudioPlayer object and then plays the music.
+     * @param music the new music
+     */
+    
+    public void setMusic(AudioPlayer music) {
+        this.music = music;
+        music.play();
+    }
+    
+    /**
+     *Tells the music to stop
+     * Waits for audio player to stop.
+     * Creates new audio player depending on given song.
+     * Plays the new player.
+     * @param song resource path for audio player to find the song to be played.
+     */
 
     public void setMusic(String song) {
         music.stop();
         try {
             Thread.sleep(400);
-            music = new AudioPlayer(song);
+            music = new AudioPlayer(song, this);
             music.play();
         } catch (InterruptedException ex) {
             Logger.getLogger(GameStateManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -90,7 +108,7 @@ public class GameStateManager {
      * Plays menu music and sets the initial state as menu state.
      */
     public void init() {
-        music = new AudioPlayer(menuMusic);
+        music = new AudioPlayer(menuMusic, this);
         music.play();
         setState(0);
     }
